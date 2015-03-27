@@ -1,2 +1,2 @@
 # ArtisticLovoy
-Lovoy internal code
+Artistic lovoy internal code.
