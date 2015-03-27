@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "ArtisticLovoy": {
+            "applicationId": "qLwTSdScfNGcExbD4lizRWjp5zFCZDyHMNgJSHBY", 
+            "masterKey": "pdsxExLxMkKS76cAwkWx8m3PeKlGQJSAiuRGy86E"
+        }, 
+        "_default": {
+            "link": "ArtisticLovoy"
+        }
+    }
+}
