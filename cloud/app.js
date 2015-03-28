@@ -18,7 +18,17 @@ app.get('/login', function(req, res) {
 // Example reading from the request body of an HTTP post request.
 app.post('/login', function (req, res) {
     // POST http://example.parseapp.com/test (with request body "message=hello")
-  res.send(req.body.message);
+  //res.send(req.body.message);
+  Parse.User.logIn(req.body.name, req.body.password, {
+  success: function(user) {
+    // Do stuff after successful login.
+    res.send('Success Login');
+  },
+  error: function(user, error) {
+    // The login failed. Check error to see why.
+    res.send('Login failed');
+  }
+});
 });
 
 app.get('/signup', function(req,res) {
