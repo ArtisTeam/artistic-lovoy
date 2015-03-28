@@ -18,11 +18,12 @@ app.get('/login', function(req, res) {
 app.post('/login', function (req, res) {
     // POST http://example.parseapp.com/test (with request body "message=hello")
   res.send(req.body.message);
-    
 });
 
 app.get('/signup', function(req,res) {
   res.render('signup', { message: 'Thank you for sign up Lovoy!'});
+  // POST http://example.parseapp.com/test (with request body "message=hello")
+  //res.send(req.body.message);
 });
 
 app.post('/signup', function (req, res) {
