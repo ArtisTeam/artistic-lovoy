@@ -9,6 +9,10 @@ app.set('view engine', 'ejs');    // Set the template engine
 app.use(expressLayouts);
 app.use(express.bodyParser());    // Middleware for reading request body
 
+app.get('/', function (req, res) {
+  res.render('welcome');
+});
+
 // This is an example of hooking up a request handler with a specific request
 // path and HTTP verb using the Express routing API.
 app.get('/login', function(req, res) {
