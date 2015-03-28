@@ -20,14 +20,14 @@ app.get('/login', function(req, res) {
 app.post('/login', function (req, res) {
   // POST http://example.parseapp.com/test (with request body "message=hello")
   // res.send(req.body.message);
-  Parse.User.logIn(req.body.username, req.body.password, {
-    success: function(user) {
-      res.send('Success Login');
-    },
-    error: function(user, error) {
-      res.send('Login failed');
-    }
-  });
+  Parse.User.logIn(req.body.username, req.body.password).then(function(user) {
+      //res.redirect('/');
+      res.render('welcome');
+      //var currentUser = Parse.User.current();
+      //res.send(currentUser);
+    }, function(error) {
+      res.render('login', {flash: error.message});
+    });
 });
 
 app.get('/signup', function(req,res) {
@@ -47,6 +47,12 @@ app.post('/signup', function (req, res) {
       alert('Error: ' + error.code + ' ' + error.message);
     }
   });
+});
+
+// Logs out the user
+app.post('/logout', function(req, res) {
+  Parse.User.logOut();
+  res.redirect('/');
 });
   
 // Attach the Express app to Cloud Code.
