@@ -28,20 +28,18 @@ app.get('/signup', function(req,res) {
 
 app.post('/signup', function (req, res) {
   var user = new Parse.User();
-  user.set("username", req.body.name);
-  user.set("password", req.body.password);
-  user.set("email", req.body.email);
+  user.set('username', req.body.name);
+  user.set('password', req.body.password);
+  user.set('email', req.body.email);
   user.signUp(null, {
     success: function(user) {
-      alert("Success create user: " + req.body.name);   
+      alert('Success create user: ' + req.body.name);   
     },
     error: function(user, error) {
-      alert("Error: " + error.code + " " + error.message);
+      alert('Error: ' + error.code + ' ' + error.message);
     }
   });
 });
-
-
   
 
 // Attach the Express app to Cloud Code.
