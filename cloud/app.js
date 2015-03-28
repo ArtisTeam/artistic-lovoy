@@ -13,32 +13,25 @@ app.get('/', function (req, res) {
   res.render('welcome');
 });
 
-// This is an example of hooking up a request handler with a specific request
-// path and HTTP verb using the Express routing API.
 app.get('/login', function(req, res) {
   res.render('login', { message: 'Welcome to Lovoy!' });
 });
 
-// Example reading from the request body of an HTTP post request.
 app.post('/login', function (req, res) {
-    // POST http://example.parseapp.com/test (with request body "message=hello")
-  //res.send(req.body.message);
+  // POST http://example.parseapp.com/test (with request body "message=hello")
+  // res.send(req.body.message);
   Parse.User.logIn(req.body.username, req.body.password, {
   success: function(user) {
-    // Do stuff after successful login.
     res.send('Success Login');
   },
   error: function(user, error) {
-    // The login failed. Check error to see why.
     res.send('Login failed');
   }
 });
 });
 
 app.get('/signup', function(req,res) {
-  res.render('signup', { message: 'Thank you for sign up Lovoy!'});
-  // POST http://example.parseapp.com/test (with request body "message=hello")
-  //res.send(req.body.message);
+  res.render('signup', {message: 'Thank you for sign up Lovoy!'});
 });
 
 app.post('/signup', function (req, res) {
@@ -56,6 +49,5 @@ app.post('/signup', function (req, res) {
   });
 });
   
-
 // Attach the Express app to Cloud Code.
 app.listen();

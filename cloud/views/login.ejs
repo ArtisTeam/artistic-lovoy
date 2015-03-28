@@ -1,10 +1,16 @@
 <div class="container">
-  <p><%= message %></p>
+  <!-- <p><%= message %></p> -->
   <form method="post" action="/login" class="form-signin">
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="input" class="sr-only">Email address</label>
-    Username: <input type="text" name="username" /><br />
-    Password: <input type="password" name="password" /><br />
-    <input class="button" type="submit" value="Log in">
+    <h3 class="form-signin-heading">Log in to Lovoy</h3>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus/>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
   </form>
 </div>

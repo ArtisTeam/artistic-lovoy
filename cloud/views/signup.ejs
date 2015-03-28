@@ -1,11 +1,13 @@
 <div class="container">
-  <form method="post" action="/signup">
-    <p>
-      Username: <input type="text" name="username" /><br />
-      Email: <input type="text" name="email" /><br />
-      Password: <input type="password" name="password" /><br />
-      <input class="button" type="submit" value="Sign up" />
-    </p>
+  <form method="post" action="/signup" class="form-signin">
+    <h3 class="form-signin-heading">Sign up for Lovoy</h3>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus/>
+    <label for="inputEmail" class="sr-only">Email</label>
+    <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email" required/>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
   </form>
 </div>
 
