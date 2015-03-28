@@ -23,7 +23,7 @@ app.get('/login', function(req, res) {
 app.post('/login', function (req, res) {
     // POST http://example.parseapp.com/test (with request body "message=hello")
   //res.send(req.body.message);
-  Parse.User.logIn(req.body.name, req.body.password, {
+  Parse.User.logIn(req.body.username, req.body.password, {
   success: function(user) {
     // Do stuff after successful login.
     res.send('Success Login');
@@ -43,12 +43,12 @@ app.get('/signup', function(req,res) {
 
 app.post('/signup', function (req, res) {
   var user = new Parse.User();
-  user.set('username', req.body.name);
+  user.set('username', req.body.username);
   user.set('password', req.body.password);
   user.set('email', req.body.email);
   user.signUp(null, {
     success: function(user) {
-      alert('Success create user: ' + req.body.name);   
+      alert('Success create user: ' + req.body.username);   
     },
     error: function(user, error) {
       alert('Error: ' + error.code + ' ' + error.message);
