@@ -1,11 +1,13 @@
 
 // These two lines are required to initialize Express in Cloud Code.
 var express = require('express');
+var expressLayouts = require('cloud/express-layouts');
 var app = express();
 
 // Global app configuration section
 app.set('views', 'cloud/views');  // Specify the folder to find templates
 app.set('view engine', 'ejs');    // Set the template engine
+app.use(expressLayouts);
 app.use(express.bodyParser());    // Middleware for reading request body
 
 // This is an example of hooking up a request handler with a specific request
