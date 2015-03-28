@@ -41,10 +41,11 @@ app.post('/signup', function (req, res) {
   user.set('email', req.body.email);
   user.signUp(null, {
     success: function(user) {
-      alert('Success create user: ' + req.body.username);   
+      res.send('Success create user: ' + req.body.username);
     },
     error: function(user, error) {
-      alert('Error: ' + error.code + ' ' + error.message);
+      // alert('Error: ' + error.code + ' ' + error.message);
+      res.send('Error: ' + error.code + ' ' + error.message);
     }
   });
 });
