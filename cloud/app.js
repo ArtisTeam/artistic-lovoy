@@ -1,13 +1,13 @@
-// These two lines are required to initialize Express in Cloud Code.
+// Initialize Express in Cloud Code
 var express = require('express');
 var expressLayouts = require('cloud/express-layouts');
 var app = express();
 
 // Global app configuration section
 app.set('views', 'cloud/views');  // Specify the folder to find templates
-app.set('view engine', 'ejs');    // Set the template engine
+app.set('view engine', 'ejs'); // Set the template engine
 app.use(expressLayouts);
-app.use(express.bodyParser());    // Middleware for reading request body
+app.use(express.bodyParser()); // Middleware for reading request body
 
 app.get('/', function (req, res) {
   res.render('welcome');
@@ -21,13 +21,13 @@ app.post('/login', function (req, res) {
   // POST http://example.parseapp.com/test (with request body "message=hello")
   // res.send(req.body.message);
   Parse.User.logIn(req.body.username, req.body.password, {
-  success: function(user) {
-    res.send('Success Login');
-  },
-  error: function(user, error) {
-    res.send('Login failed');
-  }
-});
+    success: function(user) {
+      res.send('Success Login');
+    },
+    error: function(user, error) {
+      res.send('Login failed');
+    }
+  });
 });
 
 app.get('/signup', function(req,res) {
