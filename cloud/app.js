@@ -32,6 +32,21 @@ app.post('/login', function (req, res) {
     });
 });
 
+app.post('/addEvent', function (req, res) {
+  var EventItem = Parse.Object.extend('Event');
+  var eventItem = new EventItem();
+  eventItem.set('eventName', req.body.eventName);
+  eventItem.set('eventDescription', req.body.eventDescription);
+  res.send(req.body.eventName);
+  alert(req.body.eventName);
+  eventItem.save(null, {
+    success: function() {
+      alert('success!');
+    },
+    error: function() {}
+  });
+});
+
 app.get('/signup', function(req,res) {
   res.render('signup');
 });
@@ -56,7 +71,7 @@ app.post('/signup', function (req, res) {
       ////orgProf.set('createBy', Parse.User.current());
       //orgProf.save();
       //res.send('Success create user: ' + req.body.username);
-      res.redirect('\dashboard');
+      res.redirect('/dashboard');
     },
     error: function(user, error) {
       // alert('Error: ' + error.code + ' ' + error.message);
