@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
   res.render('welcome');
 });
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
   res.render('login', { message: 'Welcome to Lovoy!' });
 });
 
@@ -22,12 +22,12 @@ app.get('/dashboard', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-  Parse.User.logIn(req.body.username, req.body.password).then(function(user) {
-      res.redirect('/dashboard');
-    }, function(error) {
-      //res.render('login', {flash: error.message});
-      res.send('error');
-    });
+  Parse.User.logIn(req.body.username, req.body.password).then(function (user) {
+    res.redirect('/dashboard');
+  }, function (error) {
+    //res.render('login', {flash: error.message});
+    res.send('error');
+  });
 });
 
 app.post('/addEvent', function (req, res) {
@@ -38,14 +38,14 @@ app.post('/addEvent', function (req, res) {
   res.send(req.body.eventName);
   alert(req.body.eventName);
   eventItem.save(null, {
-    success: function() {
+    success: function () {
       alert('success!');
     },
-    error: function() {}
+    error: function () { }
   });
 });
 
-app.get('/signup', function(req,res) {
+app.get('/signup', function (req, res) {
   res.render('signup');
 });
 
@@ -82,7 +82,7 @@ app.post('/signup', function (req, res) {
         }
       });
     },
-    error: function(user, error) {
+    error: function (user, error) {
       // alert('Error: ' + error.code + ' ' + error.message);
       res.send('Error: ' + error.code + ' ' + error.message);
     }
@@ -94,10 +94,10 @@ app.get('/ming', function (req, res) {
 });
 
 // Logs out the user
-app.post('/logout', function(req, res) {
+app.post('/logout', function (req, res) {
   Parse.User.logOut();
   res.redirect('/');
 });
-  
+
 // Attach the Express app to Cloud Code.
 app.listen();
