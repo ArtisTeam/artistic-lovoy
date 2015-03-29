@@ -17,16 +17,18 @@ app.get('/login', function(req, res) {
   res.render('login', { message: 'Welcome to Lovoy!' });
 });
 
+app.get('/dashboard', function (req, res) {
+  res.render('events');
+});
+
 app.post('/login', function (req, res) {
   // POST http://example.parseapp.com/test (with request body "message=hello")
   // res.send(req.body.message);
   Parse.User.logIn(req.body.username, req.body.password).then(function(user) {
-      //res.redirect('/');
-      res.render('welcome');
-      //var currentUser = Parse.User.current();
-      //res.send(currentUser);
+      res.redirect('/dashboard');
     }, function(error) {
-      res.render('login', {flash: error.message});
+      //res.render('login', {flash: error.message});
+      res.send('error');
     });
 });
 
