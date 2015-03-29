@@ -30,6 +30,21 @@ app.post('/login', function (req, res) {
     });
 });
 
+app.post('/addEvent', function (req, res) {
+  var EventItem = Parse.Object.extend('Event');
+  var eventItem = new EventItem();
+  eventItem.set('eventName', req.body.eventName);
+  eventItem.set('eventDescription', req.body.eventDescription);
+  res.send(req.body.eventName);
+  alert(req.body.eventName);
+  eventItem.save(null, {
+    success: function() {
+      alert('success!');
+    },
+    error: function() {}
+  });
+});
+
 app.get('/signup', function(req,res) {
   res.render('signup');
 });
