@@ -33,12 +33,24 @@ app.get('/dashboard', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-  Parse.User.logIn(req.body.username, req.body.password).then(function (user) {
-    res.redirect('/dashboard');
-  }, function (error) {
-    //res.render('login', {flash: error.message});
-    res.send('login fail');
-  });
+  // POST http://example.parseapp.com/test (with request body "message=hello")
+  Parse.User.logIn(req.body.username, req.body.password).then(function(user) {
+      var EventItem = Parse.Object.extend('Event');
+      var query = new Parse.Query(EventItem);
+      query.equalTo('createBy',req.body.username);
+      query.descending('createdAt');
+      query.find({
+        success: function(results) {
+          alert(results);
+        },
+        error: function(error) {
+          alert('query fail!');
+        }
+      });
+      res.redirect('/dashboard');
+    }, function(error) {
+      res.send('login fail');
+    });
 });
 
 app.post('/addEvent', function (req, res) {
