@@ -22,8 +22,6 @@ app.get('/dashboard', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-  // POST http://example.parseapp.com/test (with request body "message=hello")
-  // res.send(req.body.message);
   Parse.User.logIn(req.body.username, req.body.password).then(function(user) {
       res.redirect('/dashboard');
     }, function(error) {
@@ -43,26 +41,41 @@ app.post('/signup', function (req, res) {
   user.set('email', req.body.email);
   user.signUp(null, {
     success: function (user) {
+      //---use this to create new attributes
+      //var OrgProfile = Parse.Object.extend('OrgProfile', {
+      //  initialize: function (attrs, options) {
+      //    this.orgName = 'noname';
+      //  }
+      //});
+      var OrgProfile = Parse.Object.extend('OrgProfile');
+      var orgProf = new OrgProfile();
+      var orgProfACL = new Parse.ACL();
+      orgProfACL.setPublicReadAccess(true);
+      orgProfACL.setPublicWriteAccess(false);
+      orgProfACL.setWriteAccess(Parse.User.current(), true);
+      orgProf.setACL(orgProfACL);
 
-      //var OrgProfile = Parse.Object.extend('OrgProfile');
-      //var orgProf = new OrgProfile();
-      ////var orgProfACL = new Parse.ACL();
-      ////orgProfACL.setPublicReadAccess(true);
-      ////orgProfACL.setPublicWriteAccess(false);
-      ////orgProfACL.setWriteAccess(Parse.User.current(), true);
-      ////orgProf.setACL(orgProfACL);
-
-      //orgProf.set(orgName, 'UCSD');
-      ////orgProf.set('createBy', Parse.User.current());
-      //orgProf.save();
-      //res.send('Success create user: ' + req.body.username);
-      res.redirect('\dashboard');
+      orgProf.set('orgName', 'UCSD');
+      orgProf.set('createBy', Parse.User.current());
+      orgProf.save(null, {
+        success: function (orgProf) {
+          res.redirect('/dashboard');
+        },
+        error: function (orgProf, error) {
+          alert('Failed to create new OrgProfile, with error code: ' + error.message);
+          res.send('Failed to create new object, with error code: ' + error.message);
+        }
+      });
     },
     error: function(user, error) {
       // alert('Error: ' + error.code + ' ' + error.message);
       res.send('Error: ' + error.code + ' ' + error.message);
     }
   });
+});
+
+app.get('/ming', function (req, res) {
+
 });
 
 // Logs out the user
