@@ -66,6 +66,7 @@ app.post('/addEvent', function (req, res) {
     acl.setPublicReadAccess(true);
     acl.setPublicWriteAccess(false);
     acl.setWriteAccess(currUser, true);
+    eventItem.setACL(acl);
 
     eventItem.save(null, {
       success: function () {
