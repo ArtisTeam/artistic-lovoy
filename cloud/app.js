@@ -12,7 +12,13 @@ app.use(expressLayouts);
 app.use(express.bodyParser()); // Middleware for reading request body
 app.use(parseExpressHttpsRedirect());
 app.use(express.cookieParser('MING_QIN_SIGNING_SECRET'));
-app.use(parseExpressCookieSession({ cookie: { maxAge: 3600000 } }));
+app.use(parseExpressCookieSession({
+  fetchUser: true,
+  key: 'lovoy.sess',
+  cookie: {
+    maxAge: 3600000 * 24 * 30
+  }
+}));
 
 app.get('/', function (req, res) {
   res.render('welcome');
