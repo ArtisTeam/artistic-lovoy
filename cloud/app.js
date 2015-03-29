@@ -54,13 +54,19 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/addEvent', function (req, res) {
-  var EventItem = Parse.Object.extend('Event');
-  var eventItem = new EventItem();
   var currUser = Parse.User.current();
   if (currUser) {
+    var EventItem = Parse.Object.extend('Event');
+    var eventItem = new EventItem();
     eventItem.set('createBy', currUser);
     eventItem.set('eventName', req.body.eventName);
     eventItem.set('eventDescription', req.body.eventDescription);
+
+    var acl = new Parse.ACL();
+    acl.setPublicReadAccess(true);
+    acl.setPublicWriteAccess(false);
+    acl.setWriteAccess(currUser, true);
+
     eventItem.save(null, {
       success: function () {
         res.redirect('/dashboard');
