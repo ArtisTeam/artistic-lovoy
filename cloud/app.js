@@ -1,6 +1,8 @@
 // Initialize Express in Cloud Code
 var express = require('express');
 var expressLayouts = require('cloud/express-layouts');
+var parseExpressHttpsRedirect = require('parse-express-https-redirect');
+var parseExpressCookieSession = require('parse-express-cookie-session');
 var app = express();
 
 // Global app configuration section
@@ -8,13 +10,16 @@ app.set('views', 'cloud/views');  // Specify the folder to find templates
 app.set('view engine', 'ejs'); // Set the template engine
 app.use(expressLayouts);
 app.use(express.bodyParser()); // Middleware for reading request body
+app.use(parseExpressHttpsRedirect());
+app.use(express.cookieParser('MING_QIN_SIGNING_SECRET'));
+app.use(parseExpressCookieSession({ cookie: { maxAge: 3600000 } }));
 
 app.get('/', function (req, res) {
   res.render('welcome');
 });
 
 app.get('/login', function (req, res) {
-  res.render('login', { message: 'Welcome to Lovoy!' });
+  res.render('login');
 });
 
 app.get('/dashboard', function (req, res) {
@@ -26,7 +31,7 @@ app.post('/login', function (req, res) {
     res.redirect('/dashboard');
   }, function (error) {
     //res.render('login', {flash: error.message});
-    res.send('error');
+    res.send('login fail');
   });
 });
 
@@ -34,19 +39,19 @@ app.post('/addEvent', function (req, res) {
   var EventItem = Parse.Object.extend('Event');
   var eventItem = new EventItem();
   var currUser = Parse.User.current();
-  if (currUser){
+  if (currUser) {
     eventItem.set('createBy', currUser);
     eventItem.set('eventName', req.body.eventName);
     eventItem.set('eventDescription', req.body.eventDescription);
     eventItem.save(null, {
       success: function () {
-        //do something?
+        res.redirect('/dashboard');
       },
       error: function () {
         res.send('Failed to save event, with error code: ' + error.message);
       }
     });
-  }else{
+  } else {
     res.redirect('/login');
   }
 });
@@ -96,11 +101,21 @@ app.post('/signup', function (req, res) {
 });
 
 app.get('/ming', function (req, res) {
-
+  if (Parse.User.current()) {
+    // We need to fetch because we need to show fields on the user object.
+    Parse.User.current().fetch().then(function (user) {
+      res.send('Cool, you are logged in as : ' + user.get('username'));
+    },
+    function (error) {
+      res.send('fetch user error');
+    });
+  } else {
+    res.redirect('/login');
+  }
 });
 
 // Logs out the user
-app.post('/logout', function (req, res) {
+app.get('/logout', function (req, res) {
   Parse.User.logOut();
   res.redirect('/');
 });
