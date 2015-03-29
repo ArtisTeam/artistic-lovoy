@@ -33,16 +33,22 @@ app.post('/login', function (req, res) {
 app.post('/addEvent', function (req, res) {
   var EventItem = Parse.Object.extend('Event');
   var eventItem = new EventItem();
-  eventItem.set('eventName', req.body.eventName);
-  eventItem.set('eventDescription', req.body.eventDescription);
-  res.send(req.body.eventName);
-  alert(req.body.eventName);
-  eventItem.save(null, {
-    success: function () {
-      alert('success!');
-    },
-    error: function () { }
-  });
+  var currUser = Parse.User.current();
+  if (currUser){
+    eventItem.set('createBy', currUser);
+    eventItem.set('eventName', req.body.eventName);
+    eventItem.set('eventDescription', req.body.eventDescription);
+    eventItem.save(null, {
+      success: function () {
+        //do something?
+      },
+      error: function () {
+        res.send('Failed to save event, with error code: ' + error.message);
+      }
+    });
+  }else{
+    res.redirect('/login');
+  }
 });
 
 app.get('/signup', function (req, res) {
