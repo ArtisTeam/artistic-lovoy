@@ -23,11 +23,21 @@ app.get('/dashboard', function (req, res) {
 
 app.post('/login', function (req, res) {
   // POST http://example.parseapp.com/test (with request body "message=hello")
-  // res.send(req.body.message);
   Parse.User.logIn(req.body.username, req.body.password).then(function(user) {
       res.redirect('/dashboard');
+      var EventItem = Parse.Object.extend('Event');
+      var query = new Parse.Query(EventItem);
+      query.equalTo('createBy',req.body.username);
+      query.descending('createdAt');
+      query.find({
+        success: function(results) {
+          alert(results);
+        },
+        error: function(error) {
+        //Error Callback
+        }
+      });
     }, function(error) {
-      //res.render('login', {flash: error.message});
       res.send('error');
     });
 });
@@ -37,11 +47,9 @@ app.post('/addEvent', function (req, res) {
   var eventItem = new EventItem();
   eventItem.set('eventName', req.body.eventName);
   eventItem.set('eventDescription', req.body.eventDescription);
-  res.send(req.body.eventName);
-  alert(req.body.eventName);
   eventItem.save(null, {
     success: function() {
-      alert('success!');
+      //alert('success!');
     },
     error: function() {}
   });
