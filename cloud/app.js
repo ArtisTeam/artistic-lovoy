@@ -24,12 +24,12 @@ app.get('/', function (req, res) {
   res.render('welcome');
 });
 
-app.get('/login', function (req, res) {
-  res.render('login');
-});
-
 app.get('/dashboard', function (req, res) {
   res.render('events');
+});
+
+app.get('/login', function (req, res) {
+  res.render('login');
 });
 
 app.post('/login', function (req, res) {
@@ -51,34 +51,6 @@ app.post('/login', function (req, res) {
     }, function(error) {
       res.send('login fail');
     });
-});
-
-app.post('/addEvent', function (req, res) {
-  var currUser = Parse.User.current();
-  if (currUser) {
-    var EventItem = Parse.Object.extend('Event');
-    var eventItem = new EventItem();
-    eventItem.set('createBy', currUser);
-    eventItem.set('eventName', req.body.eventName);
-    eventItem.set('eventDescription', req.body.eventDescription);
-
-    var acl = new Parse.ACL();
-    acl.setPublicReadAccess(true);
-    acl.setPublicWriteAccess(false);
-    acl.setWriteAccess(currUser, true);
-    eventItem.setACL(acl);
-
-    eventItem.save(null, {
-      success: function () {
-        res.redirect('/dashboard');
-      },
-      error: function () {
-        res.send('Failed to save event, with error code: ' + error.message);
-      }
-    });
-  } else {
-    res.redirect('/login');
-  }
 });
 
 app.get('/signup', function (req, res) {
@@ -144,6 +116,9 @@ app.get('/logout', function (req, res) {
   Parse.User.logOut();
   res.redirect('/');
 });
+
+//Event endpoint
+app.use('/event', require('cloud/event'));
 
 // Attach the Express app to Cloud Code.
 app.listen();
