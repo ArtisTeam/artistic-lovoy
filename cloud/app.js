@@ -32,12 +32,26 @@ app.get('/dashboard', function (req, res) {
     query.equalTo('createBy', currUser);
     query.find({
       success: function (events) {
-        res.render('dashboard', {events: events})
+        res.render('dashboard', {events: events});
       },
       error: function (error) {
         res.send("Fail to query events: " + error.code + " " + error.message);
       }
     })
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get('/manage', function (req, res) {
+  var currUser = Parse.User.current();
+  if (currUser) {
+    if (currUser.get('group') === 1) {
+      res.render('org-manage');
+    } else if (currUser.get('group') === 2) {
+      alert('entered:' + currUser.get('group'));
+      res.render('vol-manage');
+    }
   } else {
     res.redirect('/login');
   }

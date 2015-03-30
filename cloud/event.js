@@ -1,3 +1,10 @@
+// GET     /            ?? to dashboard?
+// GET     /new         get new event form (done)
+// POST    /new         submit form create new event (done)
+// GET     /:id/edit    get edit event form
+// GET     /:id         event detail form
+// DELETE  /:id         delete event
+
 module.exports = function () {
   var express = require('express');
   var app = express();
@@ -23,6 +30,7 @@ module.exports = function () {
 
       eventItem.save(null, {
         success: function (event) {
+          // alert(eventItem.get('eventDescription'));
           res.redirect('/dashboard');
         },
         error: function () {
@@ -33,5 +41,6 @@ module.exports = function () {
       res.redirect('/login');
     }
   });
+
   return app;
 }(); // end function
