@@ -12,6 +12,8 @@ module.exports = function () {
     user.set('username', req.body.username);
     user.set('password', req.body.password);
     user.set('email', req.body.email);
+    user.set('group', req.body.group);
+    alert(req.body.group);
     user.signUp(null, {
       success: function (user) {
         //---use this to create new attributes
