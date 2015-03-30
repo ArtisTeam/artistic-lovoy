@@ -2,6 +2,10 @@ module.exports = function () {
   var express = require('express');
   var app = express();
 
+  app.get(('/new'), function (req, res) {
+    res.render('event');
+  });
+
   app.post('/new', function (req, res) {
     var currUser = Parse.User.current();
     if (currUser) {

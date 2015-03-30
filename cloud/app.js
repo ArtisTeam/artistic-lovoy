@@ -25,7 +25,22 @@ app.get('/', function (req, res) {
 });
 
 app.get('/dashboard', function (req, res) {
-  res.render('event');
+  var currUser = Parse.User.current();
+  if (currUser) {
+    var Event = Parse.Object.extend('Event');
+    var query = new Parse.Query(Event);
+    query.equalTo('createBy', currUser);
+    query.find({
+      success: function (events) {
+        res.render('dashboard', {events: events})
+      },
+      error: function (error) {
+        res.send("Fail to query events: " + error.code + " " + error.message);
+      }
+    })
+  } else {
+    res.redirect('/login');
+  }
 });
 
 //testing entry point

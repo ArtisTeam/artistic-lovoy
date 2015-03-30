@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Dashboard</h2>
+  <a href="/event/new">Create event</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Updated</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (var i=0; i<events.length ; ++i) {%>
+        <% var event = events[i] %>
+        <tr>
+          <td><%= event.get('eventName')%></td>
+          <td><%= event.get('eventDescription')%></td>
+          <td><%= event.updatedAt%></td>
+          <td><%= event.createdAt%></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
