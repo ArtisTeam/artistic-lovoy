@@ -1,4 +1,3 @@
-
 module.exports = function () {
   var express = require('express');
   var app = express();
@@ -19,7 +18,7 @@ module.exports = function () {
       eventItem.setACL(acl);
 
       eventItem.save(null, {
-        success: function () {
+        success: function (event) {
           res.redirect('/dashboard');
         },
         error: function () {
@@ -30,6 +29,5 @@ module.exports = function () {
       res.redirect('/login');
     }
   });
-
   return app;
 }(); // end function
