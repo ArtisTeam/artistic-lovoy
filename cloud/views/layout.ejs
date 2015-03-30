@@ -40,7 +40,7 @@
               <li><a href="/login">Log in</a></li>
               <li><a href="/signup">Sign up</a></li>
             <% } else { %>
-              <li><a href="/">Logged in as <%= Parse.User.current().get('username') %></a></li>
+              <li><a href="/profile"><%= Parse.User.current().get('username') %></a></li>
               <li><a href="/dashboard">Dashboard</a></li>
               <li><a href="/logout">Log Out</a></li>
             <% } %>
