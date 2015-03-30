@@ -2,7 +2,7 @@ module.exports = function () {
   var express = require('express');
   var app = express();
 
-  app.get(('/new'), function (req, res) {
+  app.get('/new', function (req, res) {
     res.render('event');
   });
 
