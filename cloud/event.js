@@ -92,6 +92,17 @@ module.exports = function () {
           alert('success find to post edit')
           event.set('eventName', req.body.eventName);
           event.set('eventDescription', req.body.eventDescription);
+          // todo save
+          // event.save;
+          event.save(null, {
+            success: function (event) {
+              alert('success save to post edit')
+              res.redirect('/dashboard');
+            },
+            error: function () {
+              res.send('Failed to save event, with error code: ' + error.message);
+            }
+          });
         },
         error: function (error) {
           res.redirect('/dashboard');
