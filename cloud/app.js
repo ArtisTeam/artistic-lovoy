@@ -1,10 +1,12 @@
 // Initialize Express in Cloud Code
 var express = require('express');
 var expressLayouts = require('cloud/lib/express-layouts');
-var moment = require("cloud/lib/moment.js");
 var parseExpressHttpsRedirect = require('parse-express-https-redirect');
 var parseExpressCookieSession = require('parse-express-cookie-session');
 var app = express();
+
+// Libs
+var moment = require("cloud/lib/moment.js");
 
 // Global app configuration section
 app.set('views', 'cloud/views');  // Specify the folder to find templates
