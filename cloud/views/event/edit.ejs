@@ -1,2 +1,14 @@
 <div class="container">
+  <h2>Edit Event (todo: implement update)</h2>
+  <form method="post" action="/event/<%= event.id %>/edit">
+    <div class="form-group">
+      <label for="eventName">Event Name: </label>
+      <input type="text" class="form-control" id="event" name="eventName" value="<%= event.get('eventName')%>">
+    </div>
+    <div class="form-group">
+      <label for="description">Event Description: </label>
+      <input type="text" class="form-control" id="description" name="eventDescription" value="<%= event.get('eventDescription')%>">
+    </div>
+    <button type="submit" class="btn btn-default">Update</button>
+  </form>
 </div>

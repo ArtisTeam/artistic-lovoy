@@ -17,8 +17,7 @@ module.exports = function () {
 
   app.post('/new', function (req, res) {
     var currUser = Parse.User.current();
-    if (currUser) {
-      // TODO GROUP
+    if (currUser && currUser.get('group') === 1) {
       var EventItem = Parse.Object.extend('Event');
       var eventItem = new EventItem();
       eventItem.set('createBy', currUser); // pointer to user
@@ -33,7 +32,6 @@ module.exports = function () {
 
       eventItem.save(null, {
         success: function (event) {
-          // alert(eventItem.get('eventDescription'));
           res.redirect('/dashboard');
         },
         error: function () {
@@ -50,7 +48,6 @@ module.exports = function () {
     var query = new Parse.Query(Event);
     query.get(req.params.id, {
       success: function (event) {
-        alert("get " + req.params.id);
         res.render('event/detail', {event: event});
       },
       error: function (error) {
@@ -64,7 +61,45 @@ module.exports = function () {
   });
   
   app.get('/:id/edit', function (req, res) {
-    alert("edit " + req.params.id);
+    var currUser = Parse.User.current();
+    if (currUser && currUser.get('group') === 1) {
+      var Event = Parse.Object.extend('Event');
+      var query = new Parse.Query(Event);
+      query.equalTo('createBy', currUser);
+      query.get(req.params.id, {
+        success: function (event) {
+          res.render('event/edit', {event: event});
+        },
+        error: function (error) {
+          res.redirect('/dashboard');
+        }
+      });
+    } else {
+      res.redirect('/login');
+    }
+  });
+
+  app.post('/:id/edit', function (req, res) {
+    alert('here I am update!')
+    var currUser = Parse.User.current();
+    if (currUser && currUser.get('group') === 1) { // logged in as org
+      var Event = Parse.Object.extend('Event');
+      var query = new Parse.Query(Event);
+      alert('req.params.id' + req.params.id)
+      query.equalTo('createBy', currUser); // crated by curr user
+      query.get(req.params.id, {
+        success: function (event) {
+          alert('success find to post edit')
+          event.set('eventName', req.body.eventName);
+          event.set('eventDescription', req.body.eventDescription);
+        },
+        error: function (error) {
+          res.redirect('/dashboard');
+        }
+      });
+    } else {
+      res.redirect('/login');
+    }
   });
 
   app.get('/:id/enroll', function (req, res) {
