@@ -11,7 +11,7 @@ module.exports = function () {
   var app = express();
 
   app.get('/new', function (req, res) {
-    res.render('event');
+    res.render('event/new'); // must not include '/' in front
   });
 
   app.post('/new', function (req, res) {

@@ -42,7 +42,7 @@ app.get('/dashboard', function (req, res) {
             events[i].updatedAt = 
               moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
           }
-          res.render('org-dashboard', {events: events});
+          res.render('org/dashboard', {events: events});
         },
         error: function (error) {
           res.send("Fail to query events: " + error.code + " " + error.message);
@@ -59,7 +59,7 @@ app.get('/dashboard', function (req, res) {
             events[i].updatedAt = 
               moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
           }
-          res.render('vol-dashboard', {events: events});
+          res.render('vol/dashboard', {events: events});
         },
         error: function (error) {
           res.send("Fail to query events: " + error.code + " " + error.message);
@@ -75,10 +75,10 @@ app.get('/profile', function (req, res) {
   var currUser = Parse.User.current();
   if (currUser) {
     if (currUser.get('group') === 1) {
-      res.render('org-profile');
+      res.render('org/profile');
     } else if (currUser.get('group') === 2) {
       alert('entered:' + currUser.get('group'));
-      res.render('vol-profile');
+      res.render('vol/profile');
     }
   } else {
     res.redirect('/login');
