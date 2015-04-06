@@ -1,6 +1,7 @@
 // Initialize Express in Cloud Code
 var express = require('express');
 var expressLayouts = require('cloud/lib/express-layouts');
+var moment = require("cloud/lib/moment.js");
 var parseExpressHttpsRedirect = require('parse-express-https-redirect');
 var parseExpressCookieSession = require('parse-express-cookie-session');
 var app = express();
@@ -33,6 +34,12 @@ app.get('/dashboard', function (req, res) {
       query.equalTo('createBy', currUser);
       query.find({
         success: function (events) {
+          for (var i=0; i<events.length; ++i) {
+            events[i].createdAt = 
+              moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
+            events[i].updatedAt = 
+              moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
+          }
           res.render('org-dashboard', {events: events});
         },
         error: function (error) {
@@ -44,9 +51,12 @@ app.get('/dashboard', function (req, res) {
       // query.limit(10);
       query.find({
         success: function (events) {
-          // for (var i=0; i<events.length; ++i) {
-          //   events[i].createdAt = "hello world";
-          // }
+          for (var i=0; i<events.length; ++i) {
+            events[i].createdAt = 
+              moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
+            events[i].updatedAt = 
+              moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
+          }
           res.render('vol-dashboard', {events: events});
         },
         error: function (error) {

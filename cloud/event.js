@@ -4,6 +4,7 @@
 // GET     /:id/edit    get edit event form
 // GET     /:id         event detail form
 // DELETE  /:id         delete event
+// POST    /:id/enroll  enroll to event :id
 
 module.exports = function () {
   var express = require('express');
