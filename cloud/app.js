@@ -29,28 +29,44 @@ app.get('/dashboard', function (req, res) {
   if (currUser) {
     var Event = Parse.Object.extend('Event');
     var query = new Parse.Query(Event);
-    query.equalTo('createBy', currUser);
-    query.find({
-      success: function (events) {
-        res.render('dashboard', {events: events});
-      },
-      error: function (error) {
-        res.send("Fail to query events: " + error.code + " " + error.message);
-      }
-    })
-  } else {
+    if (currUser.get('group') === 1) { // org user
+      query.equalTo('createBy', currUser);
+      query.find({
+        success: function (events) {
+          res.render('org-dashboard', {events: events});
+        },
+        error: function (error) {
+          res.send("Fail to query events: " + error.code + " " + error.message);
+        }
+      })
+    } else if (currUser.get('group') === 2) { // vol user
+      query.descending("createdAt");
+      // query.limit(10);
+      query.find({
+        success: function (events) {
+          // for (var i=0; i<events.length; ++i) {
+          //   events[i].createdAt = "hello world";
+          // }
+          res.render('vol-dashboard', {events: events});
+        },
+        error: function (error) {
+          res.send("Fail to query events: " + error.code + " " + error.message);
+        }
+      })
+    }
+  } else { // if (currUser)
     res.redirect('/login');
   }
 });
 
-app.get('/manage', function (req, res) {
+app.get('/profile', function (req, res) {
   var currUser = Parse.User.current();
   if (currUser) {
     if (currUser.get('group') === 1) {
-      res.render('org-manage');
+      res.render('org-profile');
     } else if (currUser.get('group') === 2) {
       alert('entered:' + currUser.get('group'));
-      res.render('vol-manage');
+      res.render('vol-profile');
     }
   } else {
     res.redirect('/login');

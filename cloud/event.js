@@ -16,9 +16,10 @@ module.exports = function () {
   app.post('/new', function (req, res) {
     var currUser = Parse.User.current();
     if (currUser) {
+      //TODO GROUP
       var EventItem = Parse.Object.extend('Event');
       var eventItem = new EventItem();
-      eventItem.set('createBy', currUser);
+      eventItem.set('createBy', currUser); // pointer to user
       eventItem.set('eventName', req.body.eventName);
       eventItem.set('eventDescription', req.body.eventDescription);
 
