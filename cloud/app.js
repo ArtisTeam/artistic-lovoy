@@ -47,7 +47,7 @@ app.get('/dashboard', function (req, res) {
         error: function (error) {
           res.send("Fail to query events: " + error.code + " " + error.message);
         }
-      })
+      });
     } else if (currUser.get('group') === 2) { // vol user
       query.descending("createdAt");
       // query.limit(10);
@@ -64,7 +64,7 @@ app.get('/dashboard', function (req, res) {
         error: function (error) {
           res.send("Fail to query events: " + error.code + " " + error.message);
         }
-      })
+      });
     }
   } else { // if (currUser)
     res.redirect('/login');

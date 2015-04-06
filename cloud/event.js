@@ -1,10 +1,11 @@
-// GET     /            ?? to dashboard?
-// GET     /new         get new event form (done)
+// The order is important
+// GET     /new         render event/new (done)
 // POST    /new         submit form create new event (done)
-// GET     /:id/edit    get edit event form
-// GET     /:id         event detail form
+// GET     /:id         render event/detail
 // DELETE  /:id         delete event
+// GET     /:id/edit    render event/edit
 // POST    /:id/enroll  enroll to event :id
+// GET     /            ?? to dashboard?
 
 module.exports = function () {
   var express = require('express');
@@ -45,7 +46,29 @@ module.exports = function () {
   });
 
   app.get('/:id', function (req, res) {
-    alert(req.params.id);
+    var Event = Parse.Object.extend('Event');
+    var query = new Parse.Query(Event);
+    query.get(req.params.id, {
+      success: function (event) {
+        alert("get " + req.params.id);
+        res.render('event/detail', {event: event});
+      },
+      error: function (error) {
+        res.send("Fail to query events: " + error.code + " " + error.message);
+      }
+    });
+  });
+
+  app.get('/:id', function (req, res) {
+    alert("delete " + req.params.id);
+  });
+  
+  app.get('/:id/edit', function (req, res) {
+    alert("edit " + req.params.id);
+  });
+
+  app.get('/:id/enroll', function (req, res) {
+    alert("enroll " + req.params.id);
   });
 
   return app;

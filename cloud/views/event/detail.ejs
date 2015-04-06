@@ -1,2 +1,34 @@
 <div class="container">
+  <h2>Event Detail</h2>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">objectId</h3>
+        </div>
+        <div class="panel-body">
+          <%= event.id %>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">eventName</h3>
+        </div>
+        <div class="panel-body">
+          <%= event.get('eventName')%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">eventDescription</h3>
+        </div>
+        <div class="panel-body">
+          <%= event.get('eventDescription')%>
+        </div>
+      </div>
+
+    </div>
+  </div>  
 </div>
