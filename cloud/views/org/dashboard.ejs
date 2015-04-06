@@ -18,6 +18,7 @@
           <td><%= event.get('eventDescription')%></td>
           <td><%= event.updatedAt%></td>
           <td><%= event.createdAt%></td>
+          <td><a href="/event/<%= event.id %>/edit">edit</a></td>
         </tr>
       <% } %>
     </tbody>
