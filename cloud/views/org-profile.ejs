@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>Organization Profile Management Page</h2>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Account</h3>
+        </div>
+        <div class="panel-body">
+          <%= Parse.User.current().get('username') %>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">ID</h3>
+        </div>
+        <div class="panel-body">
+          <%= Parse.User.current().id %>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>

@@ -1,6 +1,6 @@
 // Initialize Express in Cloud Code
 var express = require('express');
-var expressLayouts = require('cloud/express-layouts');
+var expressLayouts = require('cloud/lib/express-layouts');
 var parseExpressHttpsRedirect = require('parse-express-https-redirect');
 var parseExpressCookieSession = require('parse-express-cookie-session');
 var app = express();
