@@ -4,6 +4,7 @@
 // GET     /:id         render event/detail
 // DELETE  /:id         delete event
 // GET     /:id/edit    render event/edit
+// POST    /:id/edit    updeate event
 // POST    /:id/enroll  enroll to event :id
 // GET     /            ?? to dashboard?
 
@@ -11,10 +12,12 @@ module.exports = function () {
   var express = require('express');
   var app = express();
 
+  // render event/new
   app.get('/new', function (req, res) {
     res.render('event/new'); // must not include '/' in front
   });
 
+  // submit form create new event
   app.post('/new', function (req, res) {
     var currUser = Parse.User.current();
     if (currUser && currUser.get('group') === 1) {
@@ -43,6 +46,7 @@ module.exports = function () {
     }
   });
 
+  // render event/detail
   app.get('/:id', function (req, res) {
     var Event = Parse.Object.extend('Event');
     var query = new Parse.Query(Event);
@@ -56,10 +60,12 @@ module.exports = function () {
     });
   });
 
-  app.get('/:id', function (req, res) {
+  // delete event
+  app.delete('/:id', function (req, res) {
     alert("delete " + req.params.id);
   });
   
+  // render event/edit
   app.get('/:id/edit', function (req, res) {
     var currUser = Parse.User.current();
     if (currUser && currUser.get('group') === 1) {
@@ -79,6 +85,7 @@ module.exports = function () {
     }
   });
 
+  // update event
   app.post('/:id/edit', function (req, res) {
     alert('here I am update!')
     var currUser = Parse.User.current();
@@ -113,7 +120,13 @@ module.exports = function () {
     }
   });
 
-  app.get('/:id/enroll', function (req, res) {
+  // enroll in event - shall we use post or get?
+  app.post('/:id/enroll', function (req, res) {
+    alert("enroll " + req.params.id);
+  });
+
+  // unenroll in event
+  app.delete('/:id/enroll', function (req, res) {
     alert("enroll " + req.params.id);
   });
 
