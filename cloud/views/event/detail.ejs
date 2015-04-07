@@ -29,6 +29,7 @@
         </div>
       </div>
 
+      <!--todo: check if the event does belong to the org-->
       <% if (Parse.User.current() && Parse.User.current().get('group') === 2) { %>
         <p>
           <form action="/event/<%= event.id %>/edit">
