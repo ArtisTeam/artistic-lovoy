@@ -2,10 +2,11 @@
 // GET     /new         render event/new (done)
 // POST    /new         submit form create new event (done)
 // GET     /:id         render event/detail
-// DELETE  /:id         delete event
+// POST    /:id/delete  delete event
 // GET     /:id/edit    render event/edit
 // POST    /:id/edit    updeate event
 // POST    /:id/enroll  enroll to event :id
+// POST    /:id/enroll/delete uninroll
 // GET     /            ?? to dashboard?
 
 module.exports = function () {
@@ -37,7 +38,7 @@ module.exports = function () {
         success: function (event) {
           res.redirect('/dashboard');
         },
-        error: function () {
+        error: function (event, error) {
           res.send('Failed to save event, with error code: ' + error.message);
         }
       });
@@ -54,14 +55,40 @@ module.exports = function () {
       success: function (event) {
         res.render('event/detail', {event: event});
       },
-      error: function (error) {
+      error: function (event, error) {
         res.send("Fail to query events: " + error.code + " " + error.message);
       }
     });
   });
 
   // delete event
-  app.delete('/:id', function (req, res) {
+  // to optimize: use the same middleware for post delete and edit
+  app.post('/:id/delete', function (req, res) {
+    var currUser = Parse.User.current();
+    if (currUser && currUser.get('group') === 1) { // logged in as org
+      var Event = Parse.Object.extend('Event');
+      var query = new Parse.Query(Event);
+      alert('req.params.id' + req.params.id)
+      query.equalTo('createdBy', currUser); // crated by curr user
+      query.get(req.params.id, {
+        success: function (event) {
+          event.destroy({
+            success: function (event) {
+              alert('success destroied')
+              res.redirect('/dashboard');
+            },
+            error: function (event, error) {
+              res.send('Failed to save event, error code: ' + error.message);
+            }
+          });
+        },
+        error: function (error) {
+          res.redirect('/dashboard');
+        }
+      });
+    } else {
+      res.redirect('/login');
+    }
     alert("delete " + req.params.id);
   });
   
@@ -76,7 +103,7 @@ module.exports = function () {
         success: function (event) {
           res.render('event/edit', {event: event});
         },
-        error: function (error) {
+        error: function (event, error) {
           res.redirect('/dashboard');
         }
       });
@@ -87,7 +114,6 @@ module.exports = function () {
 
   // update event
   app.post('/:id/edit', function (req, res) {
-    alert('here I am update!')
     var currUser = Parse.User.current();
     if (currUser && currUser.get('group') === 1) { // logged in as org
       var Event = Parse.Object.extend('Event');
@@ -99,19 +125,16 @@ module.exports = function () {
           alert('success find to post edit')
           event.set('eventName', req.body.eventName);
           event.set('eventDescription', req.body.eventDescription);
-          // todo save
-          // event.save;
           event.save(null, {
             success: function (event) {
-              alert('success save to post edit')
               res.redirect('/dashboard');
             },
-            error: function () {
+            error: function (event, error) {
               res.send('Failed to save event, with error code: ' + error.message);
             }
           });
         },
-        error: function (error) {
+        error: function (event, error) {
           res.redirect('/dashboard');
         }
       });
@@ -126,8 +149,8 @@ module.exports = function () {
   });
 
   // unenroll in event
-  app.delete('/:id/enroll', function (req, res) {
-    alert("enroll " + req.params.id);
+  app.post('/:id/enroll/delete', function (req, res) {
+    alert("unenroll " + req.params.id);
   });
 
   return app;
