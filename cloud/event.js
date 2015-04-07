@@ -21,7 +21,7 @@
 module.exports = function () {
   var express = require('express');
   var app = express();
-  var currUser = null;
+  var currUser = null;  
 
   // render event/detail, the only view not require login
   app.get('/:id', function (req, res, next) {
@@ -31,10 +31,10 @@ module.exports = function () {
     var Event = Parse.Object.extend('Event');
     var query = new Parse.Query(Event);
     query.get(req.params.id, {
-      success: function (event) {
-        res.render('event/detail', {event: event});
+      success: function (currEvent) {
+        res.render('event/detail', {event: currEvent});
       },
-      error: function (event, error) {
+      error: function (currEvent, error) {
         res.send("Fail to query events: " + error.code + " " + error.message);
       }
     });
@@ -104,10 +104,10 @@ module.exports = function () {
     eventItem.setACL(acl);
 
     eventItem.save(null, {
-      success: function (event) {
+      success: function (currEvent) {
         res.redirect('/dashboard');
       },
-      error: function (event, error) {
+      error: function (currEvent, error) {
         res.send('Failed to save event, with error code: ' + error.message);
       }
     });
@@ -120,12 +120,12 @@ module.exports = function () {
     var query = new Parse.Query(Event);
     query.equalTo('createdBy', currUser); // crated by curr user
     query.get(req.params.id, {
-      success: function (event) {
-        event.destroy({
-          success: function (event) {
+      success: function (currEvent) {
+        currEvent.destroy({
+          success: function (currEvent) {
             res.redirect('/dashboard');
           },
-          error: function (event, error) {
+          error: function (currEvent, error) {
             res.send('Failed to save event, error code: ' + error.message);
           }
         });
@@ -142,10 +142,10 @@ module.exports = function () {
     var query = new Parse.Query(Event);
     query.equalTo('createdBy', currUser);
     query.get(req.params.id, {
-      success: function (event) {
-        res.render('event/edit', {event: event});
+      success: function (currEvent) {
+        res.render('event/edit', {event: currEvent});
       },
-      error: function (event, error) {
+      error: function (currEvent, error) {
         res.redirect('/dashboard');
       }
     });
@@ -157,19 +157,19 @@ module.exports = function () {
     var query = new Parse.Query(Event);
     query.equalTo('createdBy', currUser); // crated by curr user
     query.get(req.params.id, {
-      success: function (event) {
-        event.set('eventName', req.body.eventName);
-        event.set('eventDescription', req.body.eventDescription);
-        event.save(null, {
-          success: function (event) {
+      success: function (currEvent) {
+        currEvent.set('eventName', req.body.eventName);
+        currEvent.set('eventDescription', req.body.eventDescription);
+        currEvent.save(null, {
+          success: function (currEvent) {
             res.redirect('/dashboard');
           },
-          error: function (event, error) {
+          error: function (currEvent, error) {
             res.send('Failed to save event, with error code: ' + error.message);
           }
         });
       },
-      error: function (event, error) {
+      error: function (currEvent, error) {
         res.redirect('/dashboard');
       }
     });
