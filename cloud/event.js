@@ -64,12 +64,12 @@ module.exports = function () {
   });
 
   // enroll in event - shall we use post or get?
-  app.get('/:id/enroll', function (req, res) {
+  app.post('/:id/enroll', function (req, res) {
     alert("enroll " + req.params.id);
   });
 
   // unenroll in event
-  app.get('/:id/enroll/delete', function (req, res) {
+  app.post('/:id/enroll/delete', function (req, res) {
     alert("unenroll " + req.params.id);
   });
 
