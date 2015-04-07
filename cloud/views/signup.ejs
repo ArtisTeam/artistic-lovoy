@@ -1,20 +1,38 @@
 <div class="container">
   <form method="post" action="/signup" class="form-signin">
-    <h3 class="form-signin-heading">Sign up for LOVOY</h3>
-    <label for="inputUsername" class="sr-only">Username</label>
-    <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus/>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email" required/>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-    <label class="radio-inline">
-      <input type="radio" name="group" value=1>Orgnization
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="group" value=2>Volunteer
-    </label>
+    <div class="row" id="pwd-container">
+      <h3 class="form-signin-heading">Sign up for LOVOY</h3>
+      <label for="inputUsername" class="sr-only">Username</label>
+      <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus/>
+      <label for="inputEmail" class="sr-only">Email</label>
+      <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email" required/>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+      <div class="pwstrength_viewport_progress"></div>
+      <label class="radio-inline">
+        <input type="radio" name="group" value=1>Orgnization
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="group" value=2>Volunteer
+      </label>
+    </div>
     <br>
     <br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+    <script type="text/javascript" src="/js/pwstrength.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function () {
+          "use strict";
+          var options = {};
+          options.ui = {
+            container: "#pwd-container",
+            showVerdictsInsideProgressBar: true,
+            viewports: {
+              progress: ".pwstrength_viewport_progress"
+            }
+          };
+          $(':password').pwstrength(options);
+      });
+    </script>
   </form>
 </div>
