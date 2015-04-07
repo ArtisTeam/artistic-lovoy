@@ -19,7 +19,7 @@ module.exports = function () {
         //---use this to create new attributes
         //var OrgProfile = Parse.Object.extend('OrgProfile', {
         //  initialize: function (attrs, options) {
-        //    this.orgName = 'noname';
+        //    this.name = 'noname';
         //  }
         //});
         if (group === 1) {
@@ -35,8 +35,8 @@ module.exports = function () {
         profACL.setWriteAccess(Parse.User.current(), true);
         prof.setACL(profACL);
 
-        //orgProf.set('orgName', 'UCSD'); //TODO: let user change this
-        prof.set('createBy', Parse.User.current());
+        //orgProf.set('name', 'UCSD'); //TODO: let user change this
+        prof.set('createdBy', Parse.User.current());
         prof.save(null, {
           success: function (prof) {
             res.redirect('/dashboard');
@@ -63,7 +63,7 @@ module.exports = function () {
     Parse.User.logIn(req.body.username, req.body.password).then(function (user) {
       var EventItem = Parse.Object.extend('Event');
       var query = new Parse.Query(EventItem);
-      query.equalTo('createBy', req.body.username);
+      query.equalTo('createdBy', req.body.username);
       query.descending('createdAt');
       query.find({
         success: function (results) {

@@ -33,7 +33,7 @@ app.get('/dashboard', function (req, res) {
     var Event = Parse.Object.extend('Event');
     var query = new Parse.Query(Event);
     if (currUser.get('group') === 1) { // org user
-      query.equalTo('createBy', currUser);
+      query.equalTo('createdBy', currUser);
       query.find({
         success: function (events) {
           for (var i=0; i<events.length; ++i) {

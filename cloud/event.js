@@ -20,7 +20,7 @@ module.exports = function () {
     if (currUser && currUser.get('group') === 1) {
       var EventItem = Parse.Object.extend('Event');
       var eventItem = new EventItem();
-      eventItem.set('createBy', currUser); // pointer to user
+      eventItem.set('createdBy', currUser); // pointer to user
       eventItem.set('eventName', req.body.eventName);
       eventItem.set('eventDescription', req.body.eventDescription);
 
@@ -65,7 +65,7 @@ module.exports = function () {
     if (currUser && currUser.get('group') === 1) {
       var Event = Parse.Object.extend('Event');
       var query = new Parse.Query(Event);
-      query.equalTo('createBy', currUser);
+      query.equalTo('createdBy', currUser);
       query.get(req.params.id, {
         success: function (event) {
           res.render('event/edit', {event: event});
@@ -86,7 +86,7 @@ module.exports = function () {
       var Event = Parse.Object.extend('Event');
       var query = new Parse.Query(Event);
       alert('req.params.id' + req.params.id)
-      query.equalTo('createBy', currUser); // crated by curr user
+      query.equalTo('createdBy', currUser); // crated by curr user
       query.get(req.params.id, {
         success: function (event) {
           alert('success find to post edit')
