@@ -21,28 +21,40 @@
 module.exports = function () {
   var express = require('express');
   var app = express();
-  var currUser = null;
-  
+  var currUser = Parse.User.current();
+  var currEvent = null;
+
+  app.all('/:id*', function (req, res, next) {
+    alert('[app.all]: req.params.id = ' + req.params.id)
+    if (req.params.id === 'new') {
+      next();
+    } else {
+      var Event = Parse.Object.extend('Event');
+      var query = new Parse.Query(Event);
+      query.get(req.params.id, {
+        success: function (event) {
+          currEvent = event;
+          next();
+        },
+        error: function (event, error) {
+          res.send("Fail to query event: " + error.code + " " + error.message);
+        }
+      });
+    }
+  });
+
   // render event/detail, the only view not require login
   app.get('/:id', function (req, res, next) {
     if (req.params.id === 'new') {
       next();
+    } else {
+      // currEvent must exist now
+      res.render('event/detail', {event: currEvent});
     }
-    var Event = Parse.Object.extend('Event');
-    var query = new Parse.Query(Event);
-    query.get(req.params.id, {
-      success: function (event) {
-        res.render('event/detail', {event: event});
-      },
-      error: function (event, error) {
-        res.send("Fail to query events: " + error.code + " " + error.message);
-      }
-    });
   });
 
   // middleware, require whichever login, set current user
   app.all('*', function (req, res, next) {
-    currUser = Parse.User.current();
     if (currUser) {
       alert("whichever middleware accepted");
       next();
@@ -114,63 +126,32 @@ module.exports = function () {
   });
 
   // delete event
-  // to optimize: use the same middleware for post delete and edit
   app.post('/:id/delete', function (req, res) {
-    var Event = Parse.Object.extend('Event');
-    var query = new Parse.Query(Event);
-    query.equalTo('createdBy', currUser); // crated by curr user
-    query.get(req.params.id, {
+    currEvent.destroy({
       success: function (event) {
-        event.destroy({
-          success: function (event) {
-            res.redirect('/dashboard');
-          },
-          error: function (event, error) {
-            res.send('Failed to save event, error code: ' + error.message);
-          }
-        });
-      },
-      error: function (error) {
         res.redirect('/dashboard');
+      },
+      error: function (event, error) {
+        res.send('Failed to save event, error code: ' + error.message);
       }
     });
   });
   
   // render event/edit
   app.get('/:id/edit', function (req, res) {
-    var Event = Parse.Object.extend('Event');
-    var query = new Parse.Query(Event);
-    query.equalTo('createdBy', currUser);
-    query.get(req.params.id, {
-      success: function (event) {
-        res.render('event/edit', {event: event});
-      },
-      error: function (event, error) {
-        res.redirect('/dashboard');
-      }
-    });
+    res.render('event/edit', {event: currEvent});
   });
 
   // update event
   app.post('/:id/edit', function (req, res) {
-    var Event = Parse.Object.extend('Event');
-    var query = new Parse.Query(Event);
-    query.equalTo('createdBy', currUser); // crated by curr user
-    query.get(req.params.id, {
+    currEvent.set('name', req.body.name);
+    currEvent.set('description', req.body.description);
+    currEvent.save(null, {
       success: function (event) {
-        event.set('name', req.body.name);
-        event.set('description', req.body.description);
-        event.save(null, {
-          success: function (event) {
-            res.redirect('/dashboard');
-          },
-          error: function (event, error) {
-            res.send('Failed to save event, with error code: ' + error.message);
-          }
-        });
+        res.redirect('/dashboard');
       },
       error: function (event, error) {
-        res.redirect('/dashboard');
+        res.send('Failed to save event, with error code: ' + error.message);
       }
     });
   });
