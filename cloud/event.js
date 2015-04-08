@@ -143,14 +143,19 @@ module.exports = function () {
 
   // delete event
   app.post('/:id/delete', function (req, res) {
-    currEvent.destroy({
-      success: function (event) {
-        res.redirect('/dashboard');
-      },
-      error: function (event, error) {
-        res.send('Failed to save event, error code: ' + error.message);
-      }
-    });
+    if (!currUser) {currUser = Parse.User.current();}
+    if (currEvent.get('createdBy').id === currUser.id) {
+      currEvent.destroy({
+        success: function (event) {
+          res.redirect('/dashboard');
+        },
+        error: function (event, error) {
+          res.send('Failed to delete event, error code: ' + error.message);
+        }
+      });
+    } else {
+      res.send('Event not belong to current user.');
+    }
   });
   
   // render event/edit
