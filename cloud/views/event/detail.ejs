@@ -31,15 +31,7 @@
 
       <!--todo: check if the event does belong to the org-->
       <% if (Parse.User.current() && Parse.User.current().get('group') === 2) { %>
-        <p>
-          <form action="/event/<%= event.id %>/edit">
-            <button type="submit" class="btn btn-lg btn-default">Edit</button>
-          </form>
-        </p>
       <% } else { %>
-        <p>
-          Login to enroll or modify the event.
-        </p>
       <% } %>
 
     </div>
