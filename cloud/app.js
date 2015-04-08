@@ -27,50 +27,6 @@ app.get('/', function (req, res) {
   res.render('welcome');
 });
 
-app.get('/dashboard', function (req, res) {
-  var currUser = Parse.User.current();
-  if (currUser) {
-    var Event = Parse.Object.extend('Event');
-    var query = new Parse.Query(Event);
-    if (currUser.get('group') === 1) { // org user
-      query.equalTo('createdBy', currUser);
-      query.find({
-        success: function (events) {
-          for (var i=0; i<events.length; ++i) {
-            events[i].createdAt = 
-              moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
-            events[i].updatedAt = 
-              moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
-          }
-          res.render('org/dashboard', {events: events});
-        },
-        error: function (error) {
-          res.send("Fail to query events: " + error.code + " " + error.message);
-        }
-      });
-    } else if (currUser.get('group') === 2) { // vol user
-      query.descending("createdAt");
-      // query.limit(10);
-      query.find({
-        success: function (events) {
-          for (var i=0; i<events.length; ++i) {
-            events[i].createdAt = 
-              moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
-            events[i].updatedAt = 
-              moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
-          }
-          res.render('vol/dashboard', {events: events});
-        },
-        error: function (error) {
-          res.send("Fail to query events: " + error.code + " " + error.message);
-        }
-      });
-    }
-  } else { // if (currUser)
-    res.redirect('/login');
-  }
-});
-
 app.get('/profile', function (req, res) {
   var currUser = Parse.User.current();
   if (currUser) {
@@ -102,6 +58,9 @@ app.get('/ming', function (req, res) {
 
 //User endpoint
 app.use('/', require('cloud/user'));
+
+// Dashboard endpoint
+app.use('/dashboard', require('cloud/dashboard'));
 
 //Event endpoint
 app.use('/event', require('cloud/event'));
