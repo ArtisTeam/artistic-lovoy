@@ -1,35 +1,37 @@
 <div class="container">
   <h2>Organization Dashboard</h2>
   <a href="/event/new">Create event</a>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Updated</th>
-        <th>Created</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for (var i=0; i<events.length ; ++i) {%>
-        <% var event = events[i] %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td><%= event.get('name')%></td>
-          <td><%= event.get('description')%></td>
-          <td><%= event.updatedAt%></td>
-          <td><%= event.createdAt%></td>
-          <td>
-            <form action="/event/<%= event.id %>/edit" method="get">
-              <input type="submit" value="Edit">
-            </form>
-          </td>
-          <td>
-            <form action="/event/<%= event.id %>/delete" method="post">
-              <input type="submit" value="Delete"/>
-            </form>
-          </td>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Updated</th>
+          <th>Created</th>
         </tr>
-      <% } %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% for (var i=0; i<events.length ; ++i) {%>
+          <% var event = events[i] %>
+          <tr>
+            <td><%= event.get('name')%></td>
+            <td><%= event.get('description')%></td>
+            <td><%= event.updatedAt%></td>
+            <td><%= event.createdAt%></td>
+            <td>
+              <form action="/event/<%= event.id %>/edit" method="get">
+                <input type="submit" value="Edit">
+              </form>
+            </td>
+            <td>
+              <form action="/event/<%= event.id %>/delete" method="post">
+                <input type="submit" value="Delete"/>
+              </form>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
 </div>
