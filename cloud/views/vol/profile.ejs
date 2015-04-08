@@ -18,6 +18,29 @@
         <div class="panel-body">
           <%= Parse.User.current().id %>
         </div>
+
+        <div class="panel-heading">
+          <h3 class="panel-title">Events</h3>
+        </div>
+        <div class="panel-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (var i=0; i<events.length; ++i) {  %>
+              <tr>
+                <td><%= events[i].get('name') %></td>
+                <td><%= events[i].get('description') %></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>  
