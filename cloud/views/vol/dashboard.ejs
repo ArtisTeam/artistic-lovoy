@@ -17,6 +17,11 @@
           <td><%= event.get('description')%></td>
           <td><%= event.updatedAt%></td>
           <td><%= event.createdAt%></td>
+          <td>
+            <form action="/event/<%= event.id %>/enroll" method="post">
+              <input type="submit" value="Enroll"/>
+            </form>
+          </td>
         </tr>
       <% } %>
     </tbody>

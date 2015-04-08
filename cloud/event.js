@@ -55,6 +55,7 @@ module.exports = function () {
 
   // middleware, require whichever login, set current user
   app.all('*', function (req, res, next) {
+    if (!currUser) {currUser = Parse.User.current();}
     if (currUser) {
       alert("whichever middleware accepted");
       next();
@@ -66,6 +67,7 @@ module.exports = function () {
 
   // middleware, require loged in as volunteer when enroll/unenroll
   app.all('/:id/enroll*', function (req, res, next) {
+    if (!currUser) {currUser = Parse.User.current();}
     if (currUser.get('group') === 2) {
       alert("vol middleware accepted");
       next();
@@ -77,7 +79,19 @@ module.exports = function () {
 
   // enroll in event - shall we use post or get?
   app.post('/:id/enroll', function (req, res) {
-    alert("enroll " + req.params.id);
+    if (!currUser) {currUser = Parse.User.current();}
+    var Enroll = Parse.Object.extend('Enroll');
+    var enroll = new Enroll();
+    enroll.set('vol', currUser);
+    enroll.set('event', currEvent);
+    enroll.save(null, {
+      success: function (event) {
+        res.redirect('/dashboard');
+      },
+      error: function (event, error) {
+        res.send('Failed to enroll, with error code: ' + error.message);
+      }
+    });
   });
 
   // unenroll in event
@@ -87,6 +101,7 @@ module.exports = function () {
 
   // middleware, for anything else, require organization logged in
   app.all('*', function (req, res, next) {
+    if (!currUser) {currUser = Parse.User.current();}
     if (currUser.get('group') === 1) {
       alert("org middleware accepted");
       next();
@@ -103,6 +118,7 @@ module.exports = function () {
 
   // submit form create new event
   app.post('/new', function (req, res) {
+    if (!currUser) {currUser = Parse.User.current();}
     var EventItem = Parse.Object.extend('Event');
     var eventItem = new EventItem();
     eventItem.set('createdBy', currUser); // pointer to user
