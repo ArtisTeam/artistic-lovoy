@@ -1,4 +1,6 @@
 module.exports = function () {
+  // Libs
+  var moment = require("cloud/lib/moment.js");
   var express = require('express');
   var app = express();
 
@@ -42,7 +44,7 @@ module.exports = function () {
         });
       }
     } else { // if (currUser)
-      res.redirect('login');
+      res.redirect('/login');
     }
   });
   
