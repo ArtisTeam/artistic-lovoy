@@ -34,22 +34,7 @@ app.get('/profile', function (req, res) {
       res.render('vol/profile');
     }
   } else {
-    res.redirect('/login');
-  }
-});
-
-//testing entry point
-app.get('/ming', function (req, res) {
-  if (Parse.User.current()) {
-    // We need to fetch because we need to show fields on the user object.
-    Parse.User.current().fetch().then(function (user) {
-      res.send('Cool, you are logged in as : ' + user.get('username'));
-    },
-    function (error) {
-      res.send('fetch user error');
-    });
-  } else {
-    res.redirect('/login');
+    res.redirect('/login?redir=profile');
   }
 });
 

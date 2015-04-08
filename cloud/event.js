@@ -21,7 +21,6 @@
 module.exports = function () {
   var express = require('express');
   var app = express();
-  var currUser = Parse.User.current();
   var currEvent = null;
 
   app.all('/:id*', function (req, res, next) {
@@ -37,7 +36,13 @@ module.exports = function () {
           next();
         },
         error: function (event, error) {
-          res.send("Fail to query event: " + error.code + " " + error.message);
+          var test;
+          if (Parse.User.current()){
+            test = '1';
+          }else{
+            test = '0';
+          }
+          res.send("Fail /:id*: " + error.code + error.message +'\ntest='+test);
         }
       });
     }
@@ -53,22 +58,22 @@ module.exports = function () {
     }
   });
 
-  // middleware, require whichever login, set current user
-  app.all('*', function (req, res, next) {
-    if (!currUser) {currUser = Parse.User.current();}
-    if (currUser) {
-      alert("whichever middleware accepted");
-      next();
-    } else {
-      alert("whichever middleware rejected, redirect to login");
-      res.redirect('/login');
-    }
-  });
+  // // middleware, require whichever login, set current user
+  // app.all('/*', function (req, res, next) {
+  //   if (Parse.User.current()) {
+  //     alert("whichever middleware accepted");
+  //     next();
+  //   } else {
+  //     alert("whichever middleware rejected, redirect to login");
+  //     res.redirect('/login?redir=event');
+  //   }
+  // });
 
   // middleware, require loged in as volunteer when enroll/unenroll
   app.all('/:id/enroll*', function (req, res, next) {
-    if (!currUser) {currUser = Parse.User.current();}
-    if (currUser.get('group') === 2) {
+    if (!Parse.User.current()) {
+      res.redirect('/login?redir=event-vol');
+    } else if (Parse.User.current().get('group') === 2) {
       alert("vol middleware accepted");
       next();
     } else {
@@ -79,10 +84,9 @@ module.exports = function () {
 
   // enroll in event - shall we use post or get?
   app.post('/:id/enroll', function (req, res) {
-    if (!currUser) {currUser = Parse.User.current();}
     var Enroll = Parse.Object.extend('Enroll');
     var enroll = new Enroll();
-    enroll.set('vol', currUser);
+    enroll.set('vol', Parse.User.current());
     enroll.set('event', currEvent);
     enroll.save(null, {
       success: function (event) {
@@ -101,8 +105,9 @@ module.exports = function () {
 
   // middleware, for anything else, require organization logged in
   app.all('*', function (req, res, next) {
-    if (!currUser) {currUser = Parse.User.current();}
-    if (currUser.get('group') === 1) {
+    if (!Parse.User.current()) {
+      res.redirect('/login?redir=event-org');
+    } else if (Parse.User.current().get('group') === 1) {
       alert("org middleware accepted");
       next();
     } else {
@@ -118,17 +123,16 @@ module.exports = function () {
 
   // submit form create new event
   app.post('/new', function (req, res) {
-    if (!currUser) {currUser = Parse.User.current();}
     var EventItem = Parse.Object.extend('Event');
     var eventItem = new EventItem();
-    eventItem.set('createdBy', currUser); // pointer to user
+    eventItem.set('createdBy', Parse.User.current()); // pointer to user
     eventItem.set('name', req.body.name);
     eventItem.set('description', req.body.description);
 
     var acl = new Parse.ACL();
     acl.setPublicReadAccess(true);
     acl.setPublicWriteAccess(false);
-    acl.setWriteAccess(currUser, true);
+    acl.setWriteAccess(Parse.User.current(), true);
     eventItem.setACL(acl);
 
     eventItem.save(null, {
@@ -143,8 +147,7 @@ module.exports = function () {
 
   // delete event
   app.post('/:id/delete', function (req, res) {
-    if (!currUser) {currUser = Parse.User.current();}
-    if (currEvent.get('createdBy').id === currUser.id) {
+    if (currEvent.get('createdBy').id === Parse.User.current().id) {
       currEvent.destroy({
         success: function (event) {
           res.redirect('/dashboard');
@@ -160,13 +163,16 @@ module.exports = function () {
   
   // render event/edit
   app.get('/:id/edit', function (req, res) {
-    res.render('event/edit', {event: currEvent});
+    if (currEvent.get('createdBy').id === Parse.User.current().id) {
+      res.render('event/edit', {event: currEvent});
+    } else {
+      res.send('Event not belong to current user.');
+    }
   });
 
   // update event
   app.post('/:id/edit', function (req, res) {
-    if (!currUser) {currUser = Parse.User.current();}
-    if (currEvent.get('createdBy').id === currUser.id) {
+    if (currEvent.get('createdBy').id === Parse.User.current().id) {
       currEvent.set('name', req.body.name);
       currEvent.set('description', req.body.description);
       currEvent.save(null, {
