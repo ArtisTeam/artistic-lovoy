@@ -58,17 +58,6 @@ module.exports = function () {
     }
   });
 
-  // // middleware, require whichever login, set current user
-  // app.all('/*', function (req, res, next) {
-  //   if (Parse.User.current()) {
-  //     alert("whichever middleware accepted");
-  //     next();
-  //   } else {
-  //     alert("whichever middleware rejected, redirect to login");
-  //     res.redirect('/login?redir=event');
-  //   }
-  // });
-
   // middleware, require loged in as volunteer when enroll/unenroll
   app.all('/:id/enroll*', function (req, res, next) {
     if (!Parse.User.current()) {
