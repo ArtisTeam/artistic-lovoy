@@ -1,3 +1,4 @@
+Parse.User.enableRevocableSession();
 require('cloud/app.js');
 
 var Enroll = Parse.Object.extend("Enroll");
@@ -5,8 +6,8 @@ var Enroll = Parse.Object.extend("Enroll");
 // Check if stopId is set, and enforce uniqueness based on the stopId column.
 Parse.Cloud.beforeSave("Enroll", function(req, res) {
   // get requested vol and event
-  var reqVol = req.get("vol");
-  var reqEvent = req.get("event");
+  var reqVol = req.Object.get("vol");
+  var reqEvent = req.Object.get("event");
   // query if duplicated data exists
   var query = new Parse.Query(Enroll);
   query.equalTo('vol', reqVol);
