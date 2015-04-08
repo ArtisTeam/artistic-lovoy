@@ -21,7 +21,7 @@
 module.exports = function () {
   var express = require('express');
   var app = express();
-  var currUser = null;  
+  var currUser = null;
 
   // render event/detail, the only view not require login
   app.get('/:id', function (req, res, next) {
