@@ -93,7 +93,8 @@ module.exports = function () {
         res.redirect('/dashboard');
       },
       error: function (event, error) {
-        res.send('Failed to enroll, with error code: ' + error.message);
+        res.redirect('/dashboard');
+        //res.send('Failed to enroll, with error code: ' + error.message);
       }
     });
   });
