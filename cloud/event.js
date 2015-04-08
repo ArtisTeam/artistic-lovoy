@@ -165,16 +165,21 @@ module.exports = function () {
 
   // update event
   app.post('/:id/edit', function (req, res) {
-    currEvent.set('name', req.body.name);
-    currEvent.set('description', req.body.description);
-    currEvent.save(null, {
-      success: function (event) {
-        res.redirect('/dashboard');
-      },
-      error: function (event, error) {
-        res.send('Failed to save event, with error code: ' + error.message);
-      }
-    });
+    if (!currUser) {currUser = Parse.User.current();}
+    if (currEvent.get('createdBy').id === currUser.id) {
+      currEvent.set('name', req.body.name);
+      currEvent.set('description', req.body.description);
+      currEvent.save(null, {
+        success: function (event) {
+          res.redirect('/dashboard');
+        },
+        error: function (event, error) {
+          res.send('Failed to save event, with error code: ' + error.message);
+        }
+      });
+    } else {
+      res.send('Event not belong to current user.');
+    }
   });
 
   return app;
