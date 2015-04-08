@@ -21,6 +21,7 @@
 module.exports = function () {
   var express = require('express');
   var app = express();
+  var currUser = Parse.User.current();
   var currEvent = null;
 
   app.all('/:id*', function (req, res, next) {
@@ -54,7 +55,8 @@ module.exports = function () {
 
   // middleware, require whichever login, set current user
   app.all('*', function (req, res, next) {
-    if (Parse.User.current()) {
+    if (!currUser) {currUser = Parse.User.current();}
+    if (currUser) {
       alert("whichever middleware accepted");
       next();
     } else {
@@ -65,7 +67,8 @@ module.exports = function () {
 
   // middleware, require loged in as volunteer when enroll/unenroll
   app.all('/:id/enroll*', function (req, res, next) {
-    if (Parse.User.current().get('group') === 2) {
+    if (!currUser) {currUser = Parse.User.current();}
+    if (currUser.get('group') === 2) {
       alert("vol middleware accepted");
       next();
     } else {
@@ -76,9 +79,10 @@ module.exports = function () {
 
   // enroll in event - shall we use post or get?
   app.post('/:id/enroll', function (req, res) {
+    if (!currUser) {currUser = Parse.User.current();}
     var Enroll = Parse.Object.extend('Enroll');
     var enroll = new Enroll();
-    enroll.set('vol', Parse.User.current());
+    enroll.set('vol', currUser);
     enroll.set('event', currEvent);
     enroll.save(null, {
       success: function (event) {
@@ -97,7 +101,8 @@ module.exports = function () {
 
   // middleware, for anything else, require organization logged in
   app.all('*', function (req, res, next) {
-    if (Parse.User.current().get('group') === 1) {
+    if (!currUser) {currUser = Parse.User.current();}
+    if (currUser.get('group') === 1) {
       alert("org middleware accepted");
       next();
     } else {
@@ -113,16 +118,17 @@ module.exports = function () {
 
   // submit form create new event
   app.post('/new', function (req, res) {
+    if (!currUser) {currUser = Parse.User.current();}
     var EventItem = Parse.Object.extend('Event');
     var eventItem = new EventItem();
-    eventItem.set('createdBy', Parse.User.current()); // pointer to user
+    eventItem.set('createdBy', currUser); // pointer to user
     eventItem.set('name', req.body.name);
     eventItem.set('description', req.body.description);
 
     var acl = new Parse.ACL();
     acl.setPublicReadAccess(true);
     acl.setPublicWriteAccess(false);
-    acl.setWriteAccess(Parse.User.current(), true);
+    acl.setWriteAccess(currUser, true);
     eventItem.setACL(acl);
 
     eventItem.save(null, {
