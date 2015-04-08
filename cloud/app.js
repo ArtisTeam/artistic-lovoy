@@ -71,6 +71,7 @@ app.get('/dashboard', function (req, res) {
   }
 });
 
+
 app.get('/profile', function (req, res) {
   var currUser = Parse.User.current();
   if (currUser) {
@@ -102,6 +103,8 @@ app.get('/ming', function (req, res) {
 
 //User endpoint
 app.use('/', require('cloud/user'));
+
+//app.use('/dashboard', require('cloud/dashboard'));
 
 //Event endpoint
 app.use('/event', require('cloud/event'));
