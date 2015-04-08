@@ -1,3 +1,5 @@
+Parse.User.enableRevocableSession();
+
 require('cloud/app.js');
 
 var Enroll = Parse.Object.extend("Enroll");
