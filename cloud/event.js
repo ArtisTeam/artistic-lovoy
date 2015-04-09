@@ -83,7 +83,7 @@ module.exports = function () {
       },
       error: function (event, error) {
         res.redirect('/dashboard');
-        //res.send('Failed to enroll, with error code: ' + error.message);
+        // res.send('Failed to enroll, with error code: ' + error.message);
       }
     });
   });
@@ -91,6 +91,27 @@ module.exports = function () {
   // unenroll in event
   app.post('/:id/enroll/delete', function (req, res) {
     alert("unenroll " + req.params.id);
+    // alert(currEvent.id);
+    // alert(Parse.User.current().id);
+    var Enroll = Parse.Object.extend('Enroll');
+    var query = new Parse.Query(Enroll);
+    query.equalTo('vol', Parse.User.current());
+    query.equalTo('event', currEvent);
+    query.find({
+      success: function (enroll) {
+        enroll[0].destroy({
+          success: function (enroll) {
+            res.redirect('/dashboard');
+          },
+          error: function (enroll, error) {
+            res.send('Failed to unenroll, error code: ' + error.message);
+          }
+        });
+      }, 
+      error: function(error) {
+        res.send("Fail to query " + currUser + "events");
+      }
+    });
   });
 
   // middleware, for anything else, require organization logged in
