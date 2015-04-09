@@ -40,12 +40,7 @@ app.get('/profile', function (req, res) {
         success: function (events) {
           var eventPointedArr = new Array(events.length);
           for (var i=0; i<events.length; ++i) {
-            events[i].createdAt = 
-              moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
-            events[i].updatedAt = 
-              moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
             eventPointedArr[i] = events[i].get('event');
-            //alert(eventPointedArr[i].get('name'));
           }
           res.render('vol/profile', {events: eventPointedArr});
         }, 

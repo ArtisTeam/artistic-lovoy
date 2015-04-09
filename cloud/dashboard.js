@@ -27,7 +27,6 @@ module.exports = function () {
         });
       } else if (Parse.User.current().get('group') === 2) { // vol user
         query.descending("createdAt");
-        // query.limit(10);
         query.find({
           success: function (events) {
             for (var i=0; i<events.length; ++i) {
