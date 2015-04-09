@@ -71,7 +71,7 @@ module.exports = function () {
     }
   });
 
-  // enroll in event - shall we use post or get?
+  // enroll in event
   app.post('/:id/enroll', function (req, res) {
     var Enroll = Parse.Object.extend('Enroll');
     var enroll = new Enroll();
