@@ -8,18 +8,28 @@ module.exports = function () {
   });
 
   app.post('/signup', function (req, res) {
-    var user = new Parse.User();
-    user.set('username', req.body.username);
-    user.set('password', req.body.password);
-    user.set('email', req.body.email);
+    // get request data
+    var username = req.body.username;
+    var password = req.body.password;
+    var email = req.body.email;
     var group = parseInt(req.body.group);
+    // verify password strength
+    if ((!password) || password.length < 6) {
+      res.send('Error: password not valid');
+    }
+    // create new user
+    var user = new Parse.User();
+    user.set('username', username);
+    user.set('password', password);
+    user.set('email', email);
     user.set('group', group);
+    // sign up user
     user.signUp(null, {
       success: function (user) {
         //---use this to create new attributes
         //var OrgProfile = Parse.Object.extend('OrgProfile', {
         //  initialize: function (attrs, options) {
-        //    this.orgName = 'noname';
+        //    this.name = 'noname';
         //  }
         //});
         if (group === 1) {
@@ -35,8 +45,8 @@ module.exports = function () {
         profACL.setWriteAccess(Parse.User.current(), true);
         prof.setACL(profACL);
 
-        //orgProf.set('orgName', 'UCSD'); //TODO: let user change this
-        prof.set('createBy', Parse.User.current());
+        //orgProf.set('name', 'UCSD'); //TODO: let user change this
+        prof.set('createdBy', Parse.User.current());
         prof.save(null, {
           success: function (prof) {
             res.redirect('/dashboard');
@@ -63,7 +73,7 @@ module.exports = function () {
     Parse.User.logIn(req.body.username, req.body.password).then(function (user) {
       var EventItem = Parse.Object.extend('Event');
       var query = new Parse.Query(EventItem);
-      query.equalTo('createBy', req.body.username);
+      query.equalTo('createdBy', req.body.username);
       query.descending('createdAt');
       query.find({
         success: function (results) {

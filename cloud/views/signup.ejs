@@ -1,20 +1,42 @@
 <div class="container">
-  <form method="post" action="/signup" class="form-signin">
+  <form data-toggle="validator" role="form" method="post" action="/signup" class="form-signin">
     <h3 class="form-signin-heading">Sign up for LOVOY</h3>
-    <label for="inputUsername" class="sr-only">Username</label>
-    <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus/>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email" required/>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-    <label class="radio-inline">
-      <input type="radio" name="group" value=1>Orgnization
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="group" value=2>Volunteer
-    </label>
-    <br>
-    <br>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+    <div class="form-group">
+      <label for="inputUsername" class="control-label">Username</label>
+      <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username" required>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail" class="control-label">Email</label>
+      <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" data-error="Email address invalid" required>
+      <div class="help-block with-errors"></div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="control-label">Password</label>
+      <div class="form-group">
+        <input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" required>
+        <span class="help-block">Minimum of 6 characters</span>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm password" required>
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputGroup" class="control-label">Sign up as</label>
+      <div class="form-group">
+        <label class="radio-inline">
+          <input type="radio" name="group" value=1 required>
+          Orgnization
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="group" value=2 required>
+          Volunteer
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+    <script type="text/javascript" src="/js/validator.js"></script>
   </form>
 </div>

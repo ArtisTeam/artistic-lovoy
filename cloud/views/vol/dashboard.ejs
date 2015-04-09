@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Volunteer Dashboard</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Updated</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i=0; i<events.length; ++i) { %>
+          <% var event = events[i] %>
+          <tr>
+            <td><%= event.get('name')%></td>
+            <td><%= event.get('description')%></td>
+            <td><%= event.updatedAt%></td>
+            <td><%= event.createdAt%></td>
+            <td>
+              <form action="/event/<%= event.id %>/enroll" method="post">
+                <input type="submit" value="Enroll"/>
+              </form>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

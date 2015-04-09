@@ -11,7 +11,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/layout.css" rel="stylesheet">
     <!--<script src="/js/parse-1.2.8.min.js"></script>-->
-    <script src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -40,7 +40,7 @@
               <li><a href="/login">Log in</a></li>
               <li><a href="/signup">Sign up</a></li>
             <% } else { %>
-              <li><a href="/manage"><%= Parse.User.current().get('username') %></a></li>
+              <li><a href="/profile"><%= Parse.User.current().get('username') %></a></li>
               <li><a href="/dashboard">Dashboard</a></li>
               <li><a href="/logout">Log Out</a></li>
             <% } %>
