@@ -99,14 +99,18 @@ module.exports = function () {
     query.equalTo('event', currEvent);
     query.find({
       success: function (enroll) {
-        enroll[0].destroy({
-          success: function (enroll) {
-            res.redirect('/dashboard');
-          },
-          error: function (enroll, error) {
-            res.send('Failed to unenroll, error code: ' + error.message);
-          }
-        });
+        if (enroll.length > 0) {
+          enroll[0].destroy({
+            success: function (enroll) {
+              res.redirect('/dashboard');
+            },
+            error: function (enroll, error) {
+              res.send('Failed to unenroll, error code: ' + error.message);
+            }
+          });
+        } else {
+          res.send('You have not enrolled in this event');
+        }
       }, 
       error: function(error) {
         res.send("Fail to query " + currUser + "events");
