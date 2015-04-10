@@ -120,7 +120,7 @@ module.exports = function () {
 
   // testing only! shall be put after middleware
   app.get('/:eventId/checkin/:volId', function (req, res, next) {
-    res.send("checkin " + req.params.eventId + " " + eq.params.volId);
+    res.send("checkin " + req.params.eventId + " " + req.params.volId);
   });
 
   // middleware, for anything else, require organization logged in
