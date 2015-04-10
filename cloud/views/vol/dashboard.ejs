@@ -25,6 +25,11 @@
                 <input type="submit" value="Unenroll"/>
               </form>
             </td>
+            <td>
+              <form action="/qrcode/<%= event.id %>/<%= Parse.User.current().id %>" method="get">
+                <input type="submit" value="QR-code"/>
+              </form>
+            </td>
           </tr>
         <% } %>
       </tbody>

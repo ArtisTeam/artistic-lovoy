@@ -32,9 +32,10 @@ app.use('/profile', require('cloud/profile'));
 app.use('/', require('cloud/user'));
 
 // qrcode test endpoint
-app.use('/qrcode', function (req, res) {
-  res.render('qrcode');
-});
+app.use('/qrcode', require('cloud/qrcode'));
+// app.use('/qrcode', function (req, res) {
+//   res.render('qrcode');
+// });
 
 // dashboard endpoint
 app.use('/dashboard', require('cloud/dashboard'));
