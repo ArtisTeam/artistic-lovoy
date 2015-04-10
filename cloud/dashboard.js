@@ -1,9 +1,8 @@
 module.exports = function () {
-  // Libs
+  // libs
   var moment = require("cloud/lib/moment.js");
   var express = require('express');
   var app = express();
-  alert('global request thinkpad');
 
   app.get('/', function (req, res) {
     if (Parse.User.current()) {
