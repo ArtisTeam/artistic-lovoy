@@ -37,11 +37,23 @@ module.exports = function () {
             for (var i=0; i<eventsEnrolledPt.length; ++i) {
               eventsEnrolled[i] = eventsEnrolledPt[i].get('event');
             }
+            for (var i=0; i<eventsEnrolled.length; ++i) {
+              eventsEnrolled[i].createdAt = 
+                moment(eventsEnrolled[i].createdAt).format("YYYY-MM-DD, hh:mm");
+              eventsEnrolled[i].updatedAt = 
+                moment(eventsEnrolled[i].updatedAt).format("YYYY-MM-DD, hh:mm");
+            }
             // query all events
             var Event = Parse.Object.extend('Event');
             var queryEvent = new Parse.Query(Event);
             queryEvent.find({
               success: function (events) {
+                for (var i=0; i<events.length; ++i) {
+                  events[i].createdAt = 
+                    moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
+                  events[i].updatedAt = 
+                    moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
+                }
                 // get eventsId
                 var eventsId = new Array(events.length);
                 for (var i=0; i<events.length; ++i) {
