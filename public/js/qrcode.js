@@ -278,6 +278,8 @@ var QRCode;
 			this._elImage.style.display = "block";
 			this._elImage.style.marginLeft = "auto";
    		this._elImage.style.marginRight = "auto";
+   		this._elImage.style.maxWidth = "100%";
+   		this._elImage.style.maxHeight = "100%";
 			this._elCanvas.style.display = "none";			
 		}
 		
