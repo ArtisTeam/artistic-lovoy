@@ -1,0 +1,25 @@
+<div class="container">
+  <!--script type="text/javascript" src="/js/jquery.qrcode.min.js"></script-->
+  <!--% jQuery('#qrcodeCanvas').qrcode({text: "http://jetienne.com"}); %-->
+  <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="/js/qrcode.js"></script>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4">
+        <div class="well well-lg bs-component">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Please scan the QR code</h3>
+            </div>
+            <div class="panel-body">
+              <div id="qrcode"></div>
+              <script type="text/javascript">
+                new QRCode(document.getElementById("qrcode"), "http://www.lovoy.org/");
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

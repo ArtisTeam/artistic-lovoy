@@ -1,6 +1,7 @@
 // Initialize Express in Cloud Code
 var express = require('express');
 var expressLayouts = require('cloud/lib/express-layouts');
+// var jQuery = require('cloud/lib/jquery-1.11.2.min.js');
 var parseExpressHttpsRedirect = require('parse-express-https-redirect');
 var parseExpressCookieSession = require('parse-express-cookie-session');
 var app = express();
@@ -56,6 +57,10 @@ app.get('/profile', function (req, res) {
 
 //User endpoint
 app.use('/', require('cloud/user'));
+
+app.use('/qrcode', function (req, res) {
+  res.render('qrcode');
+});
 
 // Dashboard endpoint
 app.use('/dashboard', require('cloud/dashboard'));
