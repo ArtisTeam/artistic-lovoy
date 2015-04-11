@@ -22,7 +22,7 @@ module.exports = function () {
               eventPointedArr[i] = events[i].get('event');
             }
             res.render('vol/profile', {events: eventPointedArr});
-          }, 
+          },
           error: function(error) {
             res.send("Fail to query " + currUser + "events")
           }

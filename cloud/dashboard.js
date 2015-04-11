@@ -14,9 +14,9 @@ module.exports = function () {
         query.find({
           success: function (events) {
             for (var i=0; i<events.length; ++i) {
-              events[i].createdAt = 
+              events[i].createdAt =
                 moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
-              events[i].updatedAt = 
+              events[i].updatedAt =
                 moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
             }
             res.render('org/dashboard', {events: events});
@@ -38,9 +38,9 @@ module.exports = function () {
               eventsEnrolled[i] = eventsEnrolledPt[i].get('event');
             }
             for (var i=0; i<eventsEnrolled.length; ++i) {
-              eventsEnrolled[i].createdAt = 
+              eventsEnrolled[i].createdAt =
                 moment(eventsEnrolled[i].createdAt).format("YYYY-MM-DD, hh:mm");
-              eventsEnrolled[i].updatedAt = 
+              eventsEnrolled[i].updatedAt =
                 moment(eventsEnrolled[i].updatedAt).format("YYYY-MM-DD, hh:mm");
             }
             // query all events
@@ -49,9 +49,9 @@ module.exports = function () {
             queryEvent.find({
               success: function (events) {
                 for (var i=0; i<events.length; ++i) {
-                  events[i].createdAt = 
+                  events[i].createdAt =
                     moment(events[i].createdAt).format("YYYY-MM-DD, hh:mm");
-                  events[i].updatedAt = 
+                  events[i].updatedAt =
                     moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
                 }
                 // get eventsId
@@ -89,6 +89,6 @@ module.exports = function () {
       res.redirect('/login?redir=dashboard');
     }
   });
-  
+
   return app;
 }();

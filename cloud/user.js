@@ -58,6 +58,7 @@ module.exports = function () {
         });
       },
       error: function (user, error) {
+        //TODO :tell user what's wrong. "The most likely case is that the username or email has already been taken by another user. You should clearly communicate this to your users, and ask them try a different username.
         // alert('Error: ' + error.code + ' ' + error.message);
         res.send('Error: ' + error.code + ' ' + error.message);
       }
@@ -85,7 +86,7 @@ module.exports = function () {
       });
       res.redirect('/dashboard');
     }, function (error) {
-      res.send('login fail');
+      res.send('login fail');//TODO: more detail
     });
   });
 
@@ -93,6 +94,32 @@ module.exports = function () {
   app.get('/logout', function (req, res) {
     Parse.User.logOut();
     res.redirect('/');
+  });
+
+  app.post('/resetpwd', function (req,res) {
+    if (!Parse.User.current()) {
+      res.redirect('/login?redir=resetpwd');
+    } else {
+      var name = Parse.User.current().get('username')
+      Parse.User.logIn(name, req.body.oldPassword, {
+        success: function(user) {
+          user.set('password', req.body.newPassword)
+          user.save(null, {
+            success: function(user){
+              res.send('password changed')
+              //TODO: more detail
+            },
+            error: function(user, error){
+              res.send('Failed to save new password')
+            }
+          });
+        },
+        error: function(user, error) {
+          Parse.User.logOut();
+          res.send('login fail' + error.message);//TODO: more detail
+        }
+      });
+    }
   });
 
   return app;
