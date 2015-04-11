@@ -72,17 +72,23 @@ table[data-sortable].sortable-theme-bootstrap tbody td {
 }
 /* line 18, ../sass/sortable-theme-bootstrap.sass */
 table[data-sortable].sortable-theme-bootstrap th[data-sorted="true"] {
+/*
   color: #3a87ad;
   background: #d9edf7;
   border-bottom-color: #bce8f1;
+*/
+  background: #A2DED0;
+  border-bottom-color: #F2E7DD;
 }
 /* line 23, ../sass/sortable-theme-bootstrap.sass */
 table[data-sortable].sortable-theme-bootstrap th[data-sorted="true"][data-sorted-direction="descending"]:after {
-  border-top-color: #3a87ad;
+/*  border-top-color: #3a87ad;*/
+  border-top-color: #F2E7DD;
 }
 /* line 26, ../sass/sortable-theme-bootstrap.sass */
 table[data-sortable].sortable-theme-bootstrap th[data-sorted="true"][data-sorted-direction="ascending"]:after {
-  border-bottom-color: #3a87ad;
+/*  border-bottom-color: #3a87ad;*/
+  border-bottom-color: #F2E7DD;
 }
 /* line 31, ../sass/sortable-theme-bootstrap.sass */
 table[data-sortable].sortable-theme-bootstrap.sortable-theme-bootstrap-striped tbody > tr:nth-child(odd) > td {

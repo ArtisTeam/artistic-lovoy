@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Volunteer Management Page</h2>
+  <h2>Volunteer Profile Management Page</h2>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <div class="panel panel-default">
@@ -7,7 +7,18 @@
           <h3 class="panel-title">Account</h3>
         </div>
         <div class="panel-body">
-          <%= Parse.User.current().get('username') %>
+          <form data-toggle="validator" role="form" method="post" action="/resetpwd" class="form-signin">
+            <div class="form-group">
+              <label class="control-label">User Name: <%= Parse.User.current().get('username') %></label>
+              <input type="password" name="oldPassword" id="oldPassword" class="form-control" placeholder="Old password" required>
+              <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="New password" data-minlength="6" required>
+              <span class="help-block">Minimum of 6 characters</span>
+              <input type="password" class="form-control" id="newPasswordConfirm" data-match="#newPassword" data-match-error="Whoops, these don't match" placeholder="Confirm password" required>
+              <div class="help-block with-errors"></div>
+              <button type="submit" class="btn btn-primary">Change password</button>
+            </div>
+            <script type="text/javascript" src="/js/validator.js"></script>
+          </form>
         </div>
       </div>
 
@@ -18,30 +29,8 @@
         <div class="panel-body">
           <%= Parse.User.current().id %>
         </div>
-
-        <div class="panel-heading">
-          <h3 class="panel-title">Events</h3>
-        </div>
-        <div class="panel-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% for (var i=0; i<events.length; ++i) {  %>
-              <tr>
-                <td><%= events[i].get('name') %></td>
-                <td><%= events[i].get('description') %></td>
-              </tr>
-              <% } %>
-            </tbody>
-          </table>
-        </div>
-
       </div>
+
     </div>
-  </div>  
+  </div>
 </div>

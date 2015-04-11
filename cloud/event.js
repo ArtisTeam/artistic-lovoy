@@ -6,7 +6,7 @@
 //    > require login
 //      > require vol: /enroll/*
 //      > require org: otherthing
-// 
+//
 // GET     /new         render event/new (done)
 // POST    /new         submit form create new event (done)
 // GET     /:id         render event/detail (the only thing that can be viewed
@@ -111,11 +111,16 @@ module.exports = function () {
         } else {
           res.send('You have not enrolled in this event');
         }
-      }, 
+      },
       error: function(error) {
         res.send("Fail to query " + currUser + "events");
       }
     });
+  });
+
+  // testing only! shall be put after middleware
+  app.get('/:eventId/checkin/:volId', function (req, res, next) {
+    res.send("checkin " + req.params.eventId + " " + req.params.volId);
   });
 
   // middleware, for anything else, require organization logged in
@@ -175,7 +180,7 @@ module.exports = function () {
       res.send('Event not belong to current user.');
     }
   });
-  
+
   // render event/edit
   app.get('/:id/edit', function (req, res) {
     if (currEvent.get('createdBy').id === Parse.User.current().id) {

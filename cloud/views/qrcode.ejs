@@ -1,0 +1,28 @@
+<div class="container">
+  <!--script type="text/javascript" src="/js/jquery.qrcode.min.js"></script-->
+  <!--% jQuery('#qrcodeCanvas').qrcode({text: "http://jetienne.com"}); %-->
+  <script type="text/javascript" src="/js/qrcode.js"></script>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4">
+        <div class="well well-lg bs-component">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Please scan the QR code</h3>
+            </div>
+            <div class="panel-body">
+              <div id="qrcode"></div>
+              <!-- TODO: shall use global config file to store the host address -->
+              <% var rootAddr = "https://artisticlovoy.parseapp.com/" %>
+              <% var fullAddr = rootAddr + "/event/" + eventId + "/checkin/" + volId %>
+              <script type="text/javascript">
+                var addr = <%- JSON.stringify(fullAddr) %>
+                new QRCode(document.getElementById("qrcode"), addr);
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

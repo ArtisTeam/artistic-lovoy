@@ -1,5 +1,7 @@
 <div class="container">
   <h2>Volunteer Dashboard</h2>
+
+  <h3>Enrolled Events</h3>
   <div class="table-responsive">
     <table class="table table-striped sortable-theme-bootstrap" data-sortable>
       <thead>
@@ -11,8 +13,43 @@
         </tr>
       </thead>
       <tbody>
-        <% for (var i=0; i<events.length; ++i) { %>
-          <% var event = events[i] %>
+        <% for (var i=0; i<eventsEnrolled.length; ++i) { %>
+          <% var event = eventsEnrolled[i] %>
+          <tr>
+            <td><%= event.get('name')%></td>
+            <td><%= event.get('description')%></td>
+            <td><%= event.updatedAt%></td>
+            <td><%= event.createdAt%></td>
+            <td>
+              <form action="/event/<%= event.id %>/enroll/delete" method="post">
+                <input type="submit" value="Unenroll"/>
+              </form>
+            </td>
+            <td>
+              <form action="/qrcode/<%= event.id %>/<%= Parse.User.current().id %>" method="get">
+                <input type="submit" value="QR-code"/>
+              </form>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Avaliable Events</h3>
+  <div class="table-responsive">
+    <table class="table table-striped sortable-theme-bootstrap" data-sortable>
+      <thead>
+        <tr>
+          <th data-sorted="true" data-sorted-direction="descending">Name</th>
+          <th>Description</th>
+          <th>Updated</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i=0; i<eventsNotEnrolled.length; ++i) { %>
+          <% var event = eventsNotEnrolled[i] %>
           <tr>
             <td><%= event.get('name')%></td>
             <td><%= event.get('description')%></td>
@@ -21,11 +58,6 @@
             <td>
               <form action="/event/<%= event.id %>/enroll" method="post">
                 <input type="submit" value="Enroll"/>
-              </form>
-            </td>
-            <td>
-              <form action="/event/<%= event.id %>/enroll/delete" method="post">
-                <input type="submit" value="Unenroll"/>
               </form>
             </td>
           </tr>
