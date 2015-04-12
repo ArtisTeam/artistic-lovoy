@@ -115,11 +115,26 @@ module.exports = function () {
           });
         },
         error: function(user, error) {
-          Parse.User.logOut();
+          Parse.User.logOut();//TODO: don't need to logout?
           res.send('login fail' + error.message);//TODO: more detail
         }
       });
     }
+  });
+
+  app.get('/forgot-password', function(req,res) {
+    res.render('user/forgot-password');
+  });
+
+  app.post('/forgot-password', function(req,res) {
+    Parse.User.requestPasswordReset(req.body.email, {
+      success: function() {
+        res.send('An email has been sent to your mailbox. Please follow the instruction there');
+      },
+      error: function(error) {
+        res.send("Error: " + error.code + " " + error.message);
+      }
+    });
   });
 
   return app;
