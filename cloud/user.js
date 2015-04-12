@@ -4,7 +4,7 @@ module.exports = function () {
   var app = express();
 
   app.get('/signup', function (req, res) {
-    res.render('signup');
+    res.render('user/signup');
   });
 
   app.post('/signup', function (req, res) {
@@ -66,7 +66,7 @@ module.exports = function () {
   });
 
   app.get('/login', function (req, res) {
-    res.render('login');
+    res.render('user/login');
   });
 
   app.post('/login', function (req, res) {
