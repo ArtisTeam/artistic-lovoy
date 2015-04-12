@@ -6,14 +6,8 @@
       <!-- reset password -->
       <% include ../profile_partial/password_edit %>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">ID</h3>
-        </div>
-        <div class="panel-body">
-          <%= Parse.User.current().id %>
-        </div>
-      </div>
+      <!-- id -->
+      <% include ../profile_partial/id_view %>
 
     </div>
   </div>
