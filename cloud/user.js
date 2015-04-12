@@ -96,9 +96,9 @@ module.exports = function () {
     res.redirect('/');
   });
 
-  app.post('/resetpwd', function (req,res) {
+  app.post('/reset-password', function (req,res) {
     if (!Parse.User.current()) {
-      res.redirect('/login?redir=resetpwd');
+      res.redirect('/login?redir=reset-password');
     } else {
       var name = Parse.User.current().get('username')
       Parse.User.logIn(name, req.body.oldPassword, {
