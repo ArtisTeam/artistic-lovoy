@@ -101,9 +101,9 @@ module.exports = function () {
     res.redirect('/');
   });
 
-  app.post('/reset-password', function (req,res) {
+  app.post('/password-edit', function (req,res) {
     if (!Parse.User.current()) {
-      res.redirect('/login?redir=reset-password');
+      res.redirect('/login?redir=password-edit');
     } else {
       var name = Parse.User.current().get('username')
       Parse.User.logIn(name, req.body.oldPassword, {

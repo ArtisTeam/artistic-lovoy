@@ -19,7 +19,7 @@ module.exports = function () {
               events[i].updatedAt =
                 moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
             }
-            res.render('org/dashboard', {events: events});
+            res.render('dashboard/org-dashboard', {events: events});
           },
           error: function (error) {
             res.send("Fail to query events: " + error.code + " " + error.message);
@@ -72,7 +72,7 @@ module.exports = function () {
                   eventsNotEnrolled[i] = events[eventsId.indexOf(eventsNotEnrolledId[i])];
                 }
                 // render!
-                res.render('vol/dashboard', {eventsEnrolled: eventsEnrolled,
+                res.render('dashboard/vol-dashboard', {eventsEnrolled: eventsEnrolled,
                            eventsNotEnrolled: eventsNotEnrolled});
               },
               error: function (error) {
