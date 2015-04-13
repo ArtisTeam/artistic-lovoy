@@ -57,9 +57,13 @@ module.exports = function () {
     // TODO: make them globally available
     var orgProfileKeys = ["name", "description", "website",
                           "contactName", "contactEmail", "contactPhone"];
-    var volProfileKeys = ["name",
-                          "firstName", "lastName", 
-                          "contactEmail", "contactPhone"];
+    var volProfileKeys = ["firstName", "lastName", 
+                          "contactEmail", "contactPhone",
+                          "birthday",
+                          "zipcode", "address", 
+                          "gerder", 
+                          "profession",
+                          "language"];
     var validProfileKeys = null;
     if (Parse.User.current().get('group') === 1) {
       validProfileKeys = orgProfileKeys;

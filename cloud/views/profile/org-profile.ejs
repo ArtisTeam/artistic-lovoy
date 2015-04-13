@@ -3,30 +3,19 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
 
+      <!-- profile details -->
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">My profile (please fill the undefined fields)</h3>
         </div>
         <div class="panel-body">
           <form data-toggle="validator" role="form" method="post" action="/profile/edit">
-            <!-- name -->
             <% include ./name-edit %>
-            
-            <!-- description -->
             <% include ./description-edit %>
-            
-            <!-- website -->
             <% include ./website-edit %>
-
-            <!-- contactName -->
             <% include ./contact-name-edit %>
-            
-            <!-- contactEmail -->
             <% include ./contact-email-edit %>
-
-            <!-- contactPhone -->
             <% include ./contact-phone-edit %>
-            
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Update</button>
             </div>

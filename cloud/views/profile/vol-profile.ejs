@@ -3,6 +3,31 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
 
+      <!-- profile details -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">My profile (please fill the undefined fields)</h3>
+        </div>
+        <div class="panel-body">
+          <form data-toggle="validator" role="form" method="post" action="/profile/edit">
+            <% include ./first-name-edit %>
+            <% include ./last-name-edit %>
+            <% include ./contact-email-edit %>
+            <% include ./contact-phone-edit %>
+            <% include ./birthday-edit %>
+            <% include ./zipcode-edit %>
+            <% include ./address-edit %>
+            <% include ./gerder-edit %>
+            <% include ./profession-edit %>
+            <% include ./language-edit %>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            <script type="text/javascript" src="/js/validator.js"></script>
+          </form>
+        </div>
+      </div>
+
       <!-- reset password -->
       <% include ./password-edit %>
 
