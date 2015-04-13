@@ -69,7 +69,11 @@ module.exports = function () {
   });
 
   app.get('/login', function (req, res) {
-    res.render('user/login');
+    if (Parse.User.current()) {
+      res.redirect('/dashboard');
+    } else {
+      res.render('user/login');
+    }
   });
 
   app.post('/login', function (req, res) {
