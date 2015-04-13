@@ -5,40 +5,28 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">My profile</h3>
+          <h3 class="panel-title">My profile (please fill the undefined fields)</h3>
         </div>
         <div class="panel-body">
           <form data-toggle="validator" role="form" method="post" action="/profile/edit">
             <!-- name -->
-            <div class="form-group">
-              <label for="inputName" class="control-label">Name</label>
-              <input type="text" name="name" class="form-control" id="inputName" placeholder="Name" value="<%= profile.get('name')%>" required>
-            </div>
+            <% include ./name-edit %>
+            
             <!-- description -->
-            <div class="form-group">
-              <label for="inputDescription" class="control-label">About</label>
-              <input type="text" name="description" class="form-control" id="inputDescription" placeholder="About" value="<%= profile.get('description')%>" required>
-            </div>
+            <% include ./description-edit %>
+            
             <!-- website -->
-            <div class="form-group">
-              <label for="inputWebsite" class="control-label">Website</label>
-              <input type="text" name="website" class="form-control" id="inputWebsite" placeholder="Website" value="<%= profile.get('website')%>" required>
-            </div>
+            <% include ./website-edit %>
+
             <!-- contactName -->
-            <div class="form-group">
-              <label for="inputContactName" class="control-label">Contact Name</label>
-              <input type="text" name="contactName" class="form-control" id="inputContactName" placeholder="ContactName" value="<%= profile.get('contactName')%>" required>
-            </div>
+            <% include ./contact-name-edit %>
+            
             <!-- contactEmail -->
-            <div class="form-group">
-              <label for="inputContactEmail" class="control-label">Contact Email</label>
-              <input type="text" name="contactEmail" class="form-control" id="inputContactEmail" placeholder="ContactEmail" value="<%= profile.get('contactEmail')%>" required>
-            </div>
+            <% include ./contact-email-edit %>
+
             <!-- contactPhone -->
-            <div class="form-group">
-              <label for="inputContactPhone" class="control-label">Contact Phone</label>
-              <input type="text" name="contactPhone" class="form-control" id="inputContactPhone" placeholder="ContactPhone" value="<%= profile.get('contactPhone')%>" required>
-            </div>
+            <% include ./contact-phone-edit %>
+            
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Update</button>
             </div>
