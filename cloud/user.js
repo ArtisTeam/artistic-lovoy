@@ -4,7 +4,7 @@ module.exports = function () {
   var app = express();
 
   app.get('/signup', function (req, res) {
-    res.render('signup');
+    res.render('user/signup');
   });
 
   app.post('/signup', function (req, res) {
@@ -52,21 +52,28 @@ module.exports = function () {
             res.redirect('/dashboard');
           },
           error: function (prof, error) {
-            alert('Failed to create new OrgProfile, with error code: ' + error.message);
-            res.send('Failed to create OrgProfile, with error code: ' + error.message);
+            res.render('general-message', {
+              message:'Failed to create OrgProfile, with error code: ' + error.message
+            });
           }
         });
       },
       error: function (user, error) {
         //TODO :tell user what's wrong. "The most likely case is that the username or email has already been taken by another user. You should clearly communicate this to your users, and ask them try a different username.
         // alert('Error: ' + error.code + ' ' + error.message);
-        res.send('Error: ' + error.code + ' ' + error.message);
+        res.render('general-message', {
+          message:'Error: ' + error.code + ' ' + error.message
+        });
       }
     });
   });
 
   app.get('/login', function (req, res) {
-    res.render('login');
+    if (Parse.User.current()) {
+      res.redirect('/dashboard');
+    } else {
+      res.render('user/login');
+    }
   });
 
   app.post('/login', function (req, res) {
@@ -86,7 +93,9 @@ module.exports = function () {
       });
       res.redirect('/dashboard');
     }, function (error) {
-      res.send('login fail');//TODO: more detail
+      res.render('general-message', {
+        message:'login fail'
+      });
     });
   });
 
@@ -96,9 +105,9 @@ module.exports = function () {
     res.redirect('/');
   });
 
-  app.post('/resetpwd', function (req,res) {
+  app.post('/password-edit', function (req,res) {
     if (!Parse.User.current()) {
-      res.redirect('/login?redir=resetpwd');
+      res.redirect('/login?redir=password-edit');
     } else {
       var name = Parse.User.current().get('username')
       Parse.User.logIn(name, req.body.oldPassword, {
@@ -106,20 +115,46 @@ module.exports = function () {
           user.set('password', req.body.newPassword)
           user.save(null, {
             success: function(user){
-              res.send('password changed')
+              res.render('general-message', {
+                message:'Password changed'
+              });
               //TODO: more detail
             },
             error: function(user, error){
-              res.send('Failed to save new password')
+              res.render('general-message', {
+                message:'Failed to save new password'
+              });
             }
           });
         },
         error: function(user, error) {
-          Parse.User.logOut();
-          res.send('login fail' + error.message);//TODO: more detail
+          Parse.User.logOut();//TODO: don't need to logout?
+          res.render('general-message', {
+            message:'login fail' + error.message
+          });
         }
       });
     }
+  });
+
+  app.get('/forgot-password', function(req,res) {
+    res.render('user/forgot-password');
+  });
+
+  app.post('/forgot-password', function(req,res) {
+    Parse.User.requestPasswordReset(req.body.email, {
+      success: function() {
+        res.render('general-message', {
+          message:'An email has been sent to your mailbox. Please follow the instruction there'
+        });
+      },
+      error: function(error) {
+        // res.send("Error: " + error.code + " " + error.message);
+        res.render('general-message', {
+          message:'Error: ' + error.code + ' ' + error.message
+        });
+      }
+    });
   });
 
   return app;

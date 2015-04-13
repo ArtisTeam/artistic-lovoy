@@ -8,9 +8,9 @@ module.exports = function () {
     var moment = require("cloud/lib/moment.js");
     if (currUser) {
       if (currUser.get('group') === 1) {
-        res.render('org/profile');
+        res.render('profile/org-profile');
       } else if (currUser.get('group') === 2) {
-        res.render('vol/profile');
+        res.render('profile/vol-profile');
       }
     } else {
       res.redirect('/login?redir=profile');

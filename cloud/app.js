@@ -22,7 +22,11 @@ app.use(parseExpressCookieSession({
 }));
 
 app.get('/', function (req, res) {
-  res.render('welcome');
+  if (Parse.User.current()) {
+    res.redirect('/dashboard');
+  } else {
+    res.render('welcome');
+  }
 });
 
 // profile endpoint
