@@ -19,6 +19,26 @@
               <label for="inputDescription" class="control-label">About</label>
               <input type="text" name="description" class="form-control" id="inputDescription" placeholder="About" value="<%= profile.get('description')%>" required>
             </div>
+            <!-- website -->
+            <div class="form-group">
+              <label for="inputWebsite" class="control-label">Website</label>
+              <input type="text" name="website" class="form-control" id="inputWebsite" placeholder="Website" value="<%= profile.get('website')%>" required>
+            </div>
+            <!-- contactName -->
+            <div class="form-group">
+              <label for="inputContactName" class="control-label">Contact Name</label>
+              <input type="text" name="contactName" class="form-control" id="inputContactName" placeholder="ContactName" value="<%= profile.get('contactName')%>" required>
+            </div>
+            <!-- contactEmail -->
+            <div class="form-group">
+              <label for="inputContactEmail" class="control-label">Contact Email</label>
+              <input type="text" name="contactEmail" class="form-control" id="inputContactEmail" placeholder="ContactEmail" value="<%= profile.get('contactEmail')%>" required>
+            </div>
+            <!-- contactPhone -->
+            <div class="form-group">
+              <label for="inputContactPhone" class="control-label">Contact Phone</label>
+              <input type="text" name="contactPhone" class="form-control" id="inputContactPhone" placeholder="ContactPhone" value="<%= profile.get('contactPhone')%>" required>
+            </div>
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Update</button>
             </div>

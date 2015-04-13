@@ -55,8 +55,11 @@ module.exports = function () {
   app.post('/edit', function (req, res) {
     // init valid keys
     // TODO: make them globally available
-    var orgProfileKeys = ["name", "description", "website", ];
-    var volProfileKeys = ["name"];
+    var orgProfileKeys = ["name", "description", "website",
+                          "contactName", "contactEmail", "contactPhone"];
+    var volProfileKeys = ["name",
+                          "firstName", "lastName", 
+                          "contactEmail", "contactPhone"];
     var validProfileKeys = null;
     if (Parse.User.current().get('group') === 1) {
       validProfileKeys = orgProfileKeys;
