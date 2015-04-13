@@ -43,9 +43,9 @@ module.exports = function () {
     // var moment = require("cloud/lib/moment.js");
     if (Parse.User.current()) {
       if (Parse.User.current().get('group') === 1) {
-        res.render('profile/org-profile');
+        res.render('profile/org-profile', {profile: currProfile});
       } else if (Parse.User.current().get('group') === 2) {
-        res.render('profile/vol-profile');
+        res.render('profile/vol-profile', {profile: currProfile});
       }
     } else {
       res.redirect('/login?redir=profile');
@@ -54,7 +54,8 @@ module.exports = function () {
 
   app.post('/edit', function (req, res) {
     // init valid keys
-    var orgProfileKeys = ["name", "description"];
+    // TODO: make them globally available
+    var orgProfileKeys = ["name", "description", "website", ];
     var volProfileKeys = ["name"];
     var validProfileKeys = null;
     if (Parse.User.current().get('group') === 1) {
