@@ -10,12 +10,12 @@
         </div>
         <div class="panel-body">
           <form data-toggle="validator" role="form" method="post" action="/profile/edit">
-            <% include ./name-edit %>
-            <% include ./description-edit %>
-            <% include ./website-edit %>
-            <% include ./contact-name-edit %>
-            <% include ./contact-email-edit %>
-            <% include ./contact-phone-edit %>
+            <% include ./partial/name-edit %>
+            <% include ./partial/description-edit %>
+            <% include ./partial/website-edit %>
+            <% include ./partial/contact-name-edit %>
+            <% include ./partial/contact-email-edit %>
+            <% include ./partial/contact-phone-edit %>
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Update</button>
             </div>
@@ -25,10 +25,10 @@
       </div>
 
       <!-- reset password -->
-      <% include ./password-edit %>
+      <% include ./partial/password-edit %>
 
       <!-- id -->
-      <% include ./id-view %>
+      <% include ./partial/id-view %>
 
     </div>
   </div>

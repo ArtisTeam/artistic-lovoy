@@ -10,16 +10,16 @@
         </div>
         <div class="panel-body">
           <form data-toggle="validator" role="form" method="post" action="/profile/edit">
-            <% include ./first-name-edit %>
-            <% include ./last-name-edit %>
-            <% include ./contact-email-edit %>
-            <% include ./contact-phone-edit %>
-            <% include ./birthday-edit %>
-            <% include ./zipcode-edit %>
-            <% include ./address-edit %>
-            <% include ./gender-edit %>
-            <% include ./profession-edit %>
-            <% include ./language-edit %>
+            <% include ./partial/first-name-edit %>
+            <% include ./partial/last-name-edit %>
+            <% include ./partial/contact-email-edit %>
+            <% include ./partial/contact-phone-edit %>
+            <% include ./partial/birthday-edit %>
+            <% include ./partial/zipcode-edit %>
+            <% include ./partial/address-edit %>
+            <% include ./partial/gender-edit %>
+            <% include ./partial/profession-edit %>
+            <% include ./partial/language-edit %>
             <div class="form-group">
               <button type="submit" class="btn btn-primary">Update</button>
             </div>
@@ -29,10 +29,10 @@
       </div>
 
       <!-- reset password -->
-      <% include ./password-edit %>
+      <% include ./partial/password-edit %>
 
       <!-- id -->
-      <% include ./id-view %>
+      <% include ./partial/id-view %>
 
     </div>
   </div>
