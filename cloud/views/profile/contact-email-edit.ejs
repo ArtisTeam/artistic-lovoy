@@ -1,4 +1,6 @@
 <div class="form-group">
   <label for="inputContactEmail" class="control-label">Contact Email</label>
-  <input type="text" name="contactEmail" class="form-control" id="inputContactEmail" placeholder="ContactEmail" value="<%= profile.get('contactEmail')%>" required>
+  <input type="text" name="contactEmail" class="form-control" id="inputContactEmail" placeholder="Contact Email" value="<%= (!!profile.get('contactEmail'))?profile.get('contactEmail'):'' %>" required>
 </div>
+
+

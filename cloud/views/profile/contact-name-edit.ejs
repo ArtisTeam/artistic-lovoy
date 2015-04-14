@@ -1,4 +1,4 @@
 <div class="form-group">
   <label for="inputContactName" class="control-label">Contact Name</label>
-  <input type="text" name="contactName" class="form-control" id="inputContactName" placeholder="ContactName" value="<%= profile.get('contactName')%>" required>
+  <input type="text" name="contactName" class="form-control" id="inputContactName" placeholder="Contact Name" value="<%= (!!profile.get('contactName'))?profile.get('contactName'):'' %>" required>
 </div>
