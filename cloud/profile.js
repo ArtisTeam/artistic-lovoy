@@ -61,7 +61,7 @@ module.exports = function () {
                           "contactEmail", "contactPhone",
                           "birthday",
                           "zipcode", "address", 
-                          "gerder", 
+                          "gender", 
                           "profession",
                           "language"];
     var validProfileKeys = null;
