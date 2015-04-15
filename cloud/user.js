@@ -58,7 +58,10 @@ module.exports = function () {
         });
       },
       error: function (user, error) {
-        //TODO :tell user what's wrong. "The most likely case is that the username or email has already been taken by another user. You should clearly communicate this to your users, and ask them try a different username.
+        // TODO :tell user what's wrong. "The most likely case is that the 
+        // username or email has already been taken by another user. 
+        // You should clearly communicate this to your users, and ask them 
+        // try a different username.
         // alert('Error: ' + error.code + ' ' + error.message);
         res.render('general-message', {
           message:'Error: ' + error.code + ' ' + error.message

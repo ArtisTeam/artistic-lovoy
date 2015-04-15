@@ -48,13 +48,13 @@ module.exports = function () {
     }
   });
 
-  // render event/detail, the only view not require login
+  // render event/view, the only view not require login
   app.get('/:id', function (req, res, next) {
     if (req.params.id === 'new') {
       next();
     } else {
       // currEvent must exist now
-      res.render('event/detail', {event: currEvent});
+      res.render('event/view', {event: currEvent});
     }
   });
 
@@ -138,7 +138,7 @@ module.exports = function () {
 
   // render event/new
   app.get('/new', function (req, res) {
-    res.render('event/new'); // must not include '/' in front
+    res.render('event/edit', {event: null}); // must not include '/' in front
   });
 
   // submit form create new event
