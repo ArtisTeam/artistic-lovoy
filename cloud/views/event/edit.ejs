@@ -8,14 +8,14 @@
     <div class="form-group">
       <label for="name">Event Name: </label>
       <input type="text" class="form-control" id="event" name="name" 
-             placeholder="Name for Event"
-             value="<%= ((!!event) && (!!event.get('name')))?event.get('name'):'' %>">
+             placeholder="Name for event"
+             value="<%= ((!!event) && (!!event.get('name')))?event.get('name'):'' %>"/>
     </div>
     <div class="form-group">
       <label for="description">Event Description: </label>
-      <input type="text" class="form-control" id="description" name="description" 
-             placeholder="Description for Event"
-             value="<%= ((!!event) && (!!event.get('description')))?event.get('description'):'' %>">
+      <textarea rows="6" type="text" class="form-control" id="description" name="description" 
+                placeholder="Description for event"
+                value="<%= ((!!event) && (!!event.get('description')))?event.get('description'):'' %>"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
   </form>
