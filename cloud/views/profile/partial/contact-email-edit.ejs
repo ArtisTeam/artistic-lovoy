@@ -1,6 +1,5 @@
 <div class="form-group">
   <label for="inputContactEmail" class="control-label">Contact Email</label>
-  <input type="text" name="contactEmail" class="form-control" id="inputContactEmail" placeholder="Contact Email" value="<%= (!!profile.get('contactEmail'))?profile.get('contactEmail'):'' %>" required>
+  <input type="email" name="contactEmail" class="form-control" id="inputContactEmail" placeholder="Contact Email" data-error="Email address invalid" value="<%= (!!profile.get('contactEmail'))?profile.get('contactEmail'):'' %>" required>
+  <div class="help-block with-errors"></div>
 </div>
-
-
