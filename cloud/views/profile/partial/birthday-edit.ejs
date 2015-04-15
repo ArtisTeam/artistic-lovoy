@@ -1,5 +1,21 @@
 <div class="form-group">
   <label for="inputBirthday" class="control-label">Birthday</label>
-  <input type="text" name="birthday" class="form-control" id="inputBirthday" placeholder="Birthday" value="<%= (!!profile.get('birthday'))?profile.get('birthday'):'' %>" required>
+  <div class='input-group date' id='datetimepicker'>
+    <input data-format="yyyy-MM-dd" type="text" name="birthday" 
+    class="form-control" id="inputBirthday" placeholder="Birthday" 
+    value="<%= (!!profile.get('birthday'))?profile.get('birthday'):'' %>" required></input>
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+  </div>
 </div>
 
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker').datetimepicker({
+      format: 'MM/DD/YYYY', // time is 'LT'
+      viewMode: 'years'
+    });
+  });
+</script>
