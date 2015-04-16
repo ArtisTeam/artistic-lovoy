@@ -7,13 +7,10 @@
   <form id="editEventForm" method="post" 
         action="/event/<%= (!!event)? event.id + '/edit' : '/new' %>">
 
-
-
     <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
       <ul id="myTab" class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#event-basic" id="event-basic-tab" role="tab" data-toggle="tab" aria-controls="event-basic" aria-expanded="true">Event Basic</a></li>
         <li role="presentation"><a href="#event-detail" role="tab" id="event-detail-tab" data-toggle="tab" aria-controls="event-detail">Event Details</a></li>
-        <li role="presentation"><a href="#event-submit" role="tab" id="event-submit-tab" data-toggle="tab" aria-controls="event-submit">Submit</a></li>
       </ul>
       <div id="myTabContent" class="tab-content">
 
@@ -87,9 +84,14 @@
         </div>
 
         <!-- Event Detail -->
-
         <div role="tabpanel" class="tab-pane fade" id="event-detail" aria-labelledBy="event-detail-tab">
           <br/>
+
+          <div class="form-group">
+            <label for="highlight" class="control-label">Event Highlights: </label>
+            <textarea rows="6" type="text" class="form-control" id="highlight" name="highlight" 
+                      placeholder="Highlight for event"><%= ((!!event) && (!!event.get('highlight')))?event.get('highlight'):'' %></textarea>
+          </div>
 
           <div class="form-group">
             <label for="description" class="control-label">Event Description: </label>
@@ -98,15 +100,10 @@
           </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane fade" id="event-submit" aria-labelledBy="event-submit-tab">
-          <br/>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-
       </div><!-- end of myTabContent -->
     </div><!-- end of tab groups -->
 
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
 
@@ -114,62 +111,104 @@
 
 <script>
 $(document).ready(function() {
-    $('#editEventForm').formValidation({
-        framework: 'bootstrap',
-        icon: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
+  $('#editEventForm').formValidation({
+    framework: 'bootstrap',
+    icon: {
+      valid: 'glyphicon glyphicon-ok',
+      // invalid: 'glyphicon glyphicon-remove',
+      validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
 
-          name: {
-            validators: {
-              notEmpty: {
-                message: 'The name is required'
-              },
-              stringLength: {
-                min: 6,
-                max: 50,
-                message: 'The name must be more than 6 and less than 50 characters long'
-              },
-              regexp: {
-                  regexp: /^[\sa-zA-Z0-9_]+$/,
-                  message: 'The name can only consist of alphabetical, number, space and underscore'
-              }
-            }
+      name: {
+        validators: {
+          notEmpty: {
+            message: 'The name is required'
           },
-
-          description: {
-            validators: {
-              notEmpty: {
-                message: 'The description is required'
-              },
-              stringLength: {
-                min: 6,
-                max: 5000,
-                message: 'The description must be more than 6 and less than 5000 characters long'
-              }
-            }
+          stringLength: {
+            min: 6,
+            max: 50,
+            message: 'The name must be more than 6 and less than 50 characters long'
           },
-
-          maxParticipant: {
-            validators: {
-              notEmpty: {
-                message: 'Max number of participant is required'
-              },
-              integer: {
-                message: 'The value is not an integer'
-              },
-              between: {
-                min: 1,
-                max: 500,
-                message: 'The number of participant must be between 1 and 500'
-              }
-            }
+          regexp: {
+              regexp: /^[\sa-zA-Z0-9_]+$/,
+              message: 'The name can only consist of alphabetical, number, space and underscore'
           }
-
         }
-    });
+      },
+
+      highlight: {
+        validators: {
+          notEmpty: {
+            message: 'The highlight is required'
+          },
+          stringLength: {
+            min: 6,
+            max: 1000,
+            message: 'The highlight must be more than 6 and less than 1000 characters long'
+          }
+        }
+      },
+
+      description: {
+        validators: {
+          notEmpty: {
+            message: 'The description is required'
+          },
+          stringLength: {
+            min: 6,
+            max: 5000,
+            message: 'The description must be more than 6 and less than 5000 characters long'
+          }
+        }
+      },
+
+      maxParticipant: {
+        validators: {
+          notEmpty: {
+            message: 'Max number of participant is required'
+          },
+          integer: {
+            message: 'The value is not an integer'
+          },
+          between: {
+            min: 1,
+            max: 500,
+            message: 'The number of participant must be between 1 and 500'
+          }
+        }
+      },
+
+      date: {
+        validators: {
+          notEmpty: {
+            message: 'Cannot be empty'
+          }
+        }
+      },
+
+      startTime: {
+        validators: {
+          notEmpty: {
+            message: 'Cannot be empty'
+          }
+        }
+      },
+
+      endTime: {
+        validators: {
+          notEmpty: {
+            message: 'Cannot be empty'
+          }
+        }
+      }
+
+    }
+  })
+  .on('success.field.fv', function(e, data) {
+    if (data.fv.getInvalidFields().length > 0) {
+      data.fv.disableSubmitButtons(true);
+    }
+  });
 });
 </script>
