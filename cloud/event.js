@@ -26,7 +26,7 @@ module.exports = function () {
                         "maxParticipant",
                         "date", "startTime", "endTime",
                         "highlight", "description",
-                        "step"];
+                        "location"];
 
   app.all('/:id*', function (req, res, next) {
     alert('[app.all]: req.params.id = ' + req.params.id)
