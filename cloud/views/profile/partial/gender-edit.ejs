@@ -1,0 +1,9 @@
+<div class="form-group">
+  <label for="inputGender" class="control-label">Gender</label>
+  <select name="gender" class="selectpicker form-control" id="inputGender" required>
+    <option disabled selected> -- select an option -- </option>
+    <option value="Male" <%= (!!profile.get('gender') && profile.get('gender') === 'Male') ? 'selected' : '' %>>Male</option>
+    <option value="Female" <%= (!!profile.get('gender') && profile.get('gender') === 'Female') ? 'selected' : '' %>>Female</option>
+    <option value="Other" <%= (!!profile.get('gender') && profile.get('gender') === 'Other') ? 'selected' : '' %>>Do not specify</option>
+  </select>
+</div>

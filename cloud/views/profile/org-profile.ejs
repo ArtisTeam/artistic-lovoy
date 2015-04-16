@@ -1,14 +1,40 @@
+<script type="text/javascript">
+  document.title = document.title + " | My Profile";
+</script>
+
 <div class="container">
   <h2>Organization Profile Management Page</h2>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
 
+      <!-- profile details -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">My profile (please fill the undefined fields)</h3>
+        </div>
+        <div class="panel-body">
+          <form data-toggle="validator" role="form" method="post" action="/profile/edit">
+            <% include ./partial/name-edit %>
+            <% include ./partial/description-edit %>
+            <% include ./partial/website-edit %>
+            <% include ./partial/contact-name-edit %>
+            <% include ./partial/contact-email-edit %>
+            <% include ./partial/contact-phone-edit %>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            <script type="text/javascript" src="/js/validator.js"></script>
+          </form>
+        </div>
+      </div>
+
       <!-- reset password -->
-      <% include ./password-edit %>
+      <% include ./partial/password-edit %>
 
       <!-- id -->
-      <% include ./id-view %>
+      <% include ./partial/id-view %>
 
+      <script type="text/javascript" src="/js/validator.js"></script>
     </div>
   </div>
 </div>

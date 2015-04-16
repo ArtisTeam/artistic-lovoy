@@ -1,14 +1,22 @@
+<script type="text/javascript">
+  document.title = document.title + " | Edit Event";
+</script>
+
 <div class="container">
-  <h2>Edit Event</h2>
-  <form method="post" action="/event/<%= event.id %>/edit">
+  <h2><%= (!!event)? 'Edit event' : 'New event' %> </h2>
+  <form method="post" action="/event/<%= (!!event)? event.id + '/edit' : '/new' %>">
     <div class="form-group">
       <label for="name">Event Name: </label>
-      <input type="text" class="form-control" id="event" name="name" value="<%= event.get('name')%>">
+      <input type="text" class="form-control" id="event" name="name" 
+             placeholder="Name for event"
+             value="<%= ((!!event) && (!!event.get('name')))?event.get('name'):'' %>"/>
     </div>
     <div class="form-group">
       <label for="description">Event Description: </label>
-      <input type="text" class="form-control" id="description" name="description" value="<%= event.get('description')%>">
+      <textarea rows="6" type="text" class="form-control" id="description" name="description" 
+                placeholder="Description for event"
+                value="<%= ((!!event) && (!!event.get('description')))?event.get('description'):'' %>"></textarea>
     </div>
-    <button type="submit" class="btn btn-default">Update</button>
+    <button type="submit" class="btn btn-primary">Save</button>
   </form>
 </div>

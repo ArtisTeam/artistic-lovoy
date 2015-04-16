@@ -4,8 +4,8 @@
 // 3. Three kinds of access rights for middleware
 //    > global: only GET /:id
 //    > require login
-//      > require vol: /enroll/*
-//      > require org: otherthing
+//    > require vol: /enroll/*
+//    > require org: otherthing
 //
 // GET     /new         render event/new (done)
 // POST    /new         submit form create new event (done)
@@ -22,6 +22,11 @@ module.exports = function () {
   var express = require('express');
   var app = express();
   var currEvent = null;
+  var validEventKeys = ["name",
+                        "maxParticipant",
+                        "date", "startTime", "endTime",
+                        "highlight", "description",
+                        "step"];
 
   app.all('/:id*', function (req, res, next) {
     alert('[app.all]: req.params.id = ' + req.params.id)
@@ -48,13 +53,13 @@ module.exports = function () {
     }
   });
 
-  // render event/detail, the only view not require login
+  // render event/view, the only view not require login
   app.get('/:id', function (req, res, next) {
     if (req.params.id === 'new') {
       next();
     } else {
       // currEvent must exist now
-      res.render('event/detail', {event: currEvent});
+      res.render('event/view', {event: currEvent});
     }
   });
 
@@ -138,7 +143,7 @@ module.exports = function () {
 
   // render event/new
   app.get('/new', function (req, res) {
-    res.render('event/new'); // must not include '/' in front
+    res.render('event/edit', {event: null}); // must not include '/' in front
   });
 
   // submit form create new event
