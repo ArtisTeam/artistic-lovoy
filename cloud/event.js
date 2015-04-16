@@ -26,6 +26,7 @@ module.exports = function () {
                         "maxParticipant",
                         "date", "startTime", "endTime",
                         "highlight", "description",
+                        "mapAddress", "mapLatitude", "mapLongitude",
                         "location"];
 
   function isInArray(array, value) {

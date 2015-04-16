@@ -81,7 +81,39 @@
               });
             });
           </script>
-        </div>
+
+          <label for="inputMapLocation" class="control-label">Location</label>
+          <div class="well">
+            <div class="form-group">
+              <input type="text" class="form-control" id="map-address" 
+                     name="mapAddress" onkeydown="if (event.keyCode == 13) return false;"/>
+            </div>
+            <div id="map" style="height: 400px;"></div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="m-t-small">
+              <input style="display: none" type="text" id="map-lat" class="form-control col-sm-2" name="mapLatitude"/> 
+              <input style="display: none" type="text" id="map-lon" class="form-control col-sm-2" name="mapLongitude"/>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <script>
+            $('#map').locationpicker({
+              location: {
+                latitude: <%= ((!!event) && (!!event.get('mapLatitude'))) ? event.get('mapLatitude'):'40.77664406009141' %>,
+                longitude: <%= ((!!event) && (!!event.get('mapLongitude'))) ? event.get('mapLongitude'):'-73.96728672064887' %>
+              },
+              radius: 0,
+              zoom: 13,
+              inputBinding: {
+                latitudeInput: $('#map-lat'),
+                longitudeInput: $('#map-lon'),
+                locationNameInput: $('#map-address')
+              },
+              enableAutocomplete: true
+            });
+          </script>
+
+        </div><!-- Event Basics Tab -->
 
         <!-- Event Detail -->
         <div role="tabpanel" class="tab-pane fade" id="event-detail" aria-labelledBy="event-detail-tab">
