@@ -28,6 +28,10 @@ module.exports = function () {
                         "highlight", "description",
                         "location"];
 
+  function isInArray(array, value) {
+    return array.indexOf(value) > -1;
+  }
+
   app.all('/:id*', function (req, res, next) {
     alert('[app.all]: req.params.id = ' + req.params.id)
     if (req.params.id === 'new') {
@@ -151,8 +155,13 @@ module.exports = function () {
     var EventItem = Parse.Object.extend('Event');
     var eventItem = new EventItem();
     eventItem.set('createdBy', Parse.User.current()); // pointer to user
-    eventItem.set('name', req.body.name);
-    eventItem.set('description', req.body.description);
+    // eventItem.set('name', req.body.name);
+    // eventItem.set('description', req.body.description);
+    for (var key in req.body) {
+      if (req.body.hasOwnProperty(key) && isInArray(validEventKeys, key)) {
+        eventItem.set(key, req.body[key]);
+      }
+    }
 
     var acl = new Parse.ACL();
     acl.setPublicReadAccess(true);
@@ -198,8 +207,13 @@ module.exports = function () {
   // update event
   app.post('/:id/edit', function (req, res) {
     if (currEvent.get('createdBy').id === Parse.User.current().id) {
-      currEvent.set('name', req.body.name);
-      currEvent.set('description', req.body.description);
+      // currEvent.set('name', req.body.name);
+      // currEvent.set('description', req.body.description);
+      for (var key in req.body) {
+        if (req.body.hasOwnProperty(key) && isInArray(validEventKeys, key)) {
+          currEvent.set(key, req.body[key]);
+        }
+      }
       currEvent.save(null, {
         success: function (event) {
           res.redirect('/dashboard');
