@@ -39,12 +39,24 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         min: 6,
-                        max: 30,
-                        message: 'The name must be more than 6 and less than 30 characters long'
+                        max: 50,
+                        message: 'The name must be more than 6 and less than 50 characters long'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z0-9_]+$/,
-                        message: 'The name can only consist of alphabetical, number and underscore'
+                        regexp: /^[\sa-zA-Z0-9_]+$/,
+                        message: 'The name can only consist of alphabetical, number, space and underscore'
+                    }
+                }
+            },
+            description: {
+                validators: {
+                    notEmpty: {
+                        message: 'The description is required'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 5000,
+                        message: 'The description must be more than 6 and less than 5000 characters long'
                     }
                 }
             },
