@@ -24,12 +24,12 @@
             <td><%= event.createdAt%></td>
             <td>
               <form action="/event/<%= event.id %>/edit" method="get">
-                <input type="submit" value="Edit">
+                <input class="btn btn-default" role="button" type="submit" value="Edit"/>
               </form>
             </td>
             <td>
               <form action="/event/<%= event.id %>/delete" method="post">
-                <input type="submit" value="Delete"/>
+                <input class="btn btn-default" role="button" type="submit" value="Delete"/>
               </form>
             </td>
           </tr>
