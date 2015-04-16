@@ -7,78 +7,109 @@
   <form id="editEventForm" method="post" 
         action="/event/<%= (!!event)? event.id + '/edit' : '/new' %>">
 
-    <div class="form-group">
-      <label for="name" class="control-label">Event Name: </label>
-      <input type="text" class="form-control" id="event" name="name" 
-             placeholder="Name for event"
-             value="<%= ((!!event) && (!!event.get('name')))?event.get('name'):'' %>"/>
-    </div>
 
-    <div class="form-group">
-      <label for="description" class="control-label">Event Description: </label>
-      <textarea rows="6" type="text" class="form-control" id="description" name="description" 
-                placeholder="Description for event"><%= ((!!event) && (!!event.get('description')))?event.get('description'):'' %></textarea>
-    </div>
 
-    <div class="form-group">
-      <label for="maxParticipant" class="control-label">Max number of participant: </label>
-      <input type="text" class="form-control" id="maxParticipant" name="maxParticipant" 
-             placeholder="Maximum number of participant"
-             value="<%= ((!!event) && (!!event.get('maxParticipant')))?event.get('maxParticipant'):'' %>"/>
-    </div>
+    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+      <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#event-basic" id="event-basic-tab" role="tab" data-toggle="tab" aria-controls="event-basic" aria-expanded="true">Event Basic</a></li>
+        <li role="presentation"><a href="#event-detail" role="tab" id="event-detail-tab" data-toggle="tab" aria-controls="event-detail">Event Details</a></li>
+        <li role="presentation"><a href="#event-submit" role="tab" id="event-submit-tab" data-toggle="tab" aria-controls="event-submit">Submit</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
 
-    <div class="form-group">
-      <label for="inputDate" class="control-label">Date</label>
-      <div class='input-group date' id='datePicker'>
-        <input data-format="MM/DD/YYYY" type="text" name="date" 
-        class="form-control" id="inputDate" placeholder="Press icon on the right to choose a date" 
-        value="<%= ((!!event) && (!!event.get('date')))?event.get('date'):'' %>"/>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-      </div>
-    </div>
+        <!-- Event Basic -->
+        <div role="tabpanel" class="tab-pane fade in active" id="event-basic" aria-labelledBy="event-basic-tab">
+          <br/>
 
-    <div class="form-group">
-      <label for="inputStartTime" class="control-label">Start Time</label>
-      <div class='input-group date' id='startTimePicker'>
-        <input data-format="MM/DD/YYYY" type="text" name="startTime"
-        class="form-control" id="inputStartTime" placeholder="Press icon on the right to choose a start time" 
-        value="<%= ((!!event) && (!!event.get('startTime')))?event.get('startTime'):'' %>"/>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-time"></span>
-        </span>
-      </div>
-    </div>
+          <div class="form-group">
+            <label for="name" class="control-label">Event Name: </label>
+            <input type="text" class="form-control" id="event" name="name" 
+                   placeholder="Name for event"
+                   value="<%= ((!!event) && (!!event.get('name')))?event.get('name'):'' %>"/>
+          </div>
+         
+          <div class="form-group">
+            <label for="maxParticipant" class="control-label">Max number of participant: </label>
+            <input type="text" class="form-control" id="maxParticipant" name="maxParticipant" 
+                   placeholder="Maximum number of participant"
+                   value="<%= ((!!event) && (!!event.get('maxParticipant')))?event.get('maxParticipant'):'' %>"/>
+          </div>
 
-    <div class="form-group">
-      <label for="inputEndTime" class="control-label">End Time</label>
-      <div class='input-group date' id='endTimePicker'>
-        <input data-format="MM/DD/YYYY" type="text" name="endTime"
-        class="form-control" id="inputEndTime" placeholder="Press icon on the right to choose a end time" 
-        value="<%= ((!!event) && (!!event.get('endTime')))?event.get('endTime'):'' %>"/>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-time"></span>
-        </span>
-      </div>
-    </div>
+          <div class="form-group">
+            <label for="inputDate" class="control-label">Date</label>
+            <div class='input-group date' id='datePicker'>
+              <input data-format="MM/DD/YYYY" type="text" name="date" 
+              class="form-control" id="inputDate" placeholder="Press icon on the right to choose a date" 
+              value="<%= ((!!event) && (!!event.get('date')))?event.get('date'):'' %>"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>
 
-    <script type="text/javascript">
-      $(function () {
-        $('#datePicker').datetimepicker({
-          format: 'MM/DD/YYYY' // time is 'LT'
-        });
-        $('#startTimePicker').datetimepicker({
-          format: 'LT' // time is 'LT'
-        });
-        $('#endTimePicker').datetimepicker({
-          format: 'LT' // time is 'LT'
-        });
-      });
-    </script>
+          <div class="form-group">
+            <label for="inputStartTime" class="control-label">Start Time</label>
+            <div class='input-group date' id='startTimePicker'>
+              <input data-format="MM/DD/YYYY" type="text" name="startTime"
+              class="form-control" id="inputStartTime" placeholder="Press icon on the right to choose a start time" 
+              value="<%= ((!!event) && (!!event.get('startTime')))?event.get('startTime'):'' %>"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+              </span>
+            </div>
+          </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
+          <div class="form-group">
+            <label for="inputEndTime" class="control-label">End Time</label>
+            <div class='input-group date' id='endTimePicker'>
+              <input data-format="MM/DD/YYYY" type="text" name="endTime"
+              class="form-control" id="inputEndTime" placeholder="Press icon on the right to choose a end time" 
+              value="<%= ((!!event) && (!!event.get('endTime')))?event.get('endTime'):'' %>"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+              </span>
+            </div>
+          </div>
+
+          <script type="text/javascript">
+            $(function () {
+              $('#datePicker').datetimepicker({
+                format: 'MM/DD/YYYY' // time is 'LT'
+              });
+              $('#startTimePicker').datetimepicker({
+                format: 'LT' // time is 'LT'
+              });
+              $('#endTimePicker').datetimepicker({
+                format: 'LT' // time is 'LT'
+              });
+            });
+          </script>
+        </div>
+
+        <!-- Event Detail -->
+
+        <div role="tabpanel" class="tab-pane fade" id="event-detail" aria-labelledBy="event-detail-tab">
+          <br/>
+
+          <div class="form-group">
+            <label for="description" class="control-label">Event Description: </label>
+            <textarea rows="6" type="text" class="form-control" id="description" name="description" 
+                      placeholder="Description for event"><%= ((!!event) && (!!event.get('description')))?event.get('description'):'' %></textarea>
+          </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="event-submit" aria-labelledBy="event-submit-tab">
+          <br/>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+      </div><!-- end of myTabContent -->
+    </div><!-- end of tab groups -->
+
   </form>
+
+
 </div>
 
 <script>
