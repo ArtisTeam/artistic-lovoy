@@ -245,14 +245,13 @@ module.exports = function () {
       var queryEnrolled = new Parse.Query(Enroll);
       queryEnrolled.equalTo('event', currEvent);
       queryEnrolled.include('vol');
-      queryEnrolled.ascending("vol");
       queryEnrolled.find().then(
         function(volsPt) {
           // get all vols enrolled in this event
           var vols = new Array(volsPt.length);
           for (var i=0; i<volsPt.length; ++i) {
             vols[i] = volsPt[i].get('vol');
-            vols[i].set('checkedIn', volsPt[i].get('checkedIn'));
+            // vols[i].set('checkedIn', volsPt[i].get('checkedIn'));
           }
           var checkedInParticipant = 0;
           for (var i=0; i<volsPt.length; ++i) {
@@ -264,13 +263,20 @@ module.exports = function () {
           var VolProfile = Parse.Object.extend('VolProfile');
           var queryVolProfile = new Parse.Query(VolProfile);
           queryVolProfile.containedIn("createdBy", vols);
-          queryVolProfile.ascending("createdBy");
+          queryVolProfile.include("createdBy");
           queryVolProfile.find().then(
             function(volProfiles) {
+              // mark if checkedIn
+              for (var j=0; j<volProfiles.length; ++j) {
+                for (var i=0; i<volsPt.length; ++i) {
+                  if (volProfiles[j].get('createdBy').id === volsPt[i].get('vol').id) {
+                    volProfiles[j].set('checkedIn', volsPt[i].get('checkedIn'));
+                  }
+                }
+              }
               res.render('event/manage', {
                 event: currEvent,
                 volProfiles: volProfiles,
-                vols: vols,
                 maxParticipant: parseInt(currEvent.get('maxParticipant')),
                 enrolledParticipant: vols.length,
                 checkedInParticipant: checkedInParticipant
