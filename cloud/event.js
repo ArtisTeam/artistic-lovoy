@@ -128,11 +128,6 @@ module.exports = function () {
     });
   });
 
-  // testing only! shall be put after middleware
-  app.get('/:eventId/checkin/:volId', function (req, res, next) {
-    res.send("checkin " + req.params.eventId + " " + req.params.volId);
-  });
-
   // middleware, for anything else, require organization logged in
   app.all('*', function (req, res, next) {
     if (!Parse.User.current()) {
@@ -144,6 +139,44 @@ module.exports = function () {
       alert("org middleware rejected, redirect to dashboard");
       res.redirect('/dashboard');
     }
+  });
+
+  // testing only! shall be put after middleware
+  app.get('/:eventId/checkin/:volId', function (req, res, next) {
+    var Enroll = Parse.Object.extend('Enroll');
+    var query = new Parse.Query(Enroll);
+
+    var tempUser = new Parse.User();
+    tempUser.id = req.params.volId;
+    var Event = Parse.Object.extend('Event');
+    var tempEvent = new Event();
+    tempEvent.id = req.params.eventId;
+    query.equalTo('vol', tempUser);
+    query.equalTo('event', tempEvent);
+    query.find({
+      success: function (enrolls) {
+        if (enrolls.length > 0) {
+          // get the enroll entry
+          var enroll = enrolls[0];
+          enroll.set('checkedIn', true);
+          enroll.save(null, {
+            success: function (event) {
+              // res.redirect('/' + req.params.eventId = '/manage');
+              res.redirect('/event/' + req.params.eventId + '/manage');
+              // res.redirect('/dashboard');
+            },
+            error: function (event, error) {
+              res.send('Failed to save enroll, with error code: ' + error.message);
+            }
+          });
+        } else {
+          res.send('Have not enrolled in this event');
+        }
+      },
+      error: function(error) {
+        res.send("Fail to query events");
+      }
+    });
   });
 
   // render event/new
