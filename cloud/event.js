@@ -205,6 +205,47 @@ module.exports = function () {
     }
   });
 
+  // render event/edit
+  app.get('/:id/manage', function (req, res) {
+    if (currEvent.get('createdBy').id === Parse.User.current().id) {
+      var Enroll = Parse.Object.extend('Enroll');
+      var queryEnrolled = new Parse.Query(Enroll);
+      queryEnrolled.equalTo('event', currEvent);
+      queryEnrolled.include('vol');
+
+      queryEnrolled.find().then(
+        function(volsPt) {
+          // get all vols enrolled in this event
+          var vols = new Array(volsPt.length);
+          for (var i=0; i<volsPt.length; ++i) {
+            vols[i] = volsPt[i].get('vol');
+          }
+          // get the profiles of all these vols
+          var VolProfile = Parse.Object.extend('VolProfile');
+          var queryVolProfile = new Parse.Query(VolProfile);
+          queryVolProfile.containedIn("createdBy", vols);
+          queryVolProfile.find().then(
+            function(volProfiles) {
+              res.render('event/manage', {
+                event: currEvent,
+                volProfiles: volProfiles,
+                vols: vols
+              });
+            },
+            function(error) {
+              res.send("Fail to query enrolled events")
+            }
+          );
+        },
+        function(error) {
+          res.send("Fail to query enrolled events")
+        }
+      );     
+    } else {
+      res.send('Event not belong to current user.');
+    }
+  });
+
   // update event
   app.post('/:id/edit', function (req, res) {
     if (currEvent.get('createdBy').id === Parse.User.current().id) {

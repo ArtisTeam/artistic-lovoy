@@ -15,6 +15,7 @@
           <th>Maximum #</th>
           <th>Registered #</th>
           <th>Edit</th>
+          <th>Manage</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -31,6 +32,11 @@
             <td>
               <form action="/event/<%= event.id %>/edit" method="get">
                 <input class="btn btn-success" role="button" type="submit" value="Edit"/>
+              </form>
+            </td>
+            <td>
+              <form action="/event/<%= event.id %>/manage" method="get">
+                <input class="btn btn-success" role="button" type="submit" value="Manage"/>
               </form>
             </td>
             <td>

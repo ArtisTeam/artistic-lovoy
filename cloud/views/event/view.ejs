@@ -21,6 +21,13 @@
       </div>
 
       <div>
+        <h4>Max number of participant</h4>
+      </div>
+      <div class="well well-sm">
+        <%= event.get('maxParticipant')%>
+      </div>
+
+      <div>
         <h4>Date</h4>
       </div>
       <div class="well well-sm">
@@ -48,31 +55,32 @@
         </div>
       </div>
 
-
-      <label for="inputMapLocation" class="control-label">Location</label>
-        <div class="well">
-          <div class="well well-sm">
-            <p><%=event.get('mapAddress')%></p>
-          </div>
-          <div id="map" style="height: 400px;"></div>
-          <div class="clearfix">&nbsp;</div>
-          <div class="m-t-small">
-            <input style="display: none" type="text" id="map-lat" class="form-control col-sm-2" name="mapLatitude"/> 
-            <input style="display: none" type="text" id="map-lon" class="form-control col-sm-2" name="mapLongitude"/>
-          </div>
-          <div class="clearfix"></div>
+      <div>
+        <h4>Location</h4>
+      </div>
+      <div class="well">
+        <div class="well well-sm">
+          <p><%=event.get('mapAddress')%></p>
         </div>
-        <script>
-          $('#map').locationpicker({
-            location: {
-              latitude: <%= ((!!event) && (!!event.get('mapLatitude'))) ? event.get('mapLatitude'):'40.77664406009141' %>,
-              longitude: <%= ((!!event) && (!!event.get('mapLongitude'))) ? event.get('mapLongitude'):'-73.96728672064887' %>
-            },
-            radius: 0,
-            zoom: 13
-          });
-        </script>
-        
+        <div id="map" style="height: 400px;"></div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="m-t-small">
+          <input style="display: none" type="text" id="map-lat" class="form-control col-sm-2" name="mapLatitude"/> 
+          <input style="display: none" type="text" id="map-lon" class="form-control col-sm-2" name="mapLongitude"/>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <script>
+        $('#map').locationpicker({
+          location: {
+            latitude: <%= ((!!event) && (!!event.get('mapLatitude'))) ? event.get('mapLatitude'):'40.77664406009141' %>,
+            longitude: <%= ((!!event) && (!!event.get('mapLongitude'))) ? event.get('mapLongitude'):'-73.96728672064887' %>
+          },
+          radius: 0,
+          zoom: 13
+        });
+      </script>
+
     </div>
   </div>  
 </div>
