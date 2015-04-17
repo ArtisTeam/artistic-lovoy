@@ -38,8 +38,8 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" 
-          data-toggle="collapse" data-target="#navbar" aria-expanded="false" 
+          <button type="button" class="navbar-toggle collapsed"
+          data-toggle="collapse" data-target="#navbar" aria-expanded="false"
           aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -47,7 +47,7 @@
             <span class="icon-bar"></span>
           </button>
           <!-- <span class="helper", style="display:inline-block;height:100%;vertical-align:middle;"></span>
-          <a href="#" class="pull-left"><img src="/img/logo_bar.png" alt="lovoy logo" 
+          <a href="#" class="pull-left"><img src="/img/logo_bar.png" alt="lovoy logo"
             style="height:40px;vertical-align:middle;max-height:40px;"></a> -->
           <a class="navbar-brand" href="/" title="Lovoy logo">
             <img style="height:40px; margin-top: -10px;"
@@ -61,7 +61,7 @@
               <li><a href="/login">Log in</a></li>
               <li><a href="/signup">Sign up</a></li>
             <% } else { %>
-              <li><a href="/profile"><%= Parse.User.current().get('username') %> Profile</a></li>
+              <li><a href="/profile"><%= Parse.User.current().get('username') %></a></li>
               <li><a href="/dashboard">Dashboard</a></li>
               <li><a href="/logout">Log Out</a></li>
             <% } %>

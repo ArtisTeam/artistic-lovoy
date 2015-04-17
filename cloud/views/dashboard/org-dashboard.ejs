@@ -12,8 +12,9 @@
           <th>Date</th>
           <th>Start Time</th>
           <th>End Time</th>
-          <th>Maximum #</th>
-          <th>Registered #</th>
+          <th>Max People</th>
+          <th>Registered</th>
+          <th>Detail</th>
           <th>Edit</th>
           <th>Manage</th>
           <th>Delete</th>
@@ -29,6 +30,11 @@
             <td><%= event.get('endTime')%></td>
             <td><%= event.get('maxParticipant')%></td>
             <td><%= event.get('maxParticipant')%></td>
+            <td>
+              <form action="/event/<%= event.id %>" method="get">
+                <input class="btn btn-success" role="button" type="submit" value="Detail"/>
+              </form>
+            </td>
             <td>
               <form action="/event/<%= event.id %>/edit" method="get">
                 <input class="btn btn-success" role="button" type="submit" value="Edit"/>
