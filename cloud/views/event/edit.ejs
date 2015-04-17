@@ -2,21 +2,248 @@
   document.title = document.title + " | Edit Event";
 </script>
 
-<div class="container">
+<div class="row">
+<div class="container col-md-6 col-md-offset-3">
   <h2><%= (!!event)? 'Edit event' : 'New event' %> </h2>
-  <form method="post" action="/event/<%= (!!event)? event.id + '/edit' : '/new' %>">
-    <div class="form-group">
-      <label for="name">Event Name: </label>
-      <input type="text" class="form-control" id="event" name="name" 
-             placeholder="Name for event"
-             value="<%= ((!!event) && (!!event.get('name')))?event.get('name'):'' %>"/>
-    </div>
-    <div class="form-group">
-      <label for="description">Event Description: </label>
-      <textarea rows="6" type="text" class="form-control" id="description" name="description" 
-                placeholder="Description for event"
-                value="<%= ((!!event) && (!!event.get('description')))?event.get('description'):'' %>"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+  <form id="editEventForm" method="post" 
+        action="/event/<%= (!!event)? event.id + '/edit' : '/new' %>">
+
+    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+      <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#event-basic" id="event-basic-tab" role="tab" data-toggle="tab" aria-controls="event-basic" aria-expanded="true">Event Basic</a></li>
+        <li role="presentation"><a href="#event-detail" role="tab" id="event-detail-tab" data-toggle="tab" aria-controls="event-detail">Event Details</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+
+        <!-- Event Basic -->
+        <div role="tabpanel" class="tab-pane fade in active" id="event-basic" aria-labelledBy="event-basic-tab">
+          <br/>
+
+          <div class="form-group">
+            <label for="name" class="control-label">Event Name: </label>
+            <input type="text" class="form-control" id="event" name="name" 
+                   placeholder="Name for event"
+                   value="<%= ((!!event) && (!!event.get('name')))?event.get('name'):'' %>"/>
+          </div>
+         
+          <div class="form-group">
+            <label for="maxParticipant" class="control-label">Max number of participant: </label>
+            <input type="text" class="form-control" id="maxParticipant" name="maxParticipant" 
+                   placeholder="Maximum number of participant"
+                   value="<%= ((!!event) && (!!event.get('maxParticipant')))?event.get('maxParticipant'):'' %>"/>
+          </div>
+
+          <div class="form-group">
+            <label for="inputDate" class="control-label">Date</label>
+            <div class='input-group date' id='datePicker'>
+              <input data-format="MM/DD/YYYY" type="text" name="date" 
+              class="form-control" id="inputDate" placeholder="Press icon on the right to choose a date" 
+              value="<%= ((!!event) && (!!event.get('date')))?event.get('date'):'' %>"/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="inputStartTime" class="control-label">Start Time</label>
+              <div class='input-group date' id='startTimePicker'>
+                <input data-format="MM/DD/YYYY" type="text" name="startTime"
+                class="form-control" id="inputStartTime" placeholder="Press icon on the right to choose a start time" 
+                value="<%= ((!!event) && (!!event.get('startTime')))?event.get('startTime'):'' %>"/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-time"></span>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="inputEndTime" class="control-label">End Time</label>
+              <div class='input-group date' id='endTimePicker'>
+                <input data-format="MM/DD/YYYY" type="text" name="endTime"
+                class="form-control" id="inputEndTime" placeholder="Press icon on the right to choose a end time" 
+                value="<%= ((!!event) && (!!event.get('endTime')))?event.get('endTime'):'' %>"/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-time"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <script type="text/javascript">
+            $(function () {
+              $('#datePicker').datetimepicker({
+                format: 'MM/DD/YYYY' // time is 'LT'
+              });
+              $('#startTimePicker').datetimepicker({
+                format: 'LT' // time is 'LT'
+              });
+              $('#endTimePicker').datetimepicker({
+                format: 'LT' // time is 'LT'
+              });
+            });
+          </script>
+
+          <label for="inputMapLocation" class="control-label">Location</label>
+          <div class="well">
+            <div class="form-group">
+              <input type="text" class="form-control" id="map-address" 
+                     name="mapAddress" onkeydown="if (event.keyCode == 13) return false;"/>
+            </div>
+            <div id="map" style="height: 400px;"></div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="m-t-small">
+              <input style="display: none" type="text" id="map-lat" class="form-control col-sm-2" name="mapLatitude"/> 
+              <input style="display: none" type="text" id="map-lon" class="form-control col-sm-2" name="mapLongitude"/>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <script>
+            $('#map').locationpicker({
+              location: {
+                latitude: <%= ((!!event) && (!!event.get('mapLatitude'))) ? event.get('mapLatitude'):'40.77664406009141' %>,
+                longitude: <%= ((!!event) && (!!event.get('mapLongitude'))) ? event.get('mapLongitude'):'-73.96728672064887' %>
+              },
+              radius: 0,
+              zoom: 13,
+              inputBinding: {
+                latitudeInput: $('#map-lat'),
+                longitudeInput: $('#map-lon'),
+                locationNameInput: $('#map-address')
+              },
+              enableAutocomplete: true
+            });
+          </script>
+
+        </div><!-- Event Basics Tab -->
+
+        <!-- Event Detail -->
+        <div role="tabpanel" class="tab-pane fade" id="event-detail" aria-labelledBy="event-detail-tab">
+          <br/>
+
+          <div class="form-group">
+            <label for="highlight" class="control-label">Event Highlights: </label>
+            <textarea rows="6" type="text" class="form-control" id="highlight" name="highlight" 
+                      placeholder="Highlight for event"><%= ((!!event) && (!!event.get('highlight')))?event.get('highlight'):'' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="control-label">Event Description: </label>
+            <textarea rows="6" type="text" class="form-control" id="description" name="description" 
+                      placeholder="Description for event"><%= ((!!event) && (!!event.get('description')))?event.get('description'):'' %></textarea>
+          </div>
+        </div>
+
+      </div><!-- end of myTabContent -->
+    </div><!-- end of tab groups -->
+
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+
 </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $('#editEventForm').formValidation({
+    framework: 'bootstrap',
+    icon: {
+      valid: 'glyphicon glyphicon-ok',
+      // invalid: 'glyphicon glyphicon-remove',
+      validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+
+      name: {
+        validators: {
+          notEmpty: {
+            message: 'The name is required'
+          },
+          stringLength: {
+            min: 6,
+            max: 50,
+            message: 'The name must be more than 6 and less than 50 characters long'
+          },
+          regexp: {
+              regexp: /^[\sa-zA-Z0-9_]+$/,
+              message: 'The name can only consist of alphabetical, number, space and underscore'
+          }
+        }
+      },
+
+      highlight: {
+        validators: {
+          notEmpty: {
+            message: 'The highlight is required'
+          },
+          stringLength: {
+            min: 6,
+            max: 1000,
+            message: 'The highlight must be more than 6 and less than 1000 characters long'
+          }
+        }
+      },
+
+      description: {
+        validators: {
+          notEmpty: {
+            message: 'The description is required'
+          },
+          stringLength: {
+            min: 6,
+            max: 5000,
+            message: 'The description must be more than 6 and less than 5000 characters long'
+          }
+        }
+      },
+
+      maxParticipant: {
+        validators: {
+          notEmpty: {
+            message: 'Max number of participant is required'
+          },
+          integer: {
+            message: 'The value is not an integer'
+          },
+          between: {
+            min: 1,
+            max: 500,
+            message: 'The number of participant must be between 1 and 500'
+          }
+        }
+      },
+
+      date: {
+        validators: {
+          notEmpty: {
+            message: 'Cannot be empty'
+          }
+        }
+      },
+
+      startTime: {
+        validators: {
+          notEmpty: {
+            message: 'Cannot be empty'
+          }
+        }
+      },
+
+      endTime: {
+        validators: {
+          notEmpty: {
+            message: 'Cannot be empty'
+          }
+        }
+      }
+
+    }
+  })
+  .on('success.field.fv', function(e, data) {
+    if (data.fv.getInvalidFields().length > 0) {
+      data.fv.disableSubmitButtons(true);
+    }
+  });
+});
+</script>

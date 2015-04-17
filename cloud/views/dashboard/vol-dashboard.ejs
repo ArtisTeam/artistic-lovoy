@@ -25,12 +25,12 @@
             <td><%= event.createdAt%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll/delete" method="post">
-                <input type="submit" value="Unenroll"/>
+                <input class="btn btn-default" role="button" type="submit" value="Unenroll"/>
               </form>
             </td>
             <td>
               <form action="/qrcode/<%= event.id %>/<%= Parse.User.current().id %>" method="get">
-                <input type="submit" value="QR-code"/>
+                <input class="btn btn-default" role="button" type="submit" value="QR-code"/>
               </form>
             </td>
           </tr>
@@ -60,7 +60,7 @@
             <td><%= event.createdAt%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll" method="post">
-                <input type="submit" value="Enroll"/>
+                <input class="btn btn-default" role="button" type="submit" value="Enroll"/>
               </form>
             </td>
           </tr>

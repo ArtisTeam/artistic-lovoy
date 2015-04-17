@@ -1,7 +1,7 @@
 <div class="form-group">
   <label for="inputBirthday" class="control-label">Birthday</label>
   <div class='input-group date' id='datetimepicker'>
-    <input data-format="yyyy-MM-dd" type="text" name="birthday" 
+    <input data-format="MM/DD/YYY" type="text" name="birthday" 
     class="form-control" id="inputBirthday" placeholder="Birthday" 
     value="<%= (!!profile.get('birthday'))?profile.get('birthday'):'' %>" required></input>
     <span class="input-group-addon">
@@ -9,8 +9,6 @@
     </span>
   </div>
 </div>
-
-<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
   $(function () {
     $('#datetimepicker').datetimepicker({
