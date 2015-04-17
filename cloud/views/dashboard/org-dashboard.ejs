@@ -3,7 +3,7 @@
 </script>
 
 <div class="container">
-  <h2>Organization Dashboard</h2>
+  <h2><%= (orgProfile.get('name')) ? orgProfile.get('name') + '\'s ':'My ' %>Dashboard</h2>
   <div class="table-responsive">
     <table class="sortable-theme-bootstrap table table-striped" data-sortable>
       <thead>

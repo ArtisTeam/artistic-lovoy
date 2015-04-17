@@ -252,6 +252,13 @@ module.exports = function () {
           var vols = new Array(volsPt.length);
           for (var i=0; i<volsPt.length; ++i) {
             vols[i] = volsPt[i].get('vol');
+            vols[i].set('checkedIn', volsPt[i].get('checkedIn'));
+          }
+          var checkedInParticipant = 0;
+          for (var i=0; i<volsPt.length; ++i) {
+            if (volsPt[i].get('checkedIn')) {
+              checkedInParticipant += 1;
+            }
           }
           // get the profiles of all these vols
           var VolProfile = Parse.Object.extend('VolProfile');
@@ -262,7 +269,10 @@ module.exports = function () {
               res.render('event/manage', {
                 event: currEvent,
                 volProfiles: volProfiles,
-                vols: vols
+                vols: vols,
+                maxParticipant: parseInt(currEvent.get('maxParticipant')),
+                enrolledParticipant: vols.length,
+                checkedInParticipant: checkedInParticipant
               });
             },
             function(error) {

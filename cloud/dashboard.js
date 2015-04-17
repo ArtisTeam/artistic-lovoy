@@ -19,7 +19,28 @@ module.exports = function () {
               events[i].updatedAt =
                 moment(events[i].updatedAt).format("YYYY-MM-DD, hh:mm");
             }
-            res.render('dashboard/org-dashboard', {events: events});
+
+            // query the org's profile
+            var Profile = Parse.Object.extend('OrgProfile');
+            var queryProfile = new Parse.Query(Profile);
+            queryProfile.equalTo("createdBy", Parse.User.current());
+            queryProfile.find({
+              success: function (profiles) {
+                if (profiles.length > 0) {
+                  var profile = profiles[0];
+                  // render!
+                  res.render('dashboard/org-dashboard', {
+                    events: events,
+                    orgProfile: profile
+                  });
+                } else {
+                  res.send('Cannot query profile');
+                }
+              },
+              error: function(error) {
+                res.send("Fail to query profile");
+              }
+            });
           },
           error: function (error) {
             res.send("Fail to query events: " + error.code + " " + error.message);
