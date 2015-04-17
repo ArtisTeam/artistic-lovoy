@@ -58,7 +58,7 @@ module.exports = function () {
     }
   });
 
-  // render event/view, the only view not require login
+  // render event/view, the only view don't require login
   app.get('/:id', function (req, res, next) {
     if (req.params.id === 'new') {
       next();
