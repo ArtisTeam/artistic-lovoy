@@ -25,12 +25,16 @@
             <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll/delete" method="post">
-                <input class="btn btn-default" role="button" type="submit" value="Unenroll"/>
+                <button class="btn btn-default" role="button" type="submit">
+                  <span class="glyphicon glyphicon-remove"> Quit</span>
+                </button>
               </form>
             </td>
             <td>
               <form action="/qrcode/<%= event.id %>/<%= Parse.User.current().id %>" method="get">
-                <input class="btn btn-default" role="button" type="submit" value="QR-code"/>
+                <button class="btn btn-default" role="button" type="submit">
+                  <span class="glyphicon glyphicon-qrcode"> QR-code</span>
+                </button>
               </form>
             </td>
           </tr>
@@ -60,7 +64,9 @@
             <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll" method="post">
-                <input class="btn btn-default" role="button" type="submit" value="Enroll"/>
+                <button class="btn btn-default" role="button" type="submit">
+                  <span class="glyphicon glyphicon-plus-sign"> Enroll</span>
+                </button>
               </form>
             </td>
           </tr>
