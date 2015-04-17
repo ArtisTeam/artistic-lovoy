@@ -2,40 +2,85 @@
   document.title = document.title + " | Event Detail";
 </script>
 <div class="container">
-  <h2>Event Detail View</h2>
+  <h2>Event: <%= event.get('name')%></h2>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">objectId</h3>
+
+      <div>
+        <h4>Description</h4>
+      </div>
+      <div class="well well-sm">
+        <%= event.get('description')%>
+      </div>
+
+      <div>
+        <h4>Highlights</h4>
+      </div>
+      <div class="well well-sm">
+        <%= event.get('highlight')%>
+      </div>
+
+      <div>
+        <h4>Max number of participant</h4>
+      </div>
+      <div class="well well-sm">
+        <%= event.get('maxParticipant')%>
+      </div>
+
+      <div>
+        <h4>Date</h4>
+      </div>
+      <div class="well well-sm">
+        <%= event.get('date')%>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <div>
+            <h4>Start time</h4>
+          </div>
+          <div class="well well-sm">
+            <%= event.get('startTime')%>
+          </div>
         </div>
-        <div class="panel-body">
-          <%= event.id %>
+
+        <div class="form-group col-md-6">
+          <div>
+            <h4>End time</h4>
+          </div>
+          <div class="well well-sm">
+            <%= event.get('endTime')%>
+          </div>
         </div>
       </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">name</h3>
-        </div>
-        <div class="panel-body">
-          <%= event.get('name')%>
-        </div>
+      <div>
+        <h4>Location</h4>
       </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">description</h3>
+      <div class="well">
+        <div class="well well-sm">
+          <p><%=event.get('mapAddress')%></p>
         </div>
-        <div class="panel-body">
-          <%= event.get('description')%>
+        <div id="map" style="height: 400px;"></div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="m-t-small">
+          <input style="display: none" type="text" id="map-lat" class="form-control col-sm-2" name="mapLatitude"/> 
+          <input style="display: none" type="text" id="map-lon" class="form-control col-sm-2" name="mapLongitude"/>
         </div>
+        <div class="clearfix"></div>
       </div>
+      <script>
+        $('#map').locationpicker({
+          location: {
+            latitude: <%= ((!!event) && (!!event.get('mapLatitude'))) ? event.get('mapLatitude'):'40.77664406009141' %>,
+            longitude: <%= ((!!event) && (!!event.get('mapLongitude'))) ? event.get('mapLongitude'):'-73.96728672064887' %>
+          },
+          radius: 0,
+          zoom: 13
+        });
+      </script>
 
-      <!--todo: check if the event does belong to the org-->
-      <% if (Parse.User.current() && Parse.User.current().get('group') === 2) { %>
-      <% } else { %>
-      <% } %>
 
     </div>
   </div>  

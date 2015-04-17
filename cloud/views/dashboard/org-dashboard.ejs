@@ -3,33 +3,45 @@
 </script>
 
 <div class="container">
-  <h2>Organization Dashboard</h2>
+  <h2><%= (orgProfile.get('name')) ? orgProfile.get('name') + '\'s ':'My ' %>Dashboard</h2>
   <div class="table-responsive">
-    <table class="table table-striped sortable-theme-bootstrap" data-sortable>
+    <table class="sortable-theme-bootstrap table table-striped" data-sortable>
       <thead>
         <tr>
           <th data-sorted="true" data-sorted-direction="descending">Name</th>
-          <th>Description</th>
-          <th>Updated</th>
-          <th>Created</th>
+          <th>Date</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Maximum #</th>
+          <th>Registered #</th>
+          <th>Edit</th>
+          <th>Manage</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         <% for (var i=0; i<events.length ; ++i) {%>
           <% var event = events[i] %>
           <tr>
-            <td><%= event.get('name')%></td>
-            <td><%= event.get('description')%></td>
-            <td><%= event.updatedAt%></td>
-            <td><%= event.createdAt%></td>
+            <td><a href="/event/<%= event.id %>"><%= event.get('name')%></a></td>
+            <td><%= event.get('date')%></td>
+            <td><%= event.get('startTime')%></td>
+            <td><%= event.get('endTime')%></td>
+            <td><%= event.get('maxParticipant')%></td>
+            <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>/edit" method="get">
-                <input class="btn btn-default" role="button" type="submit" value="Edit"/>
+                <input class="btn btn-success" role="button" type="submit" value="Edit"/>
+              </form>
+            </td>
+            <td>
+              <form action="/event/<%= event.id %>/manage" method="get">
+                <input class="btn btn-success" role="button" type="submit" value="Manage"/>
               </form>
             </td>
             <td>
               <form action="/event/<%= event.id %>/delete" method="post">
-                <input class="btn btn-default" role="button" type="submit" value="Delete"/>
+                <input class="btn btn-danger" role="button" type="submit" value="Delete"/>
               </form>
             </td>
           </tr>
@@ -37,9 +49,6 @@
       </tbody>
     </table>
   </div>
-
-
-
   <p>
     <a href="/event/new" class="btn btn-primary" role="button">Create new event</a>
   </p>

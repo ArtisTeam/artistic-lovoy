@@ -1,0 +1,75 @@
+<script type="text/javascript">
+  document.title = document.title + " | Manage Event";
+</script>
+
+<div class="row">
+<div class="container col-md-6 col-md-offset-3">
+  <h2>Manage Event: <%= event.get('name')%></h2>
+
+  <div>
+    <h3>Enrolled Participants</h3>
+  </div>
+  <div class="table-responsive">
+    <table class="sortable-theme-bootstrap table table-striped" data-sortable>
+      <thead>
+        <tr>
+          <th data-sorted="true" data-sorted-direction="descending">User ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Applied</th>
+          <th>Checked-in</th>
+          <th>Reject</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i=0; i<volProfiles.length ; ++i) {%>
+          <% var volProfile = volProfiles[i] %>
+          <% var vol = vols[i] %>
+          <tr>
+            <td><%= vol.get('username')%></td>
+            <td><%= volProfile.get('firstName')%></td>
+            <td><%= volProfile.get('lastName')%></td>
+            <td><%= volProfile.get('contactPhone')%></td>
+            <td><%= volProfile.get('contactEmail')%></td>
+            <td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+            <td><span class="glyphicon glyphicon-ok" aria-hidden="true" <%= vol.get('checkedIn')? "" : "style='display: none'"%>></span></td>
+            <td>
+              <form action="/event/<%= event.id %>/delete" method="post">
+                <input class="btn btn-danger" role="button" type="submit" value="Delete"/>
+              </form>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="row">
+    <div class="container col-md-6">
+      <div>
+        <h3>Enrolled Participants</h3>
+      </div>
+      <div class="well">
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= enrolledParticipant %>" aria-valuemin="0" aria-valuemax="<%= maxParticipant %>" style="width: <%=(enrolledParticipant * 100 / maxParticipant).toString()%>%">Enrolled: <%= enrolledParticipant.toString() %> / Max: <%= maxParticipant.toString() %></div>
+        </div>
+      </div>
+    </div>
+    <div class="container col-md-6">
+      <div>
+        <h3>Checked-in Participants</h3>
+      </div>
+      <div class="well">
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= checkedInParticipant %>" aria-valuemin="0" aria-valuemax="<%= enrolledParticipant %>" style="width: <%=(checkedInParticipant * 100 / enrolledParticipant).toString()%>%">Checked-in: <%= checkedInParticipant.toString() %> / Enrolled: <%= enrolledParticipant.toString() %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</div>

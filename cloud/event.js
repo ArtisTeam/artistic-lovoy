@@ -128,11 +128,6 @@ module.exports = function () {
     });
   });
 
-  // testing only! shall be put after middleware
-  app.get('/:eventId/checkin/:volId', function (req, res, next) {
-    res.send("checkin " + req.params.eventId + " " + req.params.volId);
-  });
-
   // middleware, for anything else, require organization logged in
   app.all('*', function (req, res, next) {
     if (!Parse.User.current()) {
@@ -144,6 +139,44 @@ module.exports = function () {
       alert("org middleware rejected, redirect to dashboard");
       res.redirect('/dashboard');
     }
+  });
+
+  // testing only! shall be put after middleware
+  app.get('/:eventId/checkin/:volId', function (req, res, next) {
+    var Enroll = Parse.Object.extend('Enroll');
+    var query = new Parse.Query(Enroll);
+
+    var tempUser = new Parse.User();
+    tempUser.id = req.params.volId;
+    var Event = Parse.Object.extend('Event');
+    var tempEvent = new Event();
+    tempEvent.id = req.params.eventId;
+    query.equalTo('vol', tempUser);
+    query.equalTo('event', tempEvent);
+    query.find({
+      success: function (enrolls) {
+        if (enrolls.length > 0) {
+          // get the enroll entry
+          var enroll = enrolls[0];
+          enroll.set('checkedIn', true);
+          enroll.save(null, {
+            success: function (event) {
+              // res.redirect('/' + req.params.eventId = '/manage');
+              res.redirect('/event/' + req.params.eventId + '/manage');
+              // res.redirect('/dashboard');
+            },
+            error: function (event, error) {
+              res.send('Failed to save enroll, with error code: ' + error.message);
+            }
+          });
+        } else {
+          res.send('Have not enrolled in this event');
+        }
+      },
+      error: function(error) {
+        res.send("Fail to query events");
+      }
+    });
   });
 
   // render event/new
@@ -200,6 +233,58 @@ module.exports = function () {
   app.get('/:id/edit', function (req, res) {
     if (currEvent.get('createdBy').id === Parse.User.current().id) {
       res.render('event/edit', {event: currEvent});
+    } else {
+      res.send('Event not belong to current user.');
+    }
+  });
+
+  // render event/edit
+  app.get('/:id/manage', function (req, res) {
+    if (currEvent.get('createdBy').id === Parse.User.current().id) {
+      var Enroll = Parse.Object.extend('Enroll');
+      var queryEnrolled = new Parse.Query(Enroll);
+      queryEnrolled.equalTo('event', currEvent);
+      queryEnrolled.include('vol');
+      queryEnrolled.ascending("vol");
+      queryEnrolled.find().then(
+        function(volsPt) {
+          // get all vols enrolled in this event
+          var vols = new Array(volsPt.length);
+          for (var i=0; i<volsPt.length; ++i) {
+            vols[i] = volsPt[i].get('vol');
+            vols[i].set('checkedIn', volsPt[i].get('checkedIn'));
+          }
+          var checkedInParticipant = 0;
+          for (var i=0; i<volsPt.length; ++i) {
+            if (volsPt[i].get('checkedIn')) {
+              checkedInParticipant += 1;
+            }
+          }
+          // get the profiles of all these vols
+          var VolProfile = Parse.Object.extend('VolProfile');
+          var queryVolProfile = new Parse.Query(VolProfile);
+          queryVolProfile.containedIn("createdBy", vols);
+          queryVolProfile.ascending("createdBy");
+          queryVolProfile.find().then(
+            function(volProfiles) {
+              res.render('event/manage', {
+                event: currEvent,
+                volProfiles: volProfiles,
+                vols: vols,
+                maxParticipant: parseInt(currEvent.get('maxParticipant')),
+                enrolledParticipant: vols.length,
+                checkedInParticipant: checkedInParticipant
+              });
+            },
+            function(error) {
+              res.send("Fail to query enrolled events")
+            }
+          );
+        },
+        function(error) {
+          res.send("Fail to query enrolled events")
+        }
+      );     
     } else {
       res.send('Event not belong to current user.');
     }

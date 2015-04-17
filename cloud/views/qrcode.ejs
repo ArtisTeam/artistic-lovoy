@@ -9,27 +9,25 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-4 col-sm-offset-4">
-        <!-- <div class="well well-sm bs-component"> -->
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">Check-in QR code</h3>
-            </div>
-            <div class="panel-body">
-              <div id="qrcode"></div>
-              <!-- TODO: shall use global config file to store the host address -->
-              <% var rootAddr = "https://artisticlovoy.parseapp.com/" %>
-              <% var fullAddr = rootAddr + "/event/" + eventId + "/checkin/" + volId %>
-              <script type="text/javascript">
-                var addr = <%- JSON.stringify(fullAddr) %>
-                new QRCode(document.getElementById("qrcode"), addr);
-              </script>
-            </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Check-in QR code</h3>
           </div>
-          <div>
-            <p style="margin:auto;display:block">Show this QR code when you check in the event</p>
-            <button class="btn btn-primary" style="margin:auto;display:block" onclick="window.print()">Print</button>
+          <div class="panel-body">
+            <div id="qrcode"></div>
+            <!-- TODO: shall use global config file to store the host address -->
+            <% var rootAddr = "https://artisticlovoy.parseapp.com/" %>
+            <% var fullAddr = rootAddr + "/event/" + eventId + "/checkin/" + volId %>
+            <script type="text/javascript">
+              var addr = <%- JSON.stringify(fullAddr) %>
+              new QRCode(document.getElementById("qrcode"), addr);
+            </script>
           </div>
-        <!-- </div> -->
+        </div>
+        <div style="margin:auto;display:block">Show this QR code when you check in the event</div>
+        <div>
+          <button class="btn btn-primary" style="margin:auto;display:block" onclick="window.print()">Print</button>
+        </div>
       </div>
     </div>
   </div>
