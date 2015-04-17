@@ -34,8 +34,7 @@
             <td><%= volProfile.get('contactPhone')%></td>
             <td><%= volProfile.get('contactEmail')%></td>
             <td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
-            <td><span class="glyphicon glyphicon-ok" aria-hidden="true" style="display: none"></span></td>
-            vols.set('checkedIn')
+            <td><span class="glyphicon glyphicon-ok" aria-hidden="true" <%= vol.get('checkedIn')? "" : "style='display: none'"%>></span></td>
             <td>
               <form action="/event/<%= event.id %>/delete" method="post">
                 <input class="btn btn-danger" role="button" type="submit" value="Delete"/>

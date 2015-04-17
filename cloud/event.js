@@ -245,7 +245,7 @@ module.exports = function () {
       var queryEnrolled = new Parse.Query(Enroll);
       queryEnrolled.equalTo('event', currEvent);
       queryEnrolled.include('vol');
-
+      queryEnrolled.ascending("vol");
       queryEnrolled.find().then(
         function(volsPt) {
           // get all vols enrolled in this event
@@ -264,6 +264,7 @@ module.exports = function () {
           var VolProfile = Parse.Object.extend('VolProfile');
           var queryVolProfile = new Parse.Query(VolProfile);
           queryVolProfile.containedIn("createdBy", vols);
+          queryVolProfile.ascending("createdBy");
           queryVolProfile.find().then(
             function(volProfiles) {
               res.render('event/manage', {
