@@ -13,7 +13,6 @@
           <th>Start Time</th>
           <th>End Time</th>
           <th>Max People</th>
-          <th>Registered</th>
           <th>Detail</th>
           <th>Edit</th>
           <th>Manage</th>
@@ -28,7 +27,6 @@
             <td><%= event.get('date')%></td>
             <td><%= event.get('startTime')%></td>
             <td><%= event.get('endTime')%></td>
-            <td><%= event.get('maxParticipant')%></td>
             <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>" method="get">
