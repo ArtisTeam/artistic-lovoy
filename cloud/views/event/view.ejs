@@ -72,33 +72,7 @@
             zoom: 13
           });
         </script>
-
-      <div>
-        <h4>Max number of participant</h4>
-      </div>
-      <div class="well well-sm">
-        <%= event.get('maxParticipant')%>
-      </div>
-
-      <div>
-        <h4>Max number of participant</h4>
-      </div>
-      <div class="well well-sm">
-        <%= event.get('maxParticipant')%>
-      </div>
-
-      <div>
-        <h4>Max number of participant</h4>
-      </div>
-      <div class="well well-sm">
-        <%= event.get('maxParticipant')%>
-      </div>
-
-      <!--todo: check if the event does belong to the org-->
-      <% if (Parse.User.current() && Parse.User.current().get('group') === 2) { %>
-      <% } else { %>
-      <% } %>
-
+        
     </div>
   </div>  
 </div>
