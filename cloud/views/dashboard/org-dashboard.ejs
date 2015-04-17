@@ -32,22 +32,30 @@
             <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>" method="get">
-                <input class="btn btn-success" role="button" type="submit" value="Detail"/>
+                <button class="btn btn-success" role="button" type="submit">
+                  <span class="glyphicon glyphicon-search"> Preview</span>
+                </button>
               </form>
             </td>
             <td>
               <form action="/event/<%= event.id %>/edit" method="get">
-                <input class="btn btn-success" role="button" type="submit" value="Edit"/>
+                <button class="btn btn-success" role="button" type="submit">
+                  <span class="glyphicon glyphicon-pencil"> Edit</span>
+                </button>
               </form>
             </td>
             <td>
               <form action="/event/<%= event.id %>/manage" method="get">
-                <input class="btn btn-success" role="button" type="submit" value="Manage"/>
+                <button class="btn btn-success" role="button" type="submit">
+                  <span class="glyphicon glyphicon-user"> Manage</span>
+                </button>
               </form>
             </td>
             <td>
               <form action="/event/<%= event.id %>/delete" method="post">
-                <input class="btn btn-danger" role="button" type="submit" value="Delete"/>
+                <button class="btn btn-danger" role="button" type="submit">
+                  <span class="glyphicon glyphicon-remove"> Delete</span>
+                </button>
               </form>
             </td>
           </tr>
@@ -56,6 +64,6 @@
     </table>
   </div>
   <p>
-    <a href="/event/new" class="btn btn-primary" role="button">Create new event</a>
+    <a href="/event/new" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus"></span> Create new event</a>
   </p>
 </div>
