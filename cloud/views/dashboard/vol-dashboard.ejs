@@ -9,10 +9,10 @@
     <table class="table table-striped sortable-theme-bootstrap" data-sortable>
       <thead>
         <tr>
-          <th data-sorted="true" data-sorted-direction="descending">Name</th>
+          <th>Name</th>
           <th>Description</th>
-          <th>Updated</th>
-          <th>Created</th>
+          <th>Date</th>
+          <th>Max People</th>
         </tr>
       </thead>
       <tbody>
@@ -21,8 +21,8 @@
           <tr>
             <td><%= event.get('name')%></td>
             <td><%= event.get('description')%></td>
-            <td><%= event.updatedAt%></td>
-            <td><%= event.createdAt%></td>
+            <td><%= event.get('date')%></td>
+            <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll/delete" method="post">
                 <input class="btn btn-default" role="button" type="submit" value="Unenroll"/>
@@ -44,10 +44,10 @@
     <table class="table table-striped sortable-theme-bootstrap" data-sortable>
       <thead>
         <tr>
-          <th data-sorted="true" data-sorted-direction="descending">Name</th>
+          <th>Name</th>
           <th>Description</th>
-          <th>Updated</th>
-          <th>Created</th>
+          <th>Date</th>
+          <th>Max People</th>
         </tr>
       </thead>
       <tbody>
@@ -56,8 +56,8 @@
           <tr>
             <td><%= event.get('name')%></td>
             <td><%= event.get('description')%></td>
-            <td><%= event.updatedAt%></td>
-            <td><%= event.createdAt%></td>
+            <td><%= event.get('date')%></td>
+            <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll" method="post">
                 <input class="btn btn-default" role="button" type="submit" value="Enroll"/>

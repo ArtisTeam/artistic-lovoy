@@ -59,7 +59,7 @@
           <ul class="nav navbar-nav navbar-right">
             <% if (!Parse.User.current()) { %>
               <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
-              <li><a href="/signup">Sign up</a></li>
+              <li><a href="/signup"><span class="glyphicon glyphicon-send"></span> Sign up</a></li>
             <% } else { %>
               <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> <%= Parse.User.current().get('username') %></a></li>
               <li><a href="/dashboard"><span class="glyphicon glyphicon-th-list"></span> Dashboard</a></li>
