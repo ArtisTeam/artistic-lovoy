@@ -9,10 +9,10 @@
     <table class="table table-striped sortable-theme-bootstrap" data-sortable>
       <thead>
         <tr>
-          <th data-sorted="true" data-sorted-direction="descending">Name</th>
+          <th>Name</th>
           <th>Description</th>
-          <th>Updated</th>
-          <th>Created</th>
+          <th>Date</th>
+          <th>Max People</th>
         </tr>
       </thead>
       <tbody>
@@ -21,16 +21,20 @@
           <tr>
             <td><%= event.get('name')%></td>
             <td><%= event.get('description')%></td>
-            <td><%= event.updatedAt%></td>
-            <td><%= event.createdAt%></td>
+            <td><%= event.get('date')%></td>
+            <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll/delete" method="post">
-                <input class="btn btn-default" role="button" type="submit" value="Unenroll"/>
+                <button class="btn btn-default" role="button" type="submit">
+                  <span class="glyphicon glyphicon-remove"> Quit</span>
+                </button>
               </form>
             </td>
             <td>
               <form action="/qrcode/<%= event.id %>/<%= Parse.User.current().id %>" method="get">
-                <input class="btn btn-default" role="button" type="submit" value="QR-code"/>
+                <button class="btn btn-default" role="button" type="submit">
+                  <span class="glyphicon glyphicon-qrcode"> QR-code</span>
+                </button>
               </form>
             </td>
           </tr>
@@ -44,10 +48,10 @@
     <table class="table table-striped sortable-theme-bootstrap" data-sortable>
       <thead>
         <tr>
-          <th data-sorted="true" data-sorted-direction="descending">Name</th>
+          <th>Name</th>
           <th>Description</th>
-          <th>Updated</th>
-          <th>Created</th>
+          <th>Date</th>
+          <th>Max People</th>
         </tr>
       </thead>
       <tbody>
@@ -56,11 +60,13 @@
           <tr>
             <td><%= event.get('name')%></td>
             <td><%= event.get('description')%></td>
-            <td><%= event.updatedAt%></td>
-            <td><%= event.createdAt%></td>
+            <td><%= event.get('date')%></td>
+            <td><%= event.get('maxParticipant')%></td>
             <td>
               <form action="/event/<%= event.id %>/enroll" method="post">
-                <input class="btn btn-default" role="button" type="submit" value="Enroll"/>
+                <button class="btn btn-default" role="button" type="submit">
+                  <span class="glyphicon glyphicon-plus-sign"> Enroll</span>
+                </button>
               </form>
             </td>
           </tr>

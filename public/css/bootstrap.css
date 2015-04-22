@@ -5,8 +5,8 @@
  */
 
 /*!
- * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=ff4979cda8e841db7af7)
- * Config saved to config.json and https://gist.github.com/ff4979cda8e841db7af7
+ * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=733290fd3062241041d7)
+ * Config saved to config.json and https://gist.github.com/733290fd3062241041d7
  */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -3132,8 +3132,8 @@ fieldset[disabled] .btn-primary.active {
 }
 .btn-success {
   color: #ffffff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #89cebb;
+  border-color: #77c7b1;
 }
 .btn-success:hover,
 .btn-success:focus,
@@ -3142,8 +3142,8 @@ fieldset[disabled] .btn-primary.active {
 .btn-success.active,
 .open > .dropdown-toggle.btn-success {
   color: #ffffff;
-  background-color: #449d44;
-  border-color: #398439;
+  background-color: #65bfa6;
+  border-color: #4cb598;
 }
 .btn-success:active,
 .btn-success.active,
@@ -3168,11 +3168,11 @@ fieldset[disabled] .btn-success:active,
 .btn-success.disabled.active,
 .btn-success[disabled].active,
 fieldset[disabled] .btn-success.active {
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #89cebb;
+  border-color: #77c7b1;
 }
 .btn-success .badge {
-  color: #5cb85c;
+  color: #89cebb;
   background-color: #ffffff;
 }
 .btn-info {
@@ -3267,8 +3267,8 @@ fieldset[disabled] .btn-warning.active {
 }
 .btn-danger {
   color: #ffffff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
+  background-color: #dd908a;
+  border-color: #d77d76;
 }
 .btn-danger:hover,
 .btn-danger:focus,
@@ -3277,8 +3277,8 @@ fieldset[disabled] .btn-warning.active {
 .btn-danger.active,
 .open > .dropdown-toggle.btn-danger {
   color: #ffffff;
-  background-color: #c9302c;
-  border-color: #ac2925;
+  background-color: #d26b62;
+  border-color: #c95047;
 }
 .btn-danger:active,
 .btn-danger.active,
@@ -3303,11 +3303,11 @@ fieldset[disabled] .btn-danger:active,
 .btn-danger.disabled.active,
 .btn-danger[disabled].active,
 fieldset[disabled] .btn-danger.active {
-  background-color: #d9534f;
-  border-color: #d43f3a;
+  background-color: #dd908a;
+  border-color: #d77d76;
 }
 .btn-danger .badge {
-  color: #d9534f;
+  color: #dd908a;
   background-color: #ffffff;
 }
 .btn-link {
@@ -4782,11 +4782,11 @@ a.label:focus {
   background-color: #1a242f;
 }
 .label-success {
-  background-color: #5cb85c;
+  background-color: #89cebb;
 }
 .label-success[href]:hover,
 .label-success[href]:focus {
-  background-color: #449d44;
+  background-color: #65bfa6;
 }
 .label-info {
   background-color: #5bc0de;
@@ -4803,11 +4803,11 @@ a.label:focus {
   background-color: #ec971f;
 }
 .label-danger {
-  background-color: #d9534f;
+  background-color: #dd908a;
 }
 .label-danger[href]:hover,
 .label-danger[href]:focus {
-  background-color: #c9302c;
+  background-color: #d26b62;
 }
 .badge {
   display: inline-block;
@@ -5058,7 +5058,7 @@ a.thumbnail.active {
   animation: progress-bar-stripes 2s linear infinite;
 }
 .progress-bar-success {
-  background-color: #5cb85c;
+  background-color: #89cebb;
 }
 .progress-striped .progress-bar-success {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -5082,7 +5082,7 @@ a.thumbnail.active {
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
 .progress-bar-danger {
-  background-color: #d9534f;
+  background-color: #dd908a;
 }
 .progress-striped .progress-bar-danger {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);

@@ -15,8 +15,8 @@ Parse.Cloud.beforeSave("Enroll", function(request, response) {
   query.equalTo('event', reqEvent);
   alert(reqVol);
   query.find({
-    success: function(events) {
-      if (events.length === 0) {
+    success: function(enrolls) {
+      if (enrolls.length === 0 || request.object.id === enrolls[0].id) {
         response.success();
       }
       else {
