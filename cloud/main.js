@@ -103,25 +103,46 @@ Parse.Cloud.define("PushNotification", function(request, response) {
       console.error(error);
     }
   })
-})
+});
 
 
-    // var Enroll = Parse.Object.extend('Enroll');
-    // var enroll = new Enroll();
-    // enroll.set('vol', Parse.User.current());
-    // enroll.set('event', currEvent);
-    // enroll.save(null, {
-    //   success: function (event) {
-    //     response.success("Event enrollment succeeded");
-    //   },
-    //   error: function (event, error) {
-    //     response.error("Event enrollment went wrong");
-    //     // res.send('Failed to enroll, with error code: ' + error.message);
-    //   }
-    // });
+// incomplete
+Parse.Cloud.define("getHistoryEvents", function(request, response) {
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-// Parse.Cloud.define("hello", function(req, res) {
-//   res.success("Hello world!");
-// });
+  var userId = request.params.userId;
+  console.log(userId);
+  var obj = new Parse.User({id:userId});
+
+
+        console.log("getHistoryEvents() got called");
+  var enrollQuery = new Parse.Query(Enroll);
+  enrollQuery.equalTo("vol", obj);
+  enrollQuery.find
+  ({
+      success: function(results)                              
+      {              
+        console.log("getHistoryEvents() got results");
+        var retData = [];
+         if (results.length > 0) 
+         {                       
+            var data = {};
+            for (var i = 0;i < results.length;i++) {
+              // data["enrollId"] = results[i]["objectId"];
+              // data["status"] = results[i]["status"];
+              // data["completionRate"] = results[i]["completionRate"];
+            }
+            response.success(JSON.stringify(results));
+
+            // response.success(JSON.stringify(results[0]));
+
+         }
+         else    
+         {               
+
+          }
+      },
+      error: function(error) {
+        console.error("getHistoryEvents error " + error);
+      }
+  })  
+});
