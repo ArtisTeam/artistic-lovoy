@@ -144,23 +144,20 @@ Parse.Cloud.define("getHistoryEvents", function(request, response) {
 
 // set the event property "started"
 Parse.Cloud.job("bgJob1", function(request, status) {
-    Parse.Cloud.useMasterKey();
+  Parse.Cloud.useMasterKey();
 
   var Event = Parse.Object.extend('Event');
   var eventQuery = new Parse.Query(Event);
   eventQuery.notEqualTo("started", true);
   eventQuery.each(function(event) {
-      // Set and save the change
 
       // compare time using moment
       var eventDateString = event.get("date");
       var startTimeString = event.get("startTime");
       var endTimeString = event.get("endTime");
       var zone = "America/New_York";
-      console.log("event " + event);
       var startTimeFormat = moment.tz(eventDateString + " " + startTimeString, "MM/DD/YYYY hh:mm a", zone).format();
       if (moment(new Date()).isAfter(moment(startTimeFormat))) {
-        console.log("set to true");
         event.set("started", true);
         return event.save();
       }
@@ -171,13 +168,6 @@ Parse.Cloud.job("bgJob1", function(request, status) {
     // Set the job's error status
     status.error("Uh oh, something went wrong.");
   });
-});
-
-
-Parse.Cloud.define("testDate", function(request, response) {
-  
-
-});
-
+  });
 
 
