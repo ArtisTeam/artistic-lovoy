@@ -37,9 +37,6 @@ Parse.Cloud.beforeSave("Enroll", function(request, response) {
 Parse.Cloud.define("sendTwilioMessage", function(request, response) {
   console.log("request: " + request.params);
 
-  response.success("Twilio succeeded");
-
-
     // Require and initialize the Twilio module with your credentials
     var client = require('twilio')('AC15300787442c39ec0b8bd2bae0e90bfd', '91f45717322eec04c8eb917b9a5d623a');
 
@@ -81,17 +78,19 @@ Parse.Cloud.define("enrollEvent", function(request, response) {
 });
 
 // Now the only notification is event approvals
-Parse.Cloud.define("PushNotification", function(request, response) {
+Parse.Cloud.define("pushNotification", function(request, response) {
   // Our "Comment" class has a "text" key with the body of the comment itself
 
-  var volunteerId = request.params.volunteerId;
+  // var volunteerId = request.params.volunteerId;
+  var volunteerId = "2fg3mTC8uC";
   var eventName = request.params.eventName;
 
+  var userObj = new Parse.User({id:volunteerId});
+
   var query = new Parse.Query(Parse.Installation);
-  console.log("push msg received")
 
   query.equalTo('channels', 'registrationNotice');
-  query.equalTo('userId', volunteerId);
+  query.equalTo('userId2', userObj);
   Parse.Push.send({ 
     where: query,
     data: {
@@ -100,10 +99,11 @@ Parse.Cloud.define("PushNotification", function(request, response) {
     }
   }, {
     success: function() {
-      console.log("Push was successful");
+      response.success("Push was successful");
     },
     error: function(error) {
       console.error(error);
+      response.error("Oh something went wrong in pushNotification()");
     }
   })
 });
@@ -112,7 +112,6 @@ Parse.Cloud.define("PushNotification", function(request, response) {
 Parse.Cloud.define("getHistoryEvents", function(request, response) {
 
   var userId = request.params.userId;
-  console.log(userId);
   var obj = new Parse.User({id:userId});
 
   var enrollQuery = new Parse.Query(Enroll);
