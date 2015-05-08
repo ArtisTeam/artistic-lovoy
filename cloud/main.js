@@ -1,6 +1,9 @@
 Parse.User.enableRevocableSession();
 
 require('cloud/app.js');
+var moment = require('cloud/lib/moment.js');
+var momentTz = require('cloud/lib/moment-timezone-with-data.js');
+// moment.tz.add(require('cloud/lib/moment-timezone-with-data.js'));
 
 var Enroll = Parse.Object.extend("Enroll");
 
@@ -32,50 +35,50 @@ Parse.Cloud.beforeSave("Enroll", function(request, response) {
 
 
 Parse.Cloud.define("sendTwilioMessage", function(request, response) {
-    console.log("request: " + request.params);
+  console.log("request: " + request.params);
 
-          response.success("Twilio succeeded");
+  response.success("Twilio succeeded");
 
 
     // Require and initialize the Twilio module with your credentials
     var client = require('twilio')('AC15300787442c39ec0b8bd2bae0e90bfd', '91f45717322eec04c8eb917b9a5d623a');
-     
+
     // Send an SMS message
     client.sendSms({
-        to: request.params.phoneNumber,
-        from: '+17162496228', 
-        body: 'Hello ' + request.params.firstName + ', your verification code for Lovoy is ' + request.params.passcode
-      }, function(err, responseData) { 
-        if (err) {
-          console.log(err);
+      to: request.params.phoneNumber,
+      from: '+17162496228', 
+      body: 'Hello ' + request.params.firstName + ', your verification code for Lovoy is ' + request.params.passcode
+    }, function(err, responseData) { 
+      if (err) {
+        console.log(err);
         response.error("Twilio failed");
-        } else { 
-          console.log(responseData.from); 
-          console.log(responseData.body);
-          response.success("Twilio succeeded");
-        }
+      } else { 
+        console.log(responseData.from); 
+        console.log(responseData.body);
+        response.success("Twilio succeeded");
       }
+    }
     );
-});
+  });
 
 Parse.Cloud.define("enrollEvent", function(request, response) {
-    if (!Parse.User.current()) {
-      response.error("The user hasn't logged in.");
-    }
-    var currEvent = null;
+  if (!Parse.User.current()) {
+    response.error("The user hasn't logged in.");
+  }
+  var currEvent = null;
 
-    var Event = Parse.Object.extend('Event');
-    var query = new Parse.Query(Event);
-    query.get(req.params.id, {
-      success: function (event) {
-          currEvent = event;
-        },
-        error: function (event, error) {
-          var test;
-          res.send("Fail /:id*: " + error.code + error.message +'\ntest='+test);
-        }
-    });
+  var Event = Parse.Object.extend('Event');
+  var query = new Parse.Query(Event);
+  query.get(req.params.id, {
+    success: function (event) {
+      currEvent = event;
+    },
+    error: function (event, error) {
+      var test;
+      res.send("Fail /:id*: " + error.code + error.message +'\ntest='+test);
+    }
   });
+});
 
 // Now the only notification is event approvals
 Parse.Cloud.define("PushNotification", function(request, response) {
@@ -105,7 +108,6 @@ Parse.Cloud.define("PushNotification", function(request, response) {
   })
 });
 
-
 // incomplete
 Parse.Cloud.define("getHistoryEvents", function(request, response) {
 
@@ -113,36 +115,69 @@ Parse.Cloud.define("getHistoryEvents", function(request, response) {
   console.log(userId);
   var obj = new Parse.User({id:userId});
 
-
-        console.log("getHistoryEvents() got called");
   var enrollQuery = new Parse.Query(Enroll);
   enrollQuery.equalTo("vol", obj);
   enrollQuery.find
   ({
-      success: function(results)                              
-      {              
-        console.log("getHistoryEvents() got results");
-        var retData = [];
-         if (results.length > 0) 
-         {                       
-            var data = {};
-            for (var i = 0;i < results.length;i++) {
+    success: function(results)                              
+    {              
+      console.log("getHistoryEvents() got results");
+      var retData = [];
+      if (results.length > 0) 
+      {                       
+        var data = {};
+        for (var i = 0;i < results.length;i++) {
               // data["enrollId"] = results[i]["objectId"];
               // data["status"] = results[i]["status"];
               // data["completionRate"] = results[i]["completionRate"];
             }
             response.success(JSON.stringify(results));
-
-            // response.success(JSON.stringify(results[0]));
-
-         }
-         else    
-         {               
-
           }
+          else    
+          {}
       },
       error: function(error) {
         console.error("getHistoryEvents error " + error);
       }
-  })  
+    })  
 });
+
+// set the event property "started"
+Parse.Cloud.job("bgJob1", function(request, status) {
+    Parse.Cloud.useMasterKey();
+
+  var Event = Parse.Object.extend('Event');
+  var eventQuery = new Parse.Query(Event);
+  eventQuery.notEqualTo("started", true);
+  eventQuery.each(function(event) {
+      // Set and save the change
+
+      // compare time using moment
+      var eventDateString = event.get("date");
+      var startTimeString = event.get("startTime");
+      var endTimeString = event.get("endTime");
+      var zone = "America/New_York";
+      console.log("event " + event);
+      var startTimeFormat = moment.tz(eventDateString + " " + startTimeString, "MM/DD/YYYY hh:mm a", zone).format();
+      if (moment(new Date()).isAfter(moment(startTimeFormat))) {
+        console.log("set to true");
+        event.set("started", true);
+        return event.save();
+      }
+    }).then(function() {
+    // Set the job's success status
+    status.success("successfully.");
+  }, function(error) {
+    // Set the job's error status
+    status.error("Uh oh, something went wrong.");
+  });
+});
+
+
+Parse.Cloud.define("testDate", function(request, response) {
+  
+
+});
+
+
+
