@@ -19,7 +19,9 @@
           <th>Phone</th>
           <th>Email</th>
           <th>Status</th>
-          <th>Checked-in</th>
+          <th>Accept</th>
+          <th>Reject</th>
+          <th>Reset</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +34,27 @@
             <td><%= volProfile.get('contactPhone')%></td>
             <td><%= volProfile.get('contactEmail')%></td>
             <td><%= volProfile.get('status')%></td>
-            <td><span class="glyphicon glyphicon-ok" aria-hidden="true" <%= (volProfile.get('checkedIn'))? "" : "style='display: none'"%>></span></td>
+            <td>
+              <form action="/event/<%= event.id %>/approve/<%= volProfile.get('createdBy').id%>" method="get">
+                <button class="btn btn-success" role="button" type="submit">
+                  <span class="glyphicon glyphicon-ok"> Accept</span>
+                </button>
+              </form>
+            </td>
+            <td>
+              <form action="/event/<%= event.id %>/reject/<%= volProfile.get('createdBy').id%>" method="get">
+                <button class="btn btn-danger" role="button" type="submit">
+                  <span class="glyphicon glyphicon-remove"> Reject</span>
+                </button>
+              </form>
+            </td>
+            <td>
+              <form action="/event/<%= event.id %>/reset/<%= volProfile.get('createdBy').id%>" method="get">
+                <button class="btn btn-info" role="button" type="submit">
+                  <span class="glyphicon glyphicon-repeat"> Reset</span>
+                </button>
+              </form>
+            </td>
           </tr>
         <% } %>
       </tbody>

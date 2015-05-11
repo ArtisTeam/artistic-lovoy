@@ -185,6 +185,123 @@ module.exports = function () {
     });
   });
 
+  // apprve a volunteer
+  // TODO: call parse push notification
+  app.get('/:eventId/approve/:volId', function (req, res, next) {
+    var Enroll = Parse.Object.extend('Enroll');
+    var query = new Parse.Query(Enroll);
+
+    var tempUser = new Parse.User();
+    tempUser.id = req.params.volId;
+    var Event = Parse.Object.extend('Event');
+    var tempEvent = new Event();
+    tempEvent.id = req.params.eventId;
+    query.equalTo('vol', tempUser);
+    query.equalTo('event', tempEvent);
+    query.find({
+      success: function (enrolls) {
+        if (enrolls.length > 0) {
+          // get the enroll entry
+          var enroll = enrolls[0];
+          enroll.set('status', 'enrolled');
+          enroll.save(null, {
+            success: function (event) {
+              // res.redirect('/' + req.params.eventId = '/manage');
+              res.redirect('/event/' + req.params.eventId + '/manage');
+              // res.redirect('/dashboard');
+            },
+            error: function (event, error) {
+              res.send('Failed to save enroll, with error code: ' + error.message);
+            }
+          });
+        } else {
+          res.send('Have not enrolled in this event');
+        }
+      },
+      error: function(error) {
+        res.send("Fail to query events");
+      }
+    });
+  });
+
+  // reject a volunteer
+  // TODO: call parse push notification
+  app.get('/:eventId/reject/:volId', function (req, res, next) {
+    var Enroll = Parse.Object.extend('Enroll');
+    var query = new Parse.Query(Enroll);
+
+    var tempUser = new Parse.User();
+    tempUser.id = req.params.volId;
+    var Event = Parse.Object.extend('Event');
+    var tempEvent = new Event();
+    tempEvent.id = req.params.eventId;
+    query.equalTo('vol', tempUser);
+    query.equalTo('event', tempEvent);
+    query.find({
+      success: function (enrolls) {
+        if (enrolls.length > 0) {
+          // get the enroll entry
+          var enroll = enrolls[0];
+          enroll.set('status', 'cancelled');
+          enroll.save(null, {
+            success: function (event) {
+              // res.redirect('/' + req.params.eventId = '/manage');
+              res.redirect('/event/' + req.params.eventId + '/manage');
+              // res.redirect('/dashboard');
+            },
+            error: function (event, error) {
+              res.send('Failed to save enroll, with error code: ' + error.message);
+            }
+          });
+        } else {
+          res.send('Have not enrolled in this event');
+        }
+      },
+      error: function(error) {
+        res.send("Fail to query events");
+      }
+    });
+  });
+
+  // reject a volunteer
+  // TODO: call parse push notification
+  app.get('/:eventId/reset/:volId', function (req, res, next) {
+    var Enroll = Parse.Object.extend('Enroll');
+    var query = new Parse.Query(Enroll);
+
+    var tempUser = new Parse.User();
+    tempUser.id = req.params.volId;
+    var Event = Parse.Object.extend('Event');
+    var tempEvent = new Event();
+    tempEvent.id = req.params.eventId;
+    query.equalTo('vol', tempUser);
+    query.equalTo('event', tempEvent);
+    query.find({
+      success: function (enrolls) {
+        if (enrolls.length > 0) {
+          // get the enroll entry
+          var enroll = enrolls[0];
+          enroll.set('status', 'pending');
+          enroll.save(null, {
+            success: function (event) {
+              // res.redirect('/' + req.params.eventId = '/manage');
+              res.redirect('/event/' + req.params.eventId + '/manage');
+              // res.redirect('/dashboard');
+            },
+            error: function (event, error) {
+              res.send('Failed to save enroll, with error code: ' + error.message);
+            }
+          });
+        } else {
+          res.send('Have not enrolled in this event');
+        }
+      },
+      error: function(error) {
+        res.send("Fail to query events");
+      }
+    });
+  });
+
   // render event/new
   app.get('/new', function (req, res) {
     res.render('event/edit', {event: null}); // must not include '/' in front
@@ -276,7 +393,7 @@ module.exports = function () {
               for (var j=0; j<volProfiles.length; ++j) {
                 for (var i=0; i<volsPt.length; ++i) {
                   if (volProfiles[j].get('createdBy').id === volsPt[i].get('vol').id) {
-                    volProfiles[j].set('checkedIn', volsPt[i].get('checkedIn'));
+                    // volProfiles[j].set('checkedIn', volsPt[i].get('checkedIn'));
                     volProfiles[j].set('status', volsPt[i].get('status'));
                   }
                 }
