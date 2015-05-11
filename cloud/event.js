@@ -87,6 +87,12 @@ module.exports = function () {
     var enroll = new Enroll();
     enroll.set('vol', Parse.User.current());
     enroll.set('event', currEvent);
+
+    // TODO: set completion rate?
+    // TODO: set ACL s.t. the org shall be able to edit it
+
+    enroll.set('status', 'pending');
+
     enroll.save(null, {
       success: function (event) {
         res.redirect('/dashboard');

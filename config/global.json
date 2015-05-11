@@ -1,18 +1,14 @@
 {
-    "applications": {
-        "ArtisticLovoy": {
-            "applicationId": "qLwTSdScfNGcExbD4lizRWjp5zFCZDyHMNgJSHBY", 
-            "masterKey": "pdsxExLxMkKS76cAwkWx8m3PeKlGQJSAiuRGy86E"
-        }, 
-        "Lovoy": {
-            "applicationId": "TzkFbJLi9kYtHHT8FTG1PszNS1pohrqlmLuccqkT", 
-            "masterKey": "0OKUKz7WH0dNqP4MdzmZGZGLW0xESqLgY9eg6XAX"
-        }, 
-        "_default": {
-            "link": "ArtisticLovoy"
-        }
-    }, 
-    "global": {
-        "parseVersion": "1.4.0"
+  "global": {
+    "parseVersion": "1.4.2"
+  },
+  "applications": {
+    "Lovoy": {
+      "applicationId": "TzkFbJLi9kYtHHT8FTG1PszNS1pohrqlmLuccqkT",
+      "masterKey": "0OKUKz7WH0dNqP4MdzmZGZGLW0xESqLgY9eg6XAX"
+    },
+    "_default": {
+      "link": "Lovoy"
     }
+  }
 }
