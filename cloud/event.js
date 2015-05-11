@@ -277,6 +277,7 @@ module.exports = function () {
                 for (var i=0; i<volsPt.length; ++i) {
                   if (volProfiles[j].get('createdBy').id === volsPt[i].get('vol').id) {
                     volProfiles[j].set('checkedIn', volsPt[i].get('checkedIn'));
+                    volProfiles[j].set('status', volsPt[i].get('status'));
                   }
                 }
               }

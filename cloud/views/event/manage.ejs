@@ -18,7 +18,7 @@
           <th>Last Name</th>
           <th>Phone</th>
           <th>Email</th>
-          <th>Enrolled</th>
+          <th>Status</th>
           <th>Checked-in</th>
         </tr>
       </thead>
@@ -31,7 +31,7 @@
             <td><%= volProfile.get('lastName')%></td>
             <td><%= volProfile.get('contactPhone')%></td>
             <td><%= volProfile.get('contactEmail')%></td>
-            <td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+            <td><%= volProfile.get('status')%></td>
             <td><span class="glyphicon glyphicon-ok" aria-hidden="true" <%= (volProfile.get('checkedIn'))? "" : "style='display: none'"%>></span></td>
           </tr>
         <% } %>
