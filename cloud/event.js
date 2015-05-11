@@ -376,12 +376,20 @@ module.exports = function () {
             vols[i] = volsPt[i].get('vol');
             // vols[i].set('checkedIn', volsPt[i].get('checkedIn'));
           }
+          // count checked-in participant
           var checkedInParticipant = 0;
           for (var i=0; i<volsPt.length; ++i) {
             if (volsPt[i].get('checkedIn')) {
               checkedInParticipant += 1;
             }
           }
+          var approvedParticipant = 0;
+          for (var i=0; i<volsPt.length; ++i) {
+            if (volsPt[i].get('status') == 'enrolled') { // 'enrolled' means approved here
+              approvedParticipant += 1;
+            }
+          }
+          // count approved participant
           // get the profiles of all these vols
           var VolProfile = Parse.Object.extend('VolProfile');
           var queryVolProfile = new Parse.Query(VolProfile);
@@ -403,6 +411,7 @@ module.exports = function () {
                 volProfiles: volProfiles,
                 maxParticipant: parseInt(currEvent.get('maxParticipant')),
                 enrolledParticipant: vols.length,
+                approvedParticipant: approvedParticipant,
                 checkedInParticipant: checkedInParticipant
               });
             },

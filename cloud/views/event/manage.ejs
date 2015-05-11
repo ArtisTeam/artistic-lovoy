@@ -64,23 +64,12 @@
   <div class="row">
     <div class="container col-md-6">
       <div>
-        <h3>Enrolled Participants</h3>
+        <h3>Approved Participants</h3>
       </div>
       <div class="well">
-        <label class="control-label">Enrolled: <%= enrolledParticipant.toString() %> / Max: <%= maxParticipant.toString() %></label>
+        <label class="control-label">Approved: <%= enrolledParticipant.toString() %> / Max: <%= maxParticipant.toString() %></label>
         <div class="progress">
           <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= enrolledParticipant %>" aria-valuemin="0" aria-valuemax="<%= maxParticipant %>" style="width: <%=(enrolledParticipant * 100 / maxParticipant).toString()%>%"></div>
-        </div>
-      </div>
-    </div>
-    <div class="container col-md-6">
-      <div>
-        <h3>Checked-in Participants</h3>
-      </div>
-      <div class="well">
-        <label class="control-label">Checked-in: <%= checkedInParticipant.toString() %> / Enrolled: <%= enrolledParticipant.toString() %></label>
-        <div class="progress">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= checkedInParticipant %>" aria-valuemin="0" aria-valuemax="<%= enrolledParticipant %>" style="width: <%=(checkedInParticipant * 100 / enrolledParticipant).toString()%>%"></div>
         </div>
       </div>
     </div>
