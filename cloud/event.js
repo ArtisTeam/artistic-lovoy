@@ -231,7 +231,7 @@ module.exports = function () {
   // reject a volunteer
   // TODO: call parse push notification
   app.get('/:eventId/reject/:volId', function (req, res, next) {
-    changeApprovalStatus(req, res, next, 'cancelled')
+    changeApprovalStatus(req, res, next, 'rejected')
   });
 
   // reset a volunteer to pending
