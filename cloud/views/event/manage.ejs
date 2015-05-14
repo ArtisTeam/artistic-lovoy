@@ -3,7 +3,7 @@
 </script>
 
 <div class="row">
-<div class="container col-md-6 col-md-offset-3">
+<div class="container col-md-8 col-md-offset-2">
   <h2>Manage Event: <%= event.get('name')%></h2>
 
   <div>
@@ -21,7 +21,6 @@
           <th>Status</th>
           <th>Accept</th>
           <th>Reject</th>
-          <th>Reset</th>
         </tr>
       </thead>
       <tbody>
@@ -48,13 +47,6 @@
                 </button>
               </form>
             </td>
-            <td>
-              <form action="/event/<%= event.id %>/reset/<%= volProfile.get('createdBy').id%>" method="get">
-                <button class="btn btn-info" role="button" type="submit">
-                  <span class="glyphicon glyphicon-repeat"> Reset</span>
-                </button>
-              </form>
-            </td>
           </tr>
         <% } %>
       </tbody>
@@ -62,7 +54,7 @@
   </div>
 
   <div class="row">
-    <div class="container col-md-12">
+    <div class="container">
       <div>
         <h3>Approved Participants</h3>
       </div>
