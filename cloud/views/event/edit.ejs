@@ -267,35 +267,69 @@ $(document).ready(function() {
         }
       },
 
-      organizerEmail: {
-          verbose: false,
-          validators: {
-            notEmpty: {
-              message: 'The email address is required and can\'t be empty'
-            },
-            emailAddress: {
-              message: 'The input is not a valid email address'
-            },
-            stringLength: {
-              max: 512,
-              message: 'Cannot exceed 512 characters'
-            },
-            remote: {
-              type: 'GET',
-              url: 'https://api.mailgun.net/v2/address/validate?callback=?',
-              crossDomain: true,
-              name: 'address',
-              data: {
-                // Registry a Mailgun account and get a free API key
-                // at https://mailgun.com/signup
-                api_key: 'pubkey-83a6-sl6j2m3daneyobi87b3-ksx3q29'
-              },
-              dataType: 'jsonp',
-              validKey: 'is_valid',
-              message: 'The email is not valid'
-            }
+      organizerName: {
+        validators: {
+          // notEmpty: {
+          //   message: 'The name is required'
+          // },
+          // stringLength: {
+          //   min: 6,
+          //   max: 50,
+          //   message: 'The name must be more than 6 and less than 50 characters long'
+          // },
+          regexp: {
+              regexp: /^[\sa-zA-Z0-9_]+$/,
+              message: 'The name can only consist of alphabetical, number, space and underscore'
           }
         }
+      },
+
+      organizerEmail: {
+        verbose: false,
+        validators: {
+          // notEmpty: {
+          //   message: 'The email address is required and can\'t be empty'
+          // },
+          emailAddress: {
+            message: 'The input is not a valid email address'
+          },
+          stringLength: {
+            max: 512,
+            message: 'Cannot exceed 512 characters'
+          },
+          remote: {
+            type: 'GET',
+            url: 'https://api.mailgun.net/v2/address/validate?callback=?',
+            crossDomain: true,
+            name: 'address',
+            data: {
+              // Registry a Mailgun account and get a free API key
+              // at https://mailgun.com/signup
+              api_key: 'pubkey-83a6-sl6j2m3daneyobi87b3-ksx3q29'
+            },
+            dataType: 'jsonp',
+            validKey: 'is_valid',
+            message: 'The email is not valid'
+          }
+        }
+      },
+
+      organizerContact: {
+        validators: {
+          // notEmpty: {
+          //   message: 'The name is required'
+          // },
+          // stringLength: {
+          //   min: 6,
+          //   max: 50,
+          //   message: 'The name must be more than 6 and less than 50 characters long'
+          // },
+          regexp: {
+              regexp: /^[\sa-zA-Z0-9_]+$/,
+              message: 'The name can only consist of alphabetical, number, space and underscore'
+          }
+        }
+      }
 
     }
   })
