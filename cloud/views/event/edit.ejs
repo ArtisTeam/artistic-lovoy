@@ -13,7 +13,7 @@
         <li role="presentation" class="active"><a href="#event-basic" id="event-basic-tab" role="tab" data-toggle="tab" aria-controls="event-basic" aria-expanded="true">Event Basic</a></li>
         <li role="presentation"><a href="#event-detail" role="tab" id="event-detail-tab" data-toggle="tab" aria-controls="event-detail">Event Details</a></li>
         <li role="presentation"><a href="#organizer-info" role="tab" id="organizer-info-tab" data-toggle="tab" aria-controls="organizer-info">Organizer Info</a></li>
-        <li role="presentation"><a href="#beneficiary-info" role="tab" id="beneficiary-info-tab" data-toggle="tab" aria-controls="beneficiary-info">beneficiary Info</a></li>
+        <li role="presentation"><a href="#beneficiary-info" role="tab" id="beneficiary-info-tab" data-toggle="tab" aria-controls="beneficiary-info">Beneficiary Info</a></li>
       </ul>
       <div id="myTabContent" class="tab-content">
 
@@ -149,6 +149,13 @@
           </div>
 
           <div class="form-group">
+            <label for="organizerTitle" class="control-label">Organizer Title: </label>
+            <input type="text" class="form-control" id="organizerTitle" name="organizerTitle" 
+                   placeholder="Organizer Title"
+                   value="<%= ((!!event) && (!!event.get('organizerTitle')))?event.get('organizerTitle'):'' %>"/>
+          </div>
+
+          <div class="form-group">
             <label for="organizerEmail" class="control-label">Organizer Email: </label>
             <input type="email" class="form-control" id="organizerEmail" name="organizerEmail" 
                    placeholder="Organizer Email"
@@ -161,7 +168,32 @@
                    placeholder="Organizer Contact"
                    value="<%= ((!!event) && (!!event.get('organizerPhone')))?event.get('organizerPhone'):'' %>"/>
           </div>
+        </div>
 
+        <!-- Beneficiary Info -->
+        <div role="tabpanel" class="tab-pane fade" id="beneficiary-info" aria-labelledBy="beneficiary-info-tab">
+          <br/>
+
+          <div class="form-group">
+            <label for="beneficiaryName" class="control-label">Beneficiary Name: </label>
+            <input type="text" class="form-control" id="beneficiaryName" name="beneficiaryName" 
+                   placeholder="Beneficiary Name"
+                   value="<%= ((!!event) && (!!event.get('beneficiaryName')))?event.get('beneficiaryName'):'' %>"/>
+          </div>
+
+          <div class="form-group">
+            <label for="beneficiaryEmail" class="control-label">Beneficiary Email: </label>
+            <input type="email" class="form-control" id="beneficiaryEmail" name="beneficiaryEmail" 
+                   placeholder="Beneficiary Email"
+                   value="<%= ((!!event) && (!!event.get('beneficiaryEmail')))?event.get('beneficiaryEmail'):'' %>"/>
+          </div>
+
+          <div class="form-group">
+            <label for="beneficiaryPhone" class="control-label">Beneficiary Phone: </label>
+            <input type="text" class="form-control" id="beneficiaryPhone" name="beneficiaryPhone" 
+                   placeholder="Beneficiary Contact"
+                   value="<%= ((!!event) && (!!event.get('beneficiaryPhone')))?event.get('beneficiaryPhone'):'' %>"/>
+          </div>
         </div>
 
       </div><!-- end of myTabContent -->
@@ -284,6 +316,23 @@ $(document).ready(function() {
         }
       },
 
+      organizerTitle: {
+        validators: {
+          // notEmpty: {
+          //   message: 'The title is required'
+          // },
+          // stringLength: {
+          //   min: 6,
+          //   max: 50,
+          //   message: 'The name must be more than 6 and less than 50 characters long'
+          // },
+          regexp: {
+              regexp: /^[\sa-zA-Z0-9_]+$/,
+              message: 'Can only consist of alphabetical, number, space and underscore'
+          }
+        }
+      },
+
       organizerEmail: {
         verbose: false,
         validators: {
@@ -315,6 +364,70 @@ $(document).ready(function() {
       },
 
       organizerPhone: {
+        validators: {
+          // notEmpty: {
+          //   message: 'The name is required'
+          // },
+          // stringLength: {
+          //   min: 6,
+          //   max: 50,
+          //   message: 'The name must be more than 6 and less than 50 characters long'
+          // },
+          regexp: {
+              regexp: /^[\sa-zA-Z0-9_]+$/,
+              message: 'The name can only consist of alphabetical, number, space and underscore'
+          }
+        }
+      },
+
+      beneficiaryName: {
+        validators: {
+          // notEmpty: {
+          //   message: 'The name is required'
+          // },
+          // stringLength: {
+          //   min: 6,
+          //   max: 50,
+          //   message: 'The name must be more than 6 and less than 50 characters long'
+          // },
+          regexp: {
+              regexp: /^[\sa-zA-Z0-9_]+$/,
+              message: 'The name can only consist of alphabetical, number, space and underscore'
+          }
+        }
+      },
+
+      beneficiaryEmail: {
+        verbose: false,
+        validators: {
+          // notEmpty: {
+          //   message: 'The email address is required and can\'t be empty'
+          // },
+          emailAddress: {
+            message: 'The input is not a valid email address'
+          },
+          stringLength: {
+            max: 512,
+            message: 'Cannot exceed 512 characters'
+          },
+          remote: {
+            type: 'GET',
+            url: 'https://api.mailgun.net/v2/address/validate?callback=?',
+            crossDomain: true,
+            name: 'address',
+            data: {
+              // Registry a Mailgun account and get a free API key
+              // at https://mailgun.com/signup
+              api_key: 'pubkey-83a6-sl6j2m3daneyobi87b3-ksx3q29'
+            },
+            dataType: 'jsonp',
+            validKey: 'is_valid',
+            message: 'The email is not valid'
+          }
+        }
+      },
+
+      beneficiaryPhone: {
         validators: {
           // notEmpty: {
           //   message: 'The name is required'
