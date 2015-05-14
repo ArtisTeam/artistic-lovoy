@@ -156,10 +156,10 @@
           </div>
 
           <div class="form-group">
-            <label for="organizerContact" class="control-label">Organizer Contact: </label>
-            <input type="text" class="form-control" id="organizerContact" name="organizerContact" 
+            <label for="organizerPhone" class="control-label">Organizer Phone: </label>
+            <input type="text" class="form-control" id="organizerPhone" name="organizerPhone" 
                    placeholder="Organizer Contact"
-                   value="<%= ((!!event) && (!!event.get('organizerContact')))?event.get('organizerContact'):'' %>"/>
+                   value="<%= ((!!event) && (!!event.get('organizerPhone')))?event.get('organizerPhone'):'' %>"/>
           </div>
 
         </div>
@@ -314,7 +314,7 @@ $(document).ready(function() {
         }
       },
 
-      organizerContact: {
+      organizerPhone: {
         validators: {
           // notEmpty: {
           //   message: 'The name is required'

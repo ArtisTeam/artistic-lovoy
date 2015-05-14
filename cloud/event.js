@@ -27,7 +27,8 @@ module.exports = function () {
                         "date", "startTime", "endTime",
                         "highlight", "description",
                         "mapAddress", "mapLatitude", "mapLongitude",
-                        "location"];
+                        "location",
+                        "organizerName", "organizerEmail", "organizerPhone", "organizerTitle"];
 
   function isInArray(array, value) {
     return array.indexOf(value) > -1;
