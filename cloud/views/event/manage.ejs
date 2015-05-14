@@ -53,20 +53,15 @@
     </table>
   </div>
 
-  <div class="row">
-    <div class="container">
-      <div>
-        <h3>Approved Participants</h3>
-      </div>
-      <div class="well">
-        <label class="control-label">Approved: <%= approvedParticipant.toString() %> / Max: <%= maxParticipant.toString() %></label>
-        <div class="progress">
-          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= approvedParticipant %>" aria-valuemin="0" aria-valuemax="<%= maxParticipant %>" style="width: <%=(approvedParticipant * 100 / maxParticipant).toString()%>%"></div>
-        </div>
-      </div>
+  <div>
+    <h3>Approved Participants</h3>
+  </div>
+  <div class="well">
+    <label class="control-label">Approved: <%= approvedParticipant.toString() %> / Max: <%= maxParticipant.toString() %></label>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= approvedParticipant %>" aria-valuemin="0" aria-valuemax="<%= maxParticipant %>" style="width: <%=(approvedParticipant * 100 / maxParticipant).toString()%>%"></div>
     </div>
   </div>
-
-
+  
 </div>
 </div>
