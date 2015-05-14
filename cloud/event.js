@@ -29,7 +29,7 @@ module.exports = function () {
                         "mapAddress", "mapLatitude", "mapLongitude",
                         "location",
                         "organizerName", "organizerEmail", "organizerPhone", "organizerTitle",
-                        "beneficiaryName", "beneficiaryEmail", "beneficiaryPhone"];
+                        "beneficiaryName", "beneficiaryEmail", "beneficiaryPhone" ];
 
   function isInArray(array, value) {
     return array.indexOf(value) > -1;
