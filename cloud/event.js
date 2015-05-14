@@ -34,7 +34,7 @@ module.exports = function () {
   }
 
   app.all('/:id*', function (req, res, next) {
-    alert('[app.all]: req.params.id = ' + req.params.id)
+    alert('[app.all]: req.params.id = ' + req.params.id);
     if (req.params.id === 'new') {
       next();
     } else {
@@ -185,6 +185,41 @@ module.exports = function () {
     });
   });
 
+  function updateNumParticipant() {
+    alert('entered update');
+    var Enroll = Parse.Object.extend('Enroll');
+    var query = new Parse.Query(Enroll);
+    query.equalTo('event', currEvent);
+    query.include('event');
+
+    query.find().then(
+      function(enrolls) {
+        // count numParticipant
+        var approvedParticipant = 0;
+        for (var i=0; i<volsPt.length; ++i) {
+          if (enrolls[i].get('status') == 'enrolled') { // 'enrolled' means approved here
+            approvedParticipant += 1;
+          }
+        }
+        alert('found numParticipant ' + approvedParticipant.toString());
+        currEvent.set('numParticipant', approvedParticipant.toString());
+        currEvent.save(null, {
+          success: function (event) {
+            alert('numParticipant set to ' + approvedParticipant.toString());
+          },
+          error: function (event, error) {
+            res.send('Failed to save event, with error code: ' + error.message);
+          }
+        });
+      },
+      function(error) {
+        res.send("Fail to query enrolled events");
+      }
+    );
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////
+
   function changeApprovalStatus(req, res, next, statusStr) {
     var Enroll = Parse.Object.extend('Enroll');
     var query = new Parse.Query(Enroll);
@@ -204,9 +239,37 @@ module.exports = function () {
           enroll.set('status', statusStr);
           enroll.save(null, {
             success: function (event) {
-              // res.redirect('/' + req.params.eventId = '/manage');
-              res.redirect('/event/' + req.params.eventId + '/manage');
-              // res.redirect('/dashboard');
+              // update numParticipant
+              alert('going to update');
+              var Enroll = Parse.Object.extend('Enroll');
+              var query = new Parse.Query(Enroll);
+              query.equalTo('event', currEvent);
+              query.include('event');
+              query.find().then(
+                function(enrolls) {
+                  // count numParticipant
+                  var approvedParticipant = 0;
+                  for (var i=0; i<enrolls.length; ++i) {
+                    if (enrolls[i].get('status') == 'enrolled') { // 'enrolled' means approved here
+                      approvedParticipant += 1;
+                    }
+                  }
+                  alert('found numParticipant ' + approvedParticipant.toString());
+                  currEvent.set('numParticipant', approvedParticipant.toString());
+                  currEvent.save(null, {
+                    success: function (event) {
+                      alert('numParticipant set to ' + approvedParticipant.toString());
+                      res.redirect('/event/' + req.params.eventId + '/manage');
+                    },
+                    error: function (event, error) {
+                      res.send('Failed to save event, with error code: ' + error.message);
+                    }
+                  });
+                },
+                function(error) {
+                  res.send("Fail to query enrolled events");
+                }
+              );
             },
             error: function (event, error) {
               res.send('Failed to save enroll, with error code: ' + error.message);
@@ -221,6 +284,8 @@ module.exports = function () {
       }
     });
   }
+
+
 
   // apprve a volunteer
   // TODO: call parse push notification
